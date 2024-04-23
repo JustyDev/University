@@ -18,7 +18,7 @@ for _ in range(N):
         m += 1
 
 # расчёт времени выполнения
-execution_time = time.time() - start_time  # вычисляем время выполнения
+execution_time = time.time() - start_time
 
 print("Имитация:", m / N)
 print("Ручной расчёт:", t * (2 * T - t) / T ** 2)
