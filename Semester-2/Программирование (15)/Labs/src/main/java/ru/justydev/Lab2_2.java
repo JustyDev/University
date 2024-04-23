@@ -23,6 +23,6 @@ public class Lab2_2 {
 
     double res = (2 * a * a * a - 3 * b) / (Math.sqrt(a * b) + 5 * a);
 
-    System.out.println("Результат = " + res);
+    System.out.println("Результат: " + res);
   }
 }
