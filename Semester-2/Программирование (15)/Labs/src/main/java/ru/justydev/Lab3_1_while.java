@@ -13,23 +13,21 @@ public class Lab3_1_while {
     System.out.print("Введите a: ");
     double a = scanner.nextDouble();
 
-    double res = a;
-    int i = 1, j = 1, k = 1;
+    double res, res1 = 1, res2 = 0, res3 = 0;
+    int i = 1, j = 1;
 
     while (i <= M) {
-      res *= i + 1;
+      res1 *= i + 1;
+      res3 += i / (2 * a);
       i++;
     }
 
     while (j <= N) {
-      res -= 1 - j;
+      res2 += 1 - j;
       j++;
     }
 
-    while (k <= M) {
-      res -= k / (2 * a);
-      k++;
-    }
+    res = a * res1 - res2 - res3;
 
     System.out.println("Результат: " + res);
   }

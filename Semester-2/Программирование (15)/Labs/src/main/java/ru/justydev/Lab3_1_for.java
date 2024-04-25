@@ -13,11 +13,15 @@ public class Lab3_1_for {
     System.out.print("Введите a: ");
     double a = scanner.nextDouble();
 
-    double res = a;
+    double res, res1 = 1, res2 = 0, res3 = 0;
 
-    for (int i = 1; i <= M; i++) res *= i + 1;
-    for (int j = 1; j <= N; j++) res -= 1 - j;
-    for (int k = 1; k <= M; k++) res -= k / (2 * a);
+    for (int i = 1; i <= M; i++) {
+      res1 *= i + 1;
+      res2 += i / (2 * a);
+    }
+    for (int j = 1; j <= N; j++) res3 += 1 - j;
+
+    res = a * res1 - res2 - res3;
 
     System.out.println("Результат: " + res);
   }

@@ -15,8 +15,7 @@ public class Lab1 {
 
     double sum1 = sqrt(5 * Math.pow(a, 2) + 7, 3);
     double sum2 = 3 * log(a, 8) / Math.sin(b / (2 * a));
-    double sum3 = 4 * Math.abs(c - 2 * a + 1) /
-        sqrt(8 * a, 2);
+    double sum3 = 4 * Math.abs(c - 2 * a + 1) / sqrt(8 * a, 2);
 
     double result = sum1 + sum2 + sum3;
 
