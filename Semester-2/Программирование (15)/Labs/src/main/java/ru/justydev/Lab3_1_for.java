@@ -15,17 +15,9 @@ public class Lab3_1_for {
 
     double res = a;
 
-    for (int i = 1; i <= M; i++) {
-      res *= i + 1;
-    }
-
-    for (int j = 1; j <= N; j++) {
-      res -= 1 - j;
-    }
-
-    for (int k = 1; k <= M; k++) {
-      res -= k / (2 * a);
-    }
+    for (int i = 1; i <= M; i++) res *= i + 1;
+    for (int j = 1; j <= N; j++) res -= 1 - j;
+    for (int k = 1; k <= M; k++) res -= k / (2 * a);
 
     System.out.println("Результат: " + res);
   }

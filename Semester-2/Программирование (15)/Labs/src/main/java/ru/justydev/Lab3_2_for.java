@@ -1,13 +1,9 @@
 package ru.justydev;
 
 import java.util.Scanner;
-import java.util.function.BiFunction;
-import java.util.function.DoubleFunction;
 
 public class Lab3_2_for {
   public static void main(String[] args) {
-    double res = 0;
-
     Scanner scanner = new Scanner(System.in);
     System.out.print("Введите N: ");
     int N = scanner.nextInt();
@@ -15,6 +11,7 @@ public class Lab3_2_for {
     int M = scanner.nextInt();
     System.out.print("Введите b: ");
     double b = scanner.nextDouble();
+    double res = 0;
 
     for (int i = 1; i <= N; i++) {
 
