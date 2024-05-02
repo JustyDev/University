@@ -7,6 +7,7 @@ public class Lab6_1 {
     int[] arr;
     int N, sum = 0, count = 0;
 
+    //Ввод
     Scanner inp = new Scanner(System.in);
     System.out.print("N=");
     N = inp.nextInt();
