@@ -17,6 +17,7 @@ public class Lab6_2 {
       System.out.print("arr(" + i + ") = ");
       arr[i] = inp.nextDouble();
     }
+    inp.close();
 
     //Удаление дробных
     for (int i = 0; i < N; i++) {
@@ -55,7 +56,7 @@ public class Lab6_2 {
     System.out.println("Произведение между N_min и N_max: " + multiple);
 
     //Заменяем все элементы с чётными номерами на multiple
-    for (int i = 0; i < (N / 2 + N % 2); i++) arr[i * 2] = multiple;
+    for (int i = 0; i < N; i = i + 2) arr[i] = multiple;
 
     //Выводим результат
     System.out.println("Конечный массив: ");
