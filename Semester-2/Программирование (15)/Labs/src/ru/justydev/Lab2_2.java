@@ -17,6 +17,7 @@ public class Lab2_2 {
     x4 = scanner.nextDouble();
     System.out.print("Введите X5: ");
     x5 = scanner.nextDouble();
+    scanner.close();
 
     double a = x1;
     if (a < x2 + x3) a = x2 + x3;

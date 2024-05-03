@@ -15,6 +15,7 @@ public class Lab3_2_best_practice {
     int M = scanner.nextInt();
     System.out.print("Введите b: ");
     double b = scanner.nextDouble();
+    scanner.close();
 
     DoubleFunction<Double> fx = i -> i + b + row(1, M, j -> (i + j * j) / 3, (p, lambda) -> p * lambda);
     res = row(1, N, fx, Double::sum);

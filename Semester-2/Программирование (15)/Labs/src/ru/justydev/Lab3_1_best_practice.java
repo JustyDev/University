@@ -15,6 +15,7 @@ public class Lab3_1_best_practice {
     int M = scanner.nextInt();
     System.out.print("Введите a: ");
     double a = scanner.nextDouble();
+    scanner.close();
 
     res = a * row(1, M, i -> i + 1, (p, lambda) -> p * lambda);
     res -= row(1, N, j -> 1 - j, Double::sum);

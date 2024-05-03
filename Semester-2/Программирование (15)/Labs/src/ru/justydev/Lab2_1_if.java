@@ -8,6 +8,7 @@ public class Lab2_1_if {
     Scanner scanner = new Scanner(System.in);
     System.out.print("Введите A: ");
     double a = scanner.nextDouble(), y;
+    scanner.close();
 
     if ((-50 <= a && a < 12) || a == 27 || (35 < a && a < 40)) {
       y = 2 * a;

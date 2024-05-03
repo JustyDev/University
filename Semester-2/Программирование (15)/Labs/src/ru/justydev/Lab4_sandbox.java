@@ -11,6 +11,8 @@ public class Lab4_sandbox {
 
     System.out.print("Введите x: ");
     double x = scanner.nextDouble();
+    scanner.close();
+
     double result = 0;
     double sqx = Math.pow(x, 0.5);
     double fx = (x + 1 - sqx) * Math.pow(Math.E, sqx) - (x + 1 + sqx) * Math.pow(Math.E, -sqx);

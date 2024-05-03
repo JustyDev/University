@@ -27,6 +27,7 @@ public class Lab6_3 {
       System.out.print("Y(" + i + ") = ");
       Y[i] = inp.nextDouble();
     }
+    inp.close();
 
     Z = new double[0];
     for (int k = 0; k < N; k++) {

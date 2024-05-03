@@ -8,6 +8,7 @@ public class Lab2_1_switch {
     Scanner scanner = new Scanner(System.in);
     System.out.print("Введите A: ");
     double a = scanner.nextDouble(), y;
+    scanner.close();
 
     switch (((-50 <= a && a < 12) || a == 27 || (35 < a && a < 40)) ? 1 : 0) {
       case 1 -> y = 2 * a;

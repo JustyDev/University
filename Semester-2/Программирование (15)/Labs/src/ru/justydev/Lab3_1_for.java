@@ -12,6 +12,7 @@ public class Lab3_1_for {
     int M = scanner.nextInt();
     System.out.print("Введите a: ");
     double a = scanner.nextDouble();
+    scanner.close();
 
     double res, res1 = 1, res2 = 0, res3 = 0;
 

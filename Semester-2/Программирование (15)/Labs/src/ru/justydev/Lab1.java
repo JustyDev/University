@@ -12,6 +12,7 @@ public class Lab1 {
     double b = scanner.nextDouble();
     System.out.print("Введите C: ");
     double c = scanner.nextDouble();
+    scanner.close();
 
     double sum1 = sqrt(5 * Math.pow(a, 2) + 7, 3);
     double sum2 = 3 * log(a, 8) / Math.sin(b / (2 * a));

@@ -12,6 +12,7 @@ public class Lab3_2_for {
     System.out.print("Введите b: ");
     double b = scanner.nextDouble();
     double res = 0;
+    scanner.close();
 
     for (int i = 1; i <= N; i++) {
 
