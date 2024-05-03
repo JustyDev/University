@@ -47,7 +47,7 @@ public class Lab6_2 {
     //Находим произведение между максимальным и минимальным
     double multiple = 1;
     for (int i = 0; i < N; i++) {
-      if (arr[i] > arr[N_min] && arr[i] < arr[N_max]) {
+      if (i > Math.min(N_min, N_max) && i < Math.max(N_min, N_max)) {
         multiple *= arr[i];
       }
     }

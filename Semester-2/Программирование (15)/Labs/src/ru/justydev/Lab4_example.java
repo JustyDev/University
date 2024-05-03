@@ -2,7 +2,7 @@ package ru.justydev;
 
 import java.util.Scanner;
 
-public class Lab4 {
+public class Lab4_example {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
     System.out.print("Введите E: ");
@@ -11,15 +11,14 @@ public class Lab4 {
     double x = sc.nextDouble();
     sc.close();
 
-    double sqx = Math.pow(x, 0.5);
-    double fx = (x + 1 - sqx) * Math.exp(sqx) - (x + 1 + sqx) * Math.exp(-sqx);
+    double fx = x / 4 * (Math.exp(x) - 2*Math.sin(x) - Math.exp(-x));
 
     int k = 1;
-    double R = 4 * Math.pow(x, 0.5) * x / 3;
+    double R = x * x * x * x / 6;
     double S = 0;
     do {
       k++;
-      R = R * k * x / (4 * k + 2) / (k - 1) / (k - 1);
+      R = R * x * x * x * x / (4 * k - 1) / (4 * k - 2) / (4 * k - 3) / (4 * k - 4);
       S += R;
     } while (Math.abs(R / S) > E && k < 1000);
 
