@@ -46,11 +46,10 @@ public class Lab6_2 {
 
     //Находим произведение между максимальным и минимальным
     double multiple = 1;
-    for (int i = 0; i < N; i++) {
-      if (i > Math.min(N_min, N_max) && i < Math.max(N_min, N_max)) {
-        multiple *= arr[i];
-      }
-    }
+    int a = Math.min(N_min, N_max);
+    int b = Math.max(N_min, N_max);
+    for (int i = a; i <= b; i++) multiple *= arr[i];
+
     System.out.println("Минимальное: " + arr[N_min]);
     System.out.println("Максимальное: " + arr[N_max]);
     System.out.println("Произведение между N_min и N_max: " + multiple);

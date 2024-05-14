@@ -29,14 +29,16 @@ public class Lab6_3 {
     }
     inp.close();
 
-    Z = new double[0];
+    Z = new double[N];
+    int Zi = 0;
     for (int k = 0; k < N; k++) {
       double sum = Y[k] + X[k];
       if (sum < 0) {
-        Z = Arrays.copyOf(Z, Z.length + 1);
-        Z[Z.length - 1] = sum;
+        Z[Zi] = sum;
+        Zi += 1;
       }
     }
+    Z = Arrays.copyOf(Z, Zi);
 
     //Сортировка Z по убыванию
     for (int i = 0; i < Z.length - 2; i++) {
@@ -51,7 +53,8 @@ public class Lab6_3 {
 
     //Выводим результат
     System.out.println("Конечный массив: ");
-    for (int i = 0; i < Z.length; i++) {
+    if (Zi == 0) System.out.println("Нет элементов");
+    for (int i = 0; i < Zi; i++) {
       System.out.printf("Z(%d) = %.2f\n", i, Z[i]);
     }
   }

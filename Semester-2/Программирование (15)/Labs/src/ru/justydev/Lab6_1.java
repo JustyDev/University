@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Lab6_1 {
   public static void main(String[] args) {
     double[] arr;
-    int N, count = 0;
+    int N, count = 0, count2 = 0;
     double sum = 0;
 
     //Ввод
@@ -26,11 +26,20 @@ public class Lab6_1 {
         count += 1;
       }
       if (Math.abs(arr[i]) >= 4) {
+        count2 += 1;
         System.out.format("Модуль arr(%s)=%s не меньше 4", i, arr[i]).println();
       }
     }
 
-    System.out.println("Среднее арифметическое: " + sum / count);
+    if (count2 == 0) {
+      System.out.println("Не найдено элементов с модулем больше 4");
+    }
+
+    if (count == 0) {
+      System.out.println("Не найдено элементов, больше чем первое");
+    } else {
+      System.out.println("Среднее арифметическое: " + sum / count);
+    }
 
   }
 }
