@@ -2,7 +2,7 @@ package ru.justydev;
 
 import java.util.Scanner;
 
-public class Lab4_example {
+public class Lab4_from_example {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
     System.out.print("Введите E: ");
@@ -15,7 +15,7 @@ public class Lab4_example {
 
     int k = 1;
     double R = x * x * x * x / 6;
-    double S = 0;
+    double S = R;
     do {
       k++;
       R = R * x * x * x * x / (4 * k - 1) / (4 * k - 2) / (4 * k - 3) / (4 * k - 4);

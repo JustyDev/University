@@ -16,7 +16,7 @@ public class Lab4 {
 
     int k = 1;
     double R = 4 * Math.pow(x, 0.5) * x / 3;
-    double S = 0;
+    double S = R;
     do {
       k++;
       R = R * k * x / (4 * k + 2) / (k - 1) / (k - 1);
