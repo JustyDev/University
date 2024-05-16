@@ -15,12 +15,12 @@ public class Lab4 {
     double fx = (x + 1 - sqx) * Math.exp(sqx) - (x + 1 + sqx) * Math.exp(-sqx);
 
     int k = 1;
-    double R = 4 * Math.pow(x, 0.5) * x / 3;
-    double S = R;
+    double R = x / 6;
+    double S = R * k * k * Math.sqrt(x) * 8;
     do {
       k++;
-      R = R * k * x / (4 * k + 2) / (k - 1) / (k - 1);
-      S += R;
+      R = R * x / (2 * k + 1) / (2 * k);
+      S += R * k * k * Math.sqrt(x) * 8;
     } while (Math.abs(R / S) > E && k < 1000);
 
     if (k == 1000) System.out.println("Не посчитано");
