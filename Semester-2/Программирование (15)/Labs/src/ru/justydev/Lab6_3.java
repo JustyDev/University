@@ -41,10 +41,10 @@ public class Lab6_3 {
     Z = Arrays.copyOf(Z, Zi);
 
     //Сортировка Z по убыванию
-    for (int i = 0; i < Z.length - 2; i++) {
+    for (int i = 0; i <= Zi - 2; i++) {
       int N_min = i;
-      for (int j = i + 1; j < Z.length; j++) {
-        if (Z[i] < Z[N_min]) N_min = j;
+      for (int j = i + 1; j < Zi; j++) {
+        if (Z[j] > Z[N_min]) N_min = j;
       }
       double temp = Z[i];
       Z[i] = Z[N_min];

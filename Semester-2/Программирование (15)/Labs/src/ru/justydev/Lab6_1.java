@@ -32,7 +32,7 @@ public class Lab6_1 {
     }
 
     if (count2 == 0) {
-      System.out.println("Не найдено элементов с модулем больше 4");
+      System.out.println("Не найдено элементов с модулем не меньше 4");
     }
 
     if (count == 0) {
