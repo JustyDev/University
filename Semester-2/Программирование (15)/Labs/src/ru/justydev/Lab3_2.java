@@ -2,7 +2,7 @@ package ru.justydev;
 
 import java.util.Scanner;
 
-public class Lab3_2_for {
+public class Lab3_2 {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
     System.out.print("Введите N: ");
