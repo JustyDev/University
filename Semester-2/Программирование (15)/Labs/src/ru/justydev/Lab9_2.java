@@ -16,6 +16,7 @@ public class Lab9_2 {
     //Ввод N
     System.out.print("N=");
     N = inp.nextInt();
+    Z = new double[N];
 
     //Ввод X
     X = new double[N];
@@ -33,7 +34,7 @@ public class Lab9_2 {
     inp.close();
 
     //формирование нового массива из отрицательных Xi + Yi
-    doSomething(N, Y, X);
+    doSomething(X, Y);
 
     //Выводим результат
     System.out.println("Конечный массив: ");
@@ -43,9 +44,9 @@ public class Lab9_2 {
     }
   }
 
-  static void doSomething(int N, double[] Y, double[] X) {
+  static void doSomething(double[] X, double[] Y) {
     int Zi = 0;
-    for (int k = 0; k < N; k++) {
+    for (int k = 0; k < X.length; k++) {
       double sum = Y[k] + X[k];
       if (sum < 0) {
         Z[Zi] = sum;

@@ -28,14 +28,15 @@ public class Lab9_1 {
     double sum = 0;
 
     for (double el : arr) {
-      if (el <= arr[0]) continue;
-
-      sum += el;
-      count += 1;
+      if (el > arr[0]) {
+        sum += el;
+        count += 1;
+      }
     }
 
     if (count == 0) {
-      throw new Exception("Не найдено элементов, больше чем первое");
+      System.out.println("Не найдено элементов, больше чем первое");
+      System.exit(0);
     }
 
     return sum / count;

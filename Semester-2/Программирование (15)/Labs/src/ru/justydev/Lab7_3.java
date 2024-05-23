@@ -2,6 +2,10 @@ package ru.justydev;
 
 import java.util.Scanner;
 
+// Все элементы матрицы X (n x n), лежащие ниже главной диагонали,
+// заменить произведением ненулевых элементов,
+// стоящих в нечетных строках.
+
 public class Lab7_3 {
   public static void main(String[] args) {
     double[][] x;

@@ -3,6 +3,10 @@ package ru.justydev;
 import java.util.Arrays;
 import java.util.Scanner;
 
+// Сформировать одномерный массив, состоящий из сумм элементов,
+// значение которых не больше 5 и располагающихся в
+// нечетных столбцах матрицы X (n x m).
+
 public class Lab7_2 {
   public static void main(String[] args) {
     double[][] x;
@@ -28,7 +32,7 @@ public class Lab7_2 {
     //выводим введённую матрицу
     System.out.println("Введённая матрица:");
     for (int i = 0; i < N; i++) {
-      for (int j = 0; j < N; j++) {
+      for (int j = 0; j < M; j++) {
         System.out.printf("%10.2f", x[i][j]);
       }
       System.out.println();
@@ -39,17 +43,14 @@ public class Lab7_2 {
 
     for (int j = 1; j < M; j += 2) {
       double sum = 0;
-      boolean flag = false;
+      boolean found = false;
       for (int i = 0; i < N; i++) {
         if (x[i][j] <= 5) {
-          flag = true;
+          found = true;
           sum += x[i][j];
         }
       }
-      if (flag) {
-        sums[count] = sum;
-        count++;
-      }
+      if (found) sums[count++] = sum;
     }
     sums = Arrays.copyOf(sums, count);
 

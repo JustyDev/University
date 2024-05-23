@@ -2,6 +2,9 @@ package ru.justydev;
 
 import java.util.Scanner;
 
+// Вывести на экран номера тех строк,
+// где нет ни одного нулевого элемента.
+
 public class Lab7_1 {
   public static void main(String[] args) {
     double[][] x;
@@ -27,7 +30,7 @@ public class Lab7_1 {
     //выводим введённую матрицу
     System.out.println("Введённая матрица:");
     for (int i = 0; i < N; i++) {
-      for (int j = 0; j < N; j++) {
+      for (int j = 0; j < M; j++) {
         System.out.printf("%10.2f", x[i][j]);
       }
       System.out.println();
