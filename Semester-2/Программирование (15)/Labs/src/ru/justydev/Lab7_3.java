@@ -22,12 +22,30 @@ public class Lab7_3 {
     }
     sc.close();
 
+    //выводим введённую матрицу
+    System.out.println("Введённая матрица:");
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
+        System.out.printf("%10.2f", x[i][j]);
+      }
+      System.out.println();
+    }
+
     double multiple = 1;
+    boolean flag = false;
 
     for (int j = 0; j < N; j++) {
       for (int i = 1; i < N; i += 2) {
-        if (x[i][j] != 0) multiple *= x[i][j];
+        if (x[i][j] != 0) {
+          flag = true;
+          multiple *= x[i][j];
+        }
       }
+    }
+
+    if (!flag) {
+      System.out.println("Ненулевых элементов в матрице нет");
+      return;
     }
 
     for (int i = 1; i < N; i++) {

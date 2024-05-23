@@ -1,5 +1,6 @@
 package ru.justydev;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Lab7_2 {
@@ -24,15 +25,33 @@ public class Lab7_2 {
     }
     sc.close();
 
+    //выводим введённую матрицу
+    System.out.println("Введённая матрица:");
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
+        System.out.printf("%10.2f", x[i][j]);
+      }
+      System.out.println();
+    }
+
     double[] sums = new double[M / 2];
+    int count = 0;
 
     for (int j = 1; j < M; j += 2) {
       double sum = 0;
+      boolean flag = false;
       for (int i = 0; i < N; i++) {
-        if (x[i][j] <= 5) sum += x[i][j];
+        if (x[i][j] <= 5) {
+          flag = true;
+          sum += x[i][j];
+        }
       }
-      sums[j / 2] = sum;
+      if (flag) {
+        sums[count] = sum;
+        count++;
+      }
     }
+    sums = Arrays.copyOf(sums, count);
 
     System.out.println("Вывод массива сумм:");
     if (sums.length == 0) System.out.println("Нет элементов");
