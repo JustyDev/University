@@ -1,27 +1,35 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
-# Задаем параметры распределения
-mu = 2
-sigma = 2
+# Параметры распределения
+mean = 2
+std_dev = 2
 
-# Размер выборки
-sample_size = 10000
+# Количество выборок
+num_samples = 10000
 
-# Генерация выборок случайных величин x и y
-x = np.random.normal(mu, sigma, sample_size)
-y = np.random.normal(mu, sigma, sample_size)
+# Генерация нормальных случайных величин x и y
+x = np.random.normal(mean, std_dev, num_samples)
+y = np.random.normal(mean, std_dev, num_samples)
 
-# Вычисление z = (y + 2x)^2
+# Вычисление величины z
 z = (y + 2 * x) ** 2
 
-# Построение гистограммы
-plt.hist(z, bins=100, density=True, alpha=0.6, color='g')
+# Создание гистограммы
+hist, bin_edges = np.histogram(z, bins=50)
 
-# Добавление заголовка и меток осей
-plt.title('Гистограмма распределения случайной величины z = (y + 2x)^2')
-plt.xlabel('Значение z')
-plt.ylabel('Плотность вероятности')
+# Нормализация гистограммы
+hist = hist / np.sum(hist)
 
-# Показ гистограммы
-plt.show()
+
+# Функция для вывода гистограммы в консоли
+def print_histogram(hist, bin_edges, max_width=100):
+    max_height = np.max(hist)
+    scaling_factor = max_width / max_height
+
+    for i in range(len(hist)):
+        bar = '*' * int(hist[i] * scaling_factor)
+        print(f'{bin_edges[i]:.2f} - {bin_edges[i + 1]:.2f}: {bar} ({hist[i]:.4f})')
+
+
+# Вывод гистограммы в консоли
+print_histogram(hist, bin_edges)
