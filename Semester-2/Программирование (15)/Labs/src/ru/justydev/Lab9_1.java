@@ -3,7 +3,7 @@ package ru.justydev;
 import java.util.Scanner;
 
 public class Lab9_1 {
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) {
     double[] arr;
     int N;
 
@@ -23,7 +23,7 @@ public class Lab9_1 {
 
   }
 
-  static double getAvg(double[] arr) throws Exception {
+  static double getAvg(double[] arr) {
     int count = 0;
     double sum = 0;
 
