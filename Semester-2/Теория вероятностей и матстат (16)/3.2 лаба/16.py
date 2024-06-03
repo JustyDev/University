@@ -1,34 +1,35 @@
 import random
-import math
-import numpy as np
 
-# Функция для генерации нормального распределения N(2, 4)
-def normal(mu, sigma):
-    return mu + sigma * math.sqrt(-2 * math.log(random.random())) * math.cos(2 * math.pi * random.random())
-
-# Генерация случайных величин и вычисление z
+# Количество случайных значений
 num_samples = 10000
-z_values = []
-for _ in range(num_samples):
-    x = normal(2, 2)
-    y = normal(2, 2)
-    z = (y + 2 * x) ** 2
-    z_values.append(z)
+
+# Генерация случайных чисел x и y с нормальным распределением N(2, 4)
+mean = 2
+std_dev = 2  # Отклонение равно корню от дисперсии (т.е. корень от 4)
+
+x_values = [random.gauss(mean, std_dev) for _ in range(num_samples)]
+y_values = [random.gauss(mean, std_dev) for _ in range(num_samples)]
+
+# Вычисление z = (y + 2x)^2
+z_values = [(y + 2 * x) ** 2 for x, y in zip(x_values, y_values)]
 
 # Построение гистограммы
-histogram_bins = 50
-histogram = [0] * histogram_bins
+# Определяем количество бинов
+num_bins = 50
+min_z = min(z_values)
 max_z = max(z_values)
-bin_width = max_z / histogram_bins
+bin_width = (max_z - min_z) / num_bins
 
-# Подсчет количества значений z в каждом бине
+# Подсчет частот для каждого бина
+histogram = [0] * num_bins
 for z in z_values:
-    bin_index = int(z // bin_width)
-    if bin_index < histogram_bins:
-        histogram[bin_index] += 1
-    else:
-        histogram[histogram_bins - 1] += 1
+    bin_index = int((z - min_z) / bin_width)
+    if bin_index == num_bins:  # В случае, если значение z попадает в последний бин
+        bin_index -= 1
+    histogram[bin_index] += 1
 
-# Вывод гистограммы
-for i in range(histogram_bins):
-    print(f'Bin {i+1}: {"*" * (histogram[i] // 50)}')
+# Вывод результатов
+for i in range(num_bins):
+    bin_start = min_z + i * bin_width
+    bin_end = bin_start + bin_width
+    print(f"{(i + 1):>3.0f} ({bin_start:>7.2f}, {bin_end:>7.2f}): {'*' * int(histogram[i] / histogram[0] * 100)} ({histogram[i]})")
