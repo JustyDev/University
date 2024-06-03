@@ -24,7 +24,7 @@ public class Lab7_3 {
       }
       System.out.println();
     }
-    sc.close();
+    sc.close(); 
 
     //выводим введённую матрицу
     System.out.println("Введённая матрица:");

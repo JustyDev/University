@@ -1,35 +1,34 @@
+import random
+import math
 import numpy as np
 
-# Параметры распределения
-mean = 2
-std_dev = 2
+# Функция для генерации нормального распределения N(2, 4)
+def normal(mu, sigma):
+    return mu + sigma * math.sqrt(-2 * math.log(random.random())) * math.cos(2 * math.pi * random.random())
 
-# Количество выборок
+# Генерация случайных величин и вычисление z
 num_samples = 10000
+z_values = []
+for _ in range(num_samples):
+    x = normal(2, 2)
+    y = normal(2, 2)
+    z = (y + 2 * x) ** 2
+    z_values.append(z)
 
-# Генерация нормальных случайных величин x и y
-x = np.random.normal(mean, std_dev, num_samples)
-y = np.random.normal(mean, std_dev, num_samples)
+# Построение гистограммы
+histogram_bins = 50
+histogram = [0] * histogram_bins
+max_z = max(z_values)
+bin_width = max_z / histogram_bins
 
-# Вычисление величины z
-z = (y + 2 * x) ** 2
+# Подсчет количества значений z в каждом бине
+for z in z_values:
+    bin_index = int(z // bin_width)
+    if bin_index < histogram_bins:
+        histogram[bin_index] += 1
+    else:
+        histogram[histogram_bins - 1] += 1
 
-# Создание гистограммы
-hist, bin_edges = np.histogram(z, bins=50)
-
-# Нормализация гистограммы
-hist = hist / np.sum(hist)
-
-
-# Функция для вывода гистограммы в консоли
-def print_histogram(hist, bin_edges, max_width=100):
-    max_height = np.max(hist)
-    scaling_factor = max_width / max_height
-
-    for i in range(len(hist)):
-        bar = '*' * int(hist[i] * scaling_factor)
-        print(f'{bin_edges[i]:.2f} - {bin_edges[i + 1]:.2f}: {bar} ({hist[i]:.4f})')
-
-
-# Вывод гистограммы в консоли
-print_histogram(hist, bin_edges)
+# Вывод гистограммы
+for i in range(histogram_bins):
+    print(f'Bin {i+1}: {"*" * (histogram[i] // 50)}')
