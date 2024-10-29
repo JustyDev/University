@@ -47,3 +47,6 @@ add_executable(zad8 zad8.cpp
 
 add_executable(zad9 zad9.cpp
         zad9.cpp)
+
+add_executable(zad10 zad10.cpp
+        zad10.cpp)
