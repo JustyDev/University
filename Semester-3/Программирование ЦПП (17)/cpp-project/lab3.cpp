@@ -8,8 +8,8 @@ std::string lab31() {
     const bool inRightCircle = std::pow(x - 1, 2) + std::pow(y, 2) <= 1;
 
     if (inLeftCircle && inRightCircle)
-        return "DA";
-    return "NET";
+        return "YES";
+    return "NO";
 }
 
 void printRow(int x, double y) {

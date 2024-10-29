@@ -120,7 +120,7 @@ void lab72() {
 
 
 int main() {
-    //std::cout<<lab71();
+    // std::cout<<lab71();
     lab72();
     return 0;
 }

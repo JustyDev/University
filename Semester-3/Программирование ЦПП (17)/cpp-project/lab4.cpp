@@ -34,7 +34,7 @@ void lab42() {
             }
             if (rowSum > maxRowSum) {
                 maxRowSum = rowSum;
-                maxRow = i;
+                maxRow = i + 1;
             }
         }
         std::cout << maxRow << std::endl;
@@ -43,7 +43,7 @@ void lab42() {
 
 
 int main() {
-    lab41();
-    //    lab42();
+    // lab41();
+    lab42();
     return 0;
 }

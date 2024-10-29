@@ -18,7 +18,7 @@ void lab12() {
 }
 
 int main() {
-    lab11();
-    // lab12();
+    // lab11();
+    lab12();
     return 0;
 }

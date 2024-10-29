@@ -30,6 +30,6 @@ void lab22() {
 
 int main() {
     lab21();
-    //lab22();
+    // lab22();
     return 0;
 }

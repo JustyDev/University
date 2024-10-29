@@ -20,3 +20,30 @@ add_executable(lab6 lab6.cpp
 
 add_executable(lab7 lab7.cpp
         lab7.cpp)
+
+add_executable(zad1 zad1.cpp
+        zad1.cpp)
+
+add_executable(zad2 zad2.cpp
+        zad2.cpp)
+
+add_executable(zad3 zad3.cpp
+        zad3.cpp)
+
+add_executable(zad4 zad4.cpp
+        zad4.cpp)
+
+add_executable(zad5 zad5.cpp
+        zad5.cpp)
+
+add_executable(zad6 zad6.cpp
+        zad6.cpp)
+
+add_executable(zad7 zad7.cpp
+        zad7.cpp)
+
+add_executable(zad8 zad8.cpp
+        zad8.cpp)
+
+add_executable(zad9 zad9.cpp
+        zad9.cpp)
