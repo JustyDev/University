@@ -1,7 +1,5 @@
-
 #include <iostream>
 #include <fstream>
-#include <cstring>
 
 struct Recorder {
     char firmName[10];
@@ -13,7 +11,7 @@ struct Recorder {
 
 const int RECORD_SIZE = sizeof(Recorder);
 
-void writeRecord(const std::string& filename, const Recorder& recorder, int recordNumber) {
+void writeRecord(const std::string &filename, const Recorder &recorder, int recordNumber) {
     std::ofstream outFile(filename, std::ios::binary | std::ios::in | std::ios::out);
     if (!outFile) {
         std::cerr << "Ошибка открытия файла для записи!" << std::endl;
@@ -21,10 +19,10 @@ void writeRecord(const std::string& filename, const Recorder& recorder, int reco
     }
 
     outFile.seekp(recordNumber * RECORD_SIZE);
-    outFile.write(reinterpret_cast<const char*>(&recorder), RECORD_SIZE);
+    outFile.write(reinterpret_cast<const char *>(&recorder), RECORD_SIZE);
 }
 
-void readRecord(const std::string& filename, Recorder& recorder, int recordNumber) {
+void readRecord(const std::string &filename, Recorder &recorder, int recordNumber) {
     std::ifstream inFile(filename, std::ios::binary);
     if (!inFile) {
         std::cerr << "Ошибка открытия файла для чтения!" << std::endl;
@@ -32,19 +30,16 @@ void readRecord(const std::string& filename, Recorder& recorder, int recordNumbe
     }
 
     inFile.seekg(recordNumber * RECORD_SIZE);
-    inFile.read(reinterpret_cast<char*>(&recorder), RECORD_SIZE);
+    inFile.read(reinterpret_cast<char *>(&recorder), RECORD_SIZE);
 }
 
 int main() {
     const std::string filename = "../assets/zad10.dat";
 
-    // Пример записи
     Recorder recorder1 = {"Sony", "ModelX", 100, 50, 2999};
 
-    // Запись записи с номером 0
     writeRecord(filename, recorder1, 0);
 
-    // Прочтение записи с номером 0
     Recorder readRecorder;
     readRecord(filename, readRecorder, 0);
 
