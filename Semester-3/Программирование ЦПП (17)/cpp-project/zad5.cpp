@@ -1,32 +1,28 @@
 #include <iostream>
-#include <cstring> // Для работы со стандартными строковыми функциями
+#include <sstream>
+#include <string>
 
-bool hasLongWords(const char *str, size_t limit) {
-    const char *delimiters = " ";
-    char *strCopy = new char[strlen(str) + 1];
-    strcpy(strCopy, str);
+bool hasLongWords(const std::string &input, int lengthThreshold) {
+    std::istringstream stream(input);
+    std::string word;
 
-    char *token = strtok(strCopy, delimiters);
-    while (token != nullptr) {
-        if (strlen(token) > limit) {
-            delete[] strCopy;
+    while (stream >> word) {
+        if (word.length() > lengthThreshold) {
             return true;
         }
-        token = strtok(nullptr, delimiters);
     }
 
-    delete[] strCopy;
     return false;
 }
 
 int main() {
-    const char *sentence = "Эта строка содержит несколько длинных слов";
-    size_t limit = 5;
+    std::string input = "Эта строка содержит несколько длинных слов";;
+    int threshold = 50;
 
-    if (hasLongWords(sentence, limit)) {
-        std::cout << "В строке есть слова, длинее заданного числа" << std::endl;
+    if (hasLongWords(input, threshold)) {
+        std::cout << "Строка содержит слово с количеством букв больше " << threshold << std::endl;
     } else {
-        std::cout << "В строке нет слов, длиннее заданного числа" << std::endl;
+        std::cout << "Строка не содержит слова с количеством букв больше " << threshold << std::endl;
     }
 
     return 0;

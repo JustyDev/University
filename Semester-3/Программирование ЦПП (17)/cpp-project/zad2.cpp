@@ -41,8 +41,8 @@ void withSwitch() {
 }
 
 int main() {
-    withIf();
-    // withSwitch();
+    // withIf();
+    withSwitch();
 
     return 0;
 }
