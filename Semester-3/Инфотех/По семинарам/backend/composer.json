@@ -1,0 +1,23 @@
+{
+  "name": "justydev/infotech",
+  "description": "API for infotech project",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "JustyDev"
+    }
+  ],
+  "require": {
+    "ext-pdo": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Api\\Objects\\": "Objects",
+      "Api\\Shared\\": "Shared",
+      "Api\\Providers\\": "Providers",
+      "Api\\Providers\\Auth\\": "Providers/Auth",
+      "Api\\Providers\\Utils\\": "Providers/Utils"
+    }
+  }
+}
