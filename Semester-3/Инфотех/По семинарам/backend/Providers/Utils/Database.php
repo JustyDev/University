@@ -1,6 +1,6 @@
 <?php
 
-namespace Api\Utils;
+namespace Api\Providers\Utils;
 
 use Api\Providers\Utils\Errors;
 use PDO;

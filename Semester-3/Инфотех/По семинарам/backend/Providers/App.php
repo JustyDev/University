@@ -5,7 +5,7 @@ namespace Api\Providers;
 use Api\Providers\Utils\Errors;
 use Api\Providers\Utils\IProvider;
 use Api\Shared\Config;
-use Api\Utils\Database;
+use Api\Providers\Utils\Database;
 use PDO;
 
 abstract class App implements IProvider

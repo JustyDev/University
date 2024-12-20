@@ -3,6 +3,7 @@
 namespace Api\Objects;
 
 use Api\Providers\App;
+use Api\Providers\Utils\Utils;
 
 class User
 {
@@ -21,7 +22,7 @@ class User
     return $sgs->fetchObject('\Api\Objects\User') ?: null;
   }
 
-  public static function findByEmail(?int $email): ?User
+  public static function findByEmail(?string $email): ?User
   {
     if (!$email) return null;
     $sgs = App::conn()->prepare('SELECT * FROM `users` WHERE email = ? LIMIT 1');
@@ -66,5 +67,14 @@ class User
   public function areValidPassword(string $password): bool
   {
     return password_verify($password, $this->getPassword());
+  }
+
+  public static function create(?string $email, ?string $password): ?User
+  {
+    if (!$email || !$password) return null;
+    $sgs = App::conn()->prepare('INSERT INTO `users`(`email`, `password`, `register_time`, `register_ip`) VALUES (?, ?, ?, ?)');
+    $sgs->execute([$email, password_hash($password, PASSWORD_DEFAULT), time(), Utils::userIp()]);
+
+    return User::findById(App::conn()->lastInsertId());
   }
 }

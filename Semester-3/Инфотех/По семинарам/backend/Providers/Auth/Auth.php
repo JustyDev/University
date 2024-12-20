@@ -25,9 +25,20 @@ class Auth implements IProvider
   {
     $email = App::param('email');
     $password = App::param('password');
-    if (empty($email) || empty($password)) Errors::create('Все поля должны быть заполненны');
+    $confirm_password = App::param('confirm_password');
+    if (empty($email) || empty($password) || empty($confirm_password)) Errors::create('Все поля должны быть заполненны');
+
+    if ($password !== $confirm_password) Errors::create('Пароли не совпадают');
 
     if (User::findByEmail($email)) Errors::create('Пользователь с таким Email уже существует');
+
+    $created_user = User::create($email, $password);
+    if (!$created_user) Errors::create('Пользователь не был создан');
+
+    Response::set([
+      'type' => 'success',
+      'session' => $created_user->getSession()
+    ]);
   }
 
   #[NoReturn]
