@@ -72,8 +72,12 @@ class User
   public static function create(?string $email, ?string $password): ?User
   {
     if (!$email || !$password) return null;
-    $sgs = App::conn()->prepare('INSERT INTO `users`(`email`, `password`, `register_time`, `register_ip`) VALUES (?, ?, ?, ?)');
-    $sgs->execute([$email, password_hash($password, PASSWORD_DEFAULT), time(), Utils::userIp()]);
+
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+
+    App::conn()
+      ->prepare('INSERT INTO `users` (`email`, `password`, `register_time`, `register_ip`) VALUES (?, ?, ?, ?)')
+      ->execute([$email, $hash, time(), Utils::userIp()]);
 
     return User::findById(App::conn()->lastInsertId());
   }

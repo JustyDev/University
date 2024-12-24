@@ -46,7 +46,7 @@ export const RegisterPage = () => {
         placeholder="Повторите пароль"
       />
 
-      <Button onClick={() => registerQuery.start({
+      <Button disabled={pending} onClick={() => registerQuery.start({
         email: email,
         password: password,
         confirm_password: confirm
