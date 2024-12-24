@@ -38,4 +38,19 @@ class Utils
     if (empty($agent)) Errors::create('Запрос отклонён, ошибка прав доступа');
     return $agent;
   }
+
+  public static function useCookie(string $name, string $value, int $expires = 86400): void
+  {
+    setcookie($name, $value, ['expires' => time() + $expires, 'httponly' => 1, 'secure' => 1, 'path' => '/', 'samesite' => 'None']);
+  }
+
+  public static function deleteCookie(string $name): void
+  {
+    setcookie($name, '', ['expires' => time() - 3600, 'httponly' => 1, 'secure' => 1, 'path' => '/', 'samesite' => 'None']);
+  }
+
+  public static function genDefectedString(int $length = 8, string $inp = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'): string
+  {
+    return substr(str_shuffle($inp), 0, $length);
+  }
 }

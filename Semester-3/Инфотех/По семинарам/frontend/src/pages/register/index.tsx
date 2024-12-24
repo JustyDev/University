@@ -1,4 +1,4 @@
-import {Link} from 'react-router'
+import {Link, useNavigate} from 'react-router'
 import {Input} from '../../shared/ui/input'
 import {Button} from '../../shared/ui/button'
 
@@ -6,16 +6,26 @@ import s from './register.module.css'
 import {useUnit} from "effector-react/effector-react.umd";
 import {registerQuery} from "./model.ts";
 import {useQueryError} from "../../shared/hooks/useQueryError.ts";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {initialQuery} from "../common/model.ts";
 
 export const RegisterPage = () => {
 
   const {data, pending} = useUnit(registerQuery)
+  const {data: initialData} = useUnit(initialQuery)
   const {message: messageError} = useQueryError(registerQuery)
 
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [confirm, setConfirm] = useState<string>('')
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (initialData?.session) {
+      navigate('/')
+    }
+  }, [initialData]);
 
   return (
     <div className={s.container}>

@@ -17,7 +17,8 @@
       "Api\\Shared\\": "Shared",
       "Api\\Providers\\": "Providers",
       "Api\\Providers\\Auth\\": "Providers/Auth",
-      "Api\\Providers\\Utils\\": "Providers/Utils"
+      "Api\\Providers\\Utils\\": "Providers/Utils",
+      "Api\\Providers\\Common\\": "Providers/Common"
     }
   }
 }

@@ -2,6 +2,7 @@
 
 namespace Api\Providers\Auth;
 
+use Api\Objects\Session;
 use Api\Objects\User;
 use Api\Providers\App;
 use Api\Providers\Utils\Errors;
@@ -16,8 +17,19 @@ class Auth implements IProvider
     match ($uri_part) {
       'login' => $this->login(),
       'register' => $this->register(),
+      'logout' => Session::access(fn(Session $session) => $this->logout($session)),
       default => Errors::create('Метод не найден')
     };
+  }
+
+  #[NoReturn]
+  private function logout(Session $session): void
+  {
+    $session->remove();
+
+    Response::set([
+      'type' => 'success'
+    ]);
   }
 
   #[NoReturn]
@@ -26,7 +38,7 @@ class Auth implements IProvider
     $email = App::param('email');
     $password = App::param('password');
     $confirm_password = App::param('confirm_password');
-    if (empty($email) || empty($password) || empty($confirm_password)) Errors::create('Все поля должны быть заполненны');
+    if (empty($email) || empty($password) || empty($confirm_password)) Errors::create('Все поля должны быть заполнены');
 
     if ($password !== $confirm_password) Errors::create('Пароли не совпадают');
 
@@ -35,9 +47,10 @@ class Auth implements IProvider
     $created_user = User::create($email, $password);
     if (!$created_user) Errors::create('Пользователь не был создан');
 
+    $created_user->createSession();
+
     Response::set([
-      'type' => 'success',
-      'session' => $created_user->getSession()
+      'type' => 'success'
     ]);
   }
 
@@ -53,9 +66,10 @@ class Auth implements IProvider
       Errors::create('Неправильный email или пароль');
     }
 
+    $user->createSession();
+
     Response::set([
-      'type' => 'success',
-      'session' => $user->getSession()
+      'type' => 'success'
     ]);
   }
 }

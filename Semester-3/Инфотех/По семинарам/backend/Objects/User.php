@@ -56,7 +56,16 @@ class User
     return $this->register_ip;
   }
 
-  public function getSession(): array
+  public function createSession(): Session
+  {
+    $session = Session::create($this->getId());
+
+    $session->toCookie();
+
+    return $session;
+  }
+
+  public function getSessionInfo(): array
   {
     return [
       'id' => $this->getId(),

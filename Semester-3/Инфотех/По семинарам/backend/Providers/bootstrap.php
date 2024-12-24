@@ -5,6 +5,7 @@ namespace Api\Providers;
 require __DIR__ . '/../vendor/autoload.php';
 
 use Api\Providers\Auth\Auth;
+use Api\Providers\Common\Common;
 use Api\Providers\Utils\Errors;
 use Api\Providers\Utils\IProvider;
 use Api\Providers\Utils\UPath;
@@ -32,6 +33,7 @@ class Entry
 
     $provider = match ($high) {
       'auth' => new Auth(),
+      'common' => new Common(),
       default => false
     };
 
