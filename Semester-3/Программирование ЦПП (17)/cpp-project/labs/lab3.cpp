@@ -67,8 +67,8 @@ void lab32_switch() {
 
 
 int main() {
-    //std::cout << lab31();
-    // lab32_if();
+    // std::cout << lab31();
+    lab32_if();
     lab32_switch();
     return 0;
 }

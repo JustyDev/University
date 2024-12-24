@@ -21,6 +21,15 @@ add_executable(lab6 labs/lab6.cpp
 add_executable(lab7 labs/lab7.cpp
         labs/lab7.cpp)
 
+add_executable(lab8 labs/lab8.cpp
+        labs/lab8.cpp)
+
+add_executable(lab82 labs/lab82.cpp
+        labs/lab82.cpp)
+
+add_executable(lab9 labs/lab9.cpp
+        labs/lab9.cpp)
+
 add_executable(zad1 iz/zad1.cpp
         iz/zad1.cpp)
 

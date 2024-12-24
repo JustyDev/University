@@ -3,20 +3,22 @@
 #include <stdexcept>
 
 double mpow(double num, double x) {
-    if(num==0 && x<=0) return -1;
-    if(num==1 || num==0) return x;
-    if(x > 1) return num * mpow(num, x-1);
-    if(x < 1) return 1/num * mpow(num, x+1);
+    if (num == 0 && x <= 0) return -1;
+    if (num == 1 || num == 0) return x;
+    if (x > 1) return num * mpow(num, x - 1);
+    if (x < 1) return 1 / num * mpow(num, x + 1);
     return num;
 }
 
-void insertionSort(int* arr, int n) {
-    for(int i=1; i<n; i++)
-        for(int j= i;j>0 && arr[j-1]<arr[j];j--)
-            std::swap(arr[j-1], arr[j]);
+// сортируем пузырьком
+void insertionSort(int *arr, int n) {
+    for (int i = 1; i < n; i++)
+        for (int j = i; j > 0 && arr[j - 1] < arr[j]; j--)
+            std::swap(arr[j - 1], arr[j]);
 }
 
-void selectionSort(int* arr, int n) {
+// сортировка методом выбора
+void selectionSort(int *arr, int n) {
     for (int i = 0; i < n - 1; ++i) {
         int min_ix = i;
         for (int j = i + 1; j < n; ++j)
@@ -28,34 +30,35 @@ void selectionSort(int* arr, int n) {
 }
 
 void lab62() {
-    while(true) {
+    while (true) {
         int n, userChoice;
         std::cin >> n;
         int arr[n];
-        for(int i = 0; i <n; i++)
-            std::cin>>arr[i];
+        for (int i = 0; i < n; i++)
+            std::cin >> arr[i];
         std::cout << "1 - убывание, 2 - возрастание" << std::endl;
         std::cin >> userChoice;
-        if(userChoice==1) {
+        if (userChoice == 1) {
             insertionSort(arr, n);
-            for(int i = 0; i<n; i++) std::cout<<arr[i] << " ";
-        }
-        else if(userChoice==2) {
+            for (int i = 0; i < n; i++) std::cout << arr[i] << " ";
+        } else if (userChoice == 2) {
             selectionSort(arr, n);
-            for(int i = 0; i<n; i++) std::cout<<arr[i] << " ";
-        } else std::cout<<"wrong input" << std::endl;
-        std::cout<<std::endl;
+            for (int i = 0; i < n; i++) std::cout << arr[i] << " ";
+        } else std::cout << "wrong input" << std::endl;
+        std::cout << std::endl;
     }
 }
 
+// перевораичвает введённкю строку
 void lab63() {
     std::string s;
     std::cin >> s;
-    for(int i = 0; i<s.length()/2; i++) {
-        std::swap(s[i], s[s.length()-1-i]);
+    for (int i = 0; i < s.length() / 2; i++) {
+        std::swap(s[i], s[s.length() - 1 - i]);
     }
-    std::cout<<s<<std::endl;
+    std::cout << s << std::endl;
 }
+
 
 int solve(double a, double b, double c, double &x1, double &x2) {
     try {
@@ -99,9 +102,16 @@ void lab64() {
 }
 
 int main() {
+    // Возводим заданное числа в степень
     //std::cout << mpow(2, 3); // lab 61
-   // lab62();
+
+    // Сортируем массив в зависимости от выбора пользователя
+    //lab62();
+
+    // Нужно перевернуть введённую строку
     //lab63();
-    lab64();
+
+    // Решение квадратного уравнения
+    // lab64();
     return 0;
 }
