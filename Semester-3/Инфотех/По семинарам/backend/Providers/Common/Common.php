@@ -32,6 +32,8 @@ class Common implements IProvider
         'user' => [
           'id' => $user->getId(),
           'email' => $user->getEmail(),
+          'name' => $user->getName(),
+          'surname' => $user->getSurname(),
         ]
       ] : null
     ]);

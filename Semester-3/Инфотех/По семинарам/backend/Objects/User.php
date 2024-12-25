@@ -12,6 +12,8 @@ class User
   public string $email;
   public int $register_time;
   public string $register_ip;
+  public ?string $name;
+  public ?string $surname;
 
   public static function findById(?int $user_id): ?User
   {
@@ -39,6 +41,30 @@ class User
   public function getPassword(): string
   {
     return $this->password;
+  }
+
+  public function getName(): ?string
+  {
+    return $this->name;
+  }
+
+  public function setName(?string $name): void
+  {
+    App::conn()
+      ->prepare('UPDATE `users` SET `name` = ? WHERE `id` = ?')
+      ->execute([$name, $this->getId()]);
+  }
+
+  public function setSurname(?string $surname): void
+  {
+    App::conn()
+      ->prepare('UPDATE `users` SET `name` = ? WHERE `id` = ?')
+      ->execute([$surname, $this->getId()]);
+  }
+
+  public function getSurname(): ?string
+  {
+    return $this->surname;
   }
 
   public function getEmail(): string

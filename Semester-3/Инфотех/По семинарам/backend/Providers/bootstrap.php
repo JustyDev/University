@@ -6,6 +6,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Api\Providers\Auth\Auth;
 use Api\Providers\Common\Common;
+use Api\Providers\User\User;
 use Api\Providers\Utils\Errors;
 use Api\Providers\Utils\IProvider;
 use Api\Providers\Utils\UPath;
@@ -28,12 +29,12 @@ class Entry
   public function __construct()
   {
     $this->headers();
-
     $high = UPath::separate(0);
 
     $provider = match ($high) {
       'auth' => new Auth(),
       'common' => new Common(),
+      'user' => new User(),
       default => false
     };
 

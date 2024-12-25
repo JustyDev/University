@@ -64,7 +64,7 @@ export const RegisterPage = () => {
         Зарегистрироваться
       </Button>
 
-      {messageError && <p>Ошибка: {messageError}</p>}
+      {messageError && <p className={s.error}>Ошибка: {messageError}</p>}
 
       <p>Уже есть аккаунт? <Link to="/login">Войти</Link></p>
     </div>

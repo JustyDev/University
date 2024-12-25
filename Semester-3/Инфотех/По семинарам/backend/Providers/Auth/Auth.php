@@ -42,6 +42,8 @@ class Auth implements IProvider
 
     if ($password !== $confirm_password) Errors::create('Пароли не совпадают');
 
+    if (strlen($password) < 8) Errors::create('Пароль должен быть от 8и символовr');
+
     if (User::findByEmail($email)) Errors::create('Пользователь с таким Email уже существует');
 
     $created_user = User::create($email, $password);
