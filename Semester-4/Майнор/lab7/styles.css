@@ -1,0 +1,74 @@
+@font-face {
+    font-family: 'ProximaNova Black';
+    src: url('font/proximanova_black.otf') format('opentype'),
+         url('font/proximanova_black.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ProximaNova Bold';
+    src: url('font/proximanova_bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ProximaNova ExtraBold';
+    src: url('font/proximanova_extrabold.otf') format('opentype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ProximaNova Light';
+    src: url('font/proximanova_light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ProximaNova Regular';
+    src: url('font/proximanova_regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: 'ProximaNova', sans-serif;
+}
+
+body {
+    padding: 30px;
+}
+
+.images {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.imageCard {
+    gap: 15px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+.imageCard > img {
+    width: 300px;
+    height: 300px;
+}
+
+table {
+    width: 50%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+th, td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: center;
+}
+th {
+    background-color: #f2f2f2;
+}
