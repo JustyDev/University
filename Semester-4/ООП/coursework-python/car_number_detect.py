@@ -3,13 +3,13 @@ import sys
 from src.car_plate_ocr import CarPlateOCR
 from src.image_processor import ImageProcessor
 from src.lib.clear_folder import clear_folder
+from src.lib.load_car_numbers import load_car_numbers
 from src.lib.save_progress import save_progress
 
 # База автомобильных номеров
-db_numbers = [
-    "M010MM06",
-    "C797OO77"
-]
+
+db_path = "./allowed_car_numbers.txt"
+db_numbers = load_car_numbers(db_path)
 
 def main():
     # Проверяем, был ли передан аргумент с путем к файлу
