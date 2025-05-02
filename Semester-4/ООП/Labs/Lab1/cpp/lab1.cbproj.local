@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2025.05.02 21:25:49.602,=C:\Users\dmitr\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2025.05.02 21:25:49.914,=C:\Users\dmitr\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2025.05.02 21:52:42.147,D:\Work\University\Semester-4\ООП\Labs\Lab1\Unit1.cpp=C:\Users\dmitr\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2025.05.02 21:52:42.147,D:\Work\University\Semester-4\ООП\Labs\Lab1\Unit1.h=C:\Users\dmitr\Documents\Embarcadero\Studio\Projects\Unit1.h</Transaction>
+    <Transaction>2025.05.02 21:52:42.147,D:\Work\University\Semester-4\ООП\Labs\Lab1\Unit1.dfm=C:\Users\dmitr\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2025.05.02 22:39:04.519,D:\Work\University\Semester-4\ООП\Labs\Lab1\lab1PCH1.h=C:\Users\dmitr\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2025.05.02 22:39:04.534,D:\Work\University\Semester-4\ООП\Labs\Lab1\lab1.cbproj=C:\Users\dmitr\Documents\Embarcadero\Studio\Projects\Project1.cbproj</Transaction>
+  </Transactions>
+</BorlandProject>
