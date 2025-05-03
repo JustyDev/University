@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2025.05.03 20:02:54.106,=C:\Users\dmitr\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2025.05.03 20:02:54.423,=C:\Users\dmitr\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2025.05.03 20:14:58.775,=C:\Users\dmitr\Documents\Embarcadero\Studio\Projects\Unit2.cpp</Transaction>
+    <Transaction>2025.05.03 20:23:46.809,D:\Work\University\Semester-4\ООП\Labs\Lab8\Unit1.cpp=C:\Users\dmitr\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2025.05.03 20:23:46.809,D:\Work\University\Semester-4\ООП\Labs\Lab8\Unit1.h=C:\Users\dmitr\Documents\Embarcadero\Studio\Projects\Unit1.h</Transaction>
+    <Transaction>2025.05.03 20:23:46.809,D:\Work\University\Semester-4\ООП\Labs\Lab8\Unit1.dfm=C:\Users\dmitr\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2025.05.03 20:23:52.743,D:\Work\University\Semester-4\ООП\Labs\Lab8\Unit2.cpp=C:\Users\dmitr\Documents\Embarcadero\Studio\Projects\Unit2.cpp</Transaction>
+    <Transaction>2025.05.03 20:23:52.743,D:\Work\University\Semester-4\ООП\Labs\Lab8\Unit2.h=C:\Users\dmitr\Documents\Embarcadero\Studio\Projects\Unit2.h</Transaction>
+    <Transaction>2025.05.03 20:38:53.716,D:\Work\University\Semester-4\ООП\Labs\Lab8\labPCH1.h=C:\Users\dmitr\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2025.05.03 20:38:53.732,D:\Work\University\Semester-4\ООП\Labs\Lab8\lab.cbproj=C:\Users\dmitr\Documents\Embarcadero\Studio\Projects\Project1.cbproj</Transaction>
+  </Transactions>
+</BorlandProject>
