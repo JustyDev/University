@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.181,C:\C++ Builder\Project1.cbproj=C:\OS_OOP\OS\Builder\Lab7\Project1.cbproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.465,=C:\C++ Builder\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.988,C:\C++ Builder\Unit1.cpp=C:\OS_OOP\OS\Builder\Lab7\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.988,C:\C++ Builder\Unit1.dfm=C:\OS_OOP\OS\Builder\Lab7\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.163,C:\C++ Builder\Project1PCH1.h=C:\OS_OOP\OS\Builder\Lab7\Project1PCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.135,=C:\C++ Builder\Project1PCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.988,C:\C++ Builder\Unit1.h=C:\OS_OOP\OS\Builder\Lab7\Unit1.h</Transaction>
+  </Transactions>
+</BorlandProject>
