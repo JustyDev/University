@@ -12,6 +12,43 @@
 TForm1 *Form1;
 std::vector<train> trains;
 //---------------------------------------------------------------------------
+__fastcall TForm1::TForm1(TComponent* Owner)
+	: TForm(Owner)
+{
+	Form1->StringGrid1->ColCount = 4;
+
+	Form1->StringGrid1->Cells[0][0] = L"Дата";
+	StringGrid1->ColWidths[0] = 140;
+	Form1->StringGrid1->Cells[1][0] = L"Время";
+	StringGrid1->ColWidths[1] = 140;
+	Form1->StringGrid1->Cells[2][0] = L"Место назначения";
+	StringGrid1->ColWidths[2] = 200;
+    Form1->StringGrid1->Cells[3][0] = L"Свободных мест";
+	StringGrid1->ColWidths[3] = 130;
+
+    SaveDialog1->Filter = L"Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+	OpenDialog1->Filter = L"Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{
+	train tr(Form1->datetrain->Date, Form1->timetrain->Time, Form1->Edit1->Text, StrToInt(Form1->Edit2->Text));
+    trains.push_back(tr);
+    StringGrid1->RowCount = 0;
+	int row_count = StringGrid1->RowCount;
+
+    for (int i = 0; i < trains.size(); i++,row_count++) {
+
+        StringGrid1->RowCount = row_count + 1;
+		Form1->StringGrid1->Cells[0][row_count] = trains[i].get_date();
+		Form1->StringGrid1->Cells[1][row_count] = trains[i].get_time();
+        Form1->StringGrid1->Cells[2][row_count] =
+			trains[i].get_point();
+        Form1->StringGrid1->Cells[3][row_count] =
+			IntToStr(trains[i].get_space());
+    }
+}
+//---------------------------------------------------------------------------
 void __fastcall TForm1::Button2Click(TObject *Sender)
 {
     bool good = false;
@@ -47,25 +84,6 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
     if (good == false)
         Application->MessageBox(L"Подходящих поездов нет", L"Внимание",
         MB_OKCANCEL);
-}
-//---------------------------------------------------------------------------
-void __fastcall TForm1::Button1Click(TObject *Sender)
-{
-	train tr(Form1->datetrain->Date, Form1->timetrain->Time, Form1->Edit1->Text, StrToInt(Form1->Edit2->Text));
-    trains.push_back(tr);
-    StringGrid1->RowCount = 0;
-	int row_count = StringGrid1->RowCount;
-
-    for (int i = 0; i < trains.size(); i++,row_count++) {
-
-        StringGrid1->RowCount = row_count + 1;
-		Form1->StringGrid1->Cells[0][row_count] = trains[i].get_date();
-		Form1->StringGrid1->Cells[1][row_count] = trains[i].get_time();
-        Form1->StringGrid1->Cells[2][row_count] =
-			trains[i].get_point();
-        Form1->StringGrid1->Cells[3][row_count] =
-			IntToStr(trains[i].get_space());
-    }
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Button3Click(TObject *Sender)
@@ -110,24 +128,6 @@ void __fastcall TForm1::Button5Click(TObject *Sender)
 			delete list;
 		}
 	}
-}
-//---------------------------------------------------------------------------
-__fastcall TForm1::TForm1(TComponent* Owner)
-	: TForm(Owner)
-{
-	Form1->StringGrid1->ColCount = 4;
-
-	Form1->StringGrid1->Cells[0][0] = L"Дата";
-	StringGrid1->ColWidths[0] = 140;
-	Form1->StringGrid1->Cells[1][0] = L"Время";
-	StringGrid1->ColWidths[1] = 140;
-	Form1->StringGrid1->Cells[2][0] = L"Место назначения";
-	StringGrid1->ColWidths[2] = 200;
-	Form1->StringGrid1->Cells[3][0] = L"Свободных мест";
-	StringGrid1->ColWidths[3] = 130;
-
-	SaveDialog1->Filter = L"Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
-	OpenDialog1->Filter = L"Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Button6Click(TObject *Sender)

@@ -16,6 +16,19 @@ TForm1 *Form1;
 std::vector<Tovar*> allTovars;
 const int MAX = 200;
 
+void Tovar::add_rec(int flag) {
+	if(flag == 0) {
+		name = Form1->LabeledEdit1->Text;
+		number = StrToInt(Form1->LabeledEdit2->Text);
+		price = StrToFloat(Form1->LabeledEdit3->Text);
+	}
+	if(flag == 1) {
+		name = Form1->LabeledEdit6->Text;
+		number = StrToInt(Form1->LabeledEdit7->Text);
+		price = StrToFloat(Form1->LabeledEdit8->Text);
+	}
+}
+
 void Tovar::show(int rowIndex) {
     Form1->StringGrid1->Cells[0][rowIndex] = name;
     Form1->StringGrid1->Cells[1][rowIndex] = number;
@@ -35,19 +48,6 @@ void Tovar::clear(int flag) {
 	}
 }
 
-void Tovar::add_rec(int flag) {
-	if(flag == 0) {
-		name = Form1->LabeledEdit1->Text;
-		number = StrToInt(Form1->LabeledEdit2->Text);
-		price = StrToFloat(Form1->LabeledEdit3->Text);
-	}
-	if(flag == 1) {
-		name = Form1->LabeledEdit6->Text;
-		number = StrToInt(Form1->LabeledEdit7->Text);
-		price = StrToFloat(Form1->LabeledEdit8->Text);
-	}
-}
-
 void Tovar::add_grid(const String& nameStr, const String& numberStr, const String& priceStr) {
 	name = nameStr;
 	number = StrToInt(numberStr);
@@ -58,29 +58,15 @@ float Tovar::get_price() {
 	return price;
 }
 
-void TovarProm::clear() {
-	Tovar::clear(1);
-}
-
-
-//---------------------------------------------------------------------------
-void UpdateGrid(){
-	Form1->StringGrid1->RowCount = allTovars.size();
-
-    for (size_t i = 0; i < allTovars.size(); i++) {
-        if (dynamic_cast<TovarProd*>(allTovars[i])) {
-            dynamic_cast<TovarProd*>(allTovars[i])->show(i);
-        } else {
-            dynamic_cast<TovarProm*>(allTovars[i])->show(i);
-        }
-    }
-    Form1->StringGrid1->Repaint();
-}
-
 //---------------------------------------------------------------------------
 void TovarProm::add_rec() {
     Tovar::add_rec(1);
 }
+
+void TovarProm::clear() {
+	Tovar::clear(1);
+}
+
 
 void TovarProd::add_rec() {
 	Tovar::add_rec(0);
@@ -94,22 +80,35 @@ void TovarProd::show(int rowIndex) {
     Form1->StringGrid1->Cells[4][rowIndex] = temp;
 }
 
-void TovarProd::add_grid(const String& nameStr, const String& numberStr, const String& priceStr, const String& termStr, const String& tempStr) {
-	Tovar::add_grid(nameStr, numberStr, priceStr);
-	term = StrToInt(termStr);
-	temp = StrToInt(tempStr);
-}
-
 void TovarProd::clear() {
 	Tovar::clear(0);
 	Form1->LabeledEdit4->Clear();
 	Form1->LabeledEdit5->Clear();
 }
 
+void TovarProd::add_grid(const String& nameStr, const String& numberStr, const String& priceStr, const String& termStr, const String& tempStr) {
+	Tovar::add_grid(nameStr, numberStr, priceStr);
+	term = StrToInt(termStr);
+	temp = StrToInt(tempStr);
+}
+
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
 	: TForm(Owner)
 {
+}
+//---------------------------------------------------------------------------
+void UpdateGrid(){
+	Form1->StringGrid1->RowCount = allTovars.size();
+
+    for (size_t i = 0; i < allTovars.size(); i++) {
+        if (dynamic_cast<TovarProd*>(allTovars[i])) {
+            dynamic_cast<TovarProd*>(allTovars[i])->show(i);
+        } else {
+            dynamic_cast<TovarProm*>(allTovars[i])->show(i);
+        }
+    }
+    Form1->StringGrid1->Repaint();
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Button1Click(TObject *Sender)
@@ -154,7 +153,22 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
 		ShowMessage(L"Общая стоимость: " + FloatToStr(sum));
     }
 }
+//---------------------------------------------------------------------------
+void __fastcall TForm1::FormCreate(TObject *Sender)
+{
+	StringGrid1->FixedCols = 0;
+	StringGrid1->FixedRows = 0;
 
+	StringGrid1->ColCount = 5;
+	StringGrid1->RowCount = 0;
+	StringGrid1->ColWidths[0] = 150;
+	StringGrid1->ColWidths[1] = 110;
+
+    StringGrid1->Options << goRowSelect << goAlwaysShowEditor;
+
+    SaveDialog1->Filter = L"Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+	OpenDialog1->Filter = L"Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+}
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Button4Click(TObject *Sender)
 {
@@ -173,22 +187,6 @@ void __fastcall TForm1::Button4Click(TObject *Sender)
         list->SaveToFile(filename, TEncoding::UTF8);
         delete list;
 	}
-}
-//---------------------------------------------------------------------------
-void __fastcall TForm1::FormCreate(TObject *Sender)
-{
-	StringGrid1->FixedCols = 0;
-	StringGrid1->FixedRows = 0;
-
-	StringGrid1->ColCount = 5;
-	StringGrid1->RowCount = 0;
-	StringGrid1->ColWidths[0] = 150;
-	StringGrid1->ColWidths[1] = 110;
-
-    StringGrid1->Options << goRowSelect << goAlwaysShowEditor;
-
-    SaveDialog1->Filter = L"Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
-	OpenDialog1->Filter = L"Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Button5Click(TObject *Sender)
@@ -250,15 +248,6 @@ void __fastcall TForm1::Button5Click(TObject *Sender)
     }
 }
 //---------------------------------------------------------------------------
-void __fastcall TForm1::FormClose(TObject *Sender, TCloseAction &Action)
-{
-    for (std::vector<Tovar*>::iterator it = allTovars.begin(); it != allTovars.end(); ++it)
-    {
-        delete *it;
-    }
-    allTovars.clear();
-}
-//---------------------------------------------------------------------------
 void __fastcall TForm1::Button6Click(TObject *Sender)
 {
 	if (StringGrid1->RowCount <= 0)
@@ -300,6 +289,15 @@ void __fastcall TForm1::Button6Click(TObject *Sender)
         }
         delete gridData[i];
     }
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::FormClose(TObject *Sender, TCloseAction &Action)
+{
+    for (std::vector<Tovar*>::iterator it = allTovars.begin(); it != allTovars.end(); ++it)
+    {
+        delete *it;
+    }
+    allTovars.clear();
 }
 //---------------------------------------------------------------------------
 

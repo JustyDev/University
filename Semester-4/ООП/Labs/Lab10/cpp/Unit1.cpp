@@ -14,7 +14,6 @@ TForm1 *Form1;
 int ProductType = 0;
 int i = 0, j = 0;
 
-
 class Tovar {
 	private:
 		String name;
@@ -22,7 +21,7 @@ class Tovar {
 		float price;
 	public:
 		Tovar() : name(""), number(0), price(0) {};
-		virtual ~Tovar() {};
+        virtual ~Tovar() {};
 		void add_rec() {
 			if(ProductType == 0) {
 				name = Form1->LabeledEdit1->Text;
@@ -62,8 +61,8 @@ class Tovar {
 		}
 
 		float get_price() {
-			return price;
-		}
+            return price;
+        }
 
 };
 
@@ -74,17 +73,16 @@ class TovarProd : public Tovar {
 		int term;
 		int temp;
 	public:
-		void show() {
-			Tovar::show();
-			Form1->StringGrid1->Cells[3][i+j] = term;
-			Form1->StringGrid1->Cells[4][i+j] = temp;
-		}
-
-
 		void add_rec() {
 			Tovar::add_rec();
 			term = StrToInt(Form1->LabeledEdit4->Text);
             temp = StrToInt(Form1->LabeledEdit5->Text);
+		}
+
+		void show() {
+			Tovar::show();
+			Form1->StringGrid1->Cells[3][i+j] = term;
+			Form1->StringGrid1->Cells[4][i+j] = temp;
 		}
 
 		void clear() {
@@ -103,76 +101,6 @@ class TovarProd : public Tovar {
 const int K = 100;
 TovarProd prod[K];
 TovarProm prom[K];
-
-//---------------------------------------------------------------------------
-void __fastcall TForm1::Button5Click(TObject *Sender)
-{
-	if(OpenDialog1->Execute())
-	{
-		String filename = OpenDialog1->FileName;
-		TStringList *list = new TStringList();
-
-		try
-		{
-            try {
-				list->LoadFromFile(filename, TEncoding::UTF8);
-			}
-            catch (...) {
-				list->LoadFromFile(filename, TEncoding::GetEncoding(1251));
-			}
-
-			StringGrid1->RowCount = (StringGrid1->FixedRows > 0) ? 1 : 0;
-			i = 0; j = 0;
-
-            for(int k = 0; k < list->Count; k++)
-            {
-                String line = list->Strings[k].Trim();
-                if (line.IsEmpty()) continue;
-
-                TStringList *parts = new TStringList();
-                parts->Delimiter = L' ';
-				parts->DelimitedText = line;
-
-				if(parts->Count == 3 && j < K)
-				{
-                    prom[j].add_grid(parts->Strings[0], parts->Strings[1], parts->Strings[2]);
-					prom[j].show();
-					j++;
-					StringGrid1->RowCount++;
-				}
-				else if(parts->Count == 5 && i < K)
-				{
-					prod[i].add_grid(parts->Strings[0], parts->Strings[1], parts->Strings[2],
-								   parts->Strings[3], parts->Strings[4]);
-					prod[i].show();
-					i++;
-					StringGrid1->RowCount++;
-                }
-
-                delete parts;
-			}
-		}
-        __finally
-		{
-			delete list;
-        }
-	}
-}
-//---------------------------------------------------------------------------
-
-
-
-//---------------------------------------------------------------------------
-void __fastcall TForm1::Button2Click(TObject *Sender)
-{
-	ProductType = 1;
-	prom[j].add_rec();
-	prom[j].show();
-	j++;
-	prom[j].clear();
-	StringGrid1->RowCount++;
-}
-
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
 	: TForm(Owner)
@@ -186,6 +114,16 @@ void __fastcall TForm1::Button1Click(TObject *Sender)
 	prod[i].show();
 	i++;
 	prod[i].clear();
+    StringGrid1->RowCount++;
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::Button2Click(TObject *Sender)
+{
+	ProductType = 1;
+	prom[j].add_rec();
+	prom[j].show();
+	j++;
+	prom[j].clear();
     StringGrid1->RowCount++;
 }
 //---------------------------------------------------------------------------
@@ -228,12 +166,68 @@ void __fastcall TForm1::Button4Click(TObject *Sender)
 
         for (int i = 0; i < StringGrid1->RowCount; i++)
         {
-			StringGrid1->Rows[i]->Delimiter = L' ';
-			String line = StringGrid1->Rows[i]->DelimitedText;
-			list->Add(line);
-		}
+            StringGrid1->Rows[i]->Delimiter = L' ';
+            String line = StringGrid1->Rows[i]->DelimitedText;
+            list->Add(line);
+        }
 
         list->SaveToFile(filename, TEncoding::UTF8);
         delete list;
 	}
 }
+//---------------------------------------------------------------------------
+void __fastcall TForm1::Button5Click(TObject *Sender)
+{
+    if(OpenDialog1->Execute())
+    {
+        String filename = OpenDialog1->FileName;
+        TStringList *list = new TStringList();
+
+        try
+		{
+            try {
+                list->LoadFromFile(filename, TEncoding::UTF8);
+            }
+            catch (...) {
+				list->LoadFromFile(filename, TEncoding::GetEncoding(1251));
+			}
+
+			StringGrid1->RowCount = (StringGrid1->FixedRows > 0) ? 1 : 0;
+			i = 0; j = 0;
+
+            for(int k = 0; k < list->Count; k++)
+            {
+                String line = list->Strings[k].Trim();
+                if (line.IsEmpty()) continue;
+
+                TStringList *parts = new TStringList();
+                parts->Delimiter = L' ';
+				parts->DelimitedText = line;
+
+				if(parts->Count == 3 && j < K)
+				{
+                    prom[j].add_grid(parts->Strings[0], parts->Strings[1], parts->Strings[2]);
+                    prom[j].show();
+                    j++;
+                    StringGrid1->RowCount++;
+                }
+                else if(parts->Count == 5 && i < K)
+                {
+                    prod[i].add_grid(parts->Strings[0], parts->Strings[1], parts->Strings[2],
+                                   parts->Strings[3], parts->Strings[4]);
+                    prod[i].show();
+                    i++;
+                    StringGrid1->RowCount++;
+                }
+
+                delete parts;
+            }
+        }
+        __finally
+        {
+            delete list;
+        }
+    }
+}
+//---------------------------------------------------------------------------
+

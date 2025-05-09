@@ -2,9 +2,9 @@ object Form1: TForm1
   Left = 0
   Top = 0
   BorderStyle = bsSingle
-  Caption = #1051#1072#1073#1086#1088#1072#1090#1086#1088#1085#1072#1103' 13'
-  ClientHeight = 586
-  ClientWidth = 593
+  Caption = 'Lab13'
+  ClientHeight = 582
+  ClientWidth = 571
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -66,9 +66,9 @@ object Form1: TForm1
   end
   object StringGrid1: TStringGrid
     Left = 24
-    Top = 288
+    Top = 296
     Width = 537
-    Height = 209
+    Height = 201
     FixedCols = 0
     FixedRows = 0
     TabOrder = 0
@@ -89,7 +89,7 @@ object Form1: TForm1
     OnClick = Button1Click
   end
   object Button2: TButton
-    Left = 160
+    Left = 168
     Top = 244
     Width = 121
     Height = 25
@@ -164,18 +164,18 @@ object Form1: TForm1
     OnClick = Button6Click
   end
   object datetrain: TDateTimePicker
-    Left = 296
-    Top = 30
-    Width = 265
+    Left = 248
+    Top = 28
+    Width = 313
     Height = 23
     Date = 45764.000000000000000000
     Time = 0.887486944448028200
     TabOrder = 7
   end
   object timetrain: TDateTimePicker
-    Left = 296
-    Top = 85
-    Width = 265
+    Left = 248
+    Top = 82
+    Width = 313
     Height = 23
     Date = 45764.000000000000000000
     Time = 0.887638333333598000
@@ -184,25 +184,25 @@ object Form1: TForm1
     TabOrder = 8
   end
   object Edit1: TEdit
-    Left = 296
-    Top = 142
-    Width = 265
+    Left = 248
+    Top = 138
+    Width = 313
     Height = 23
     TabOrder = 9
   end
   object Edit2: TEdit
-    Left = 296
-    Top = 197
-    Width = 265
+    Left = 248
+    Top = 193
+    Width = 313
     Height = 23
     TabOrder = 10
   end
   object OpenDialog1: TOpenDialog
-    Left = 240
-    Top = 24
+    Left = 336
+    Top = 504
   end
   object SaveDialog1: TSaveDialog
-    Left = 240
-    Top = 104
+    Left = 456
+    Top = 504
   end
 end

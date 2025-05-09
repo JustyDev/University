@@ -17,9 +17,6 @@ class TForm1 : public TForm
 __published:	// IDE-managed Components
 	TGroupBox *GroupBox1;
 	TGroupBox *GroupBox2;
-	TLabeledEdit *LabeledEdit2;
-	TLabeledEdit *LabeledEdit3;
-	TLabeledEdit *LabeledEdit4;
 	TStringGrid *StringGrid1;
 	TButton *Button1;
 	TButton *Button2;
@@ -29,13 +26,13 @@ __published:	// IDE-managed Components
 	TOpenDialog *OpenDialog1;
 	TSaveDialog *SaveDialog1;
 	TLabeledEdit *LabeledEdit1;
+	TLabeledEdit *LabeledEdit2;
+	TLabeledEdit *LabeledEdit3;
+	TLabeledEdit *LabeledEdit4;
 	TLabeledEdit *LabeledEdit5;
 	TLabeledEdit *LabeledEdit6;
 	TLabeledEdit *LabeledEdit7;
 	TLabeledEdit *LabeledEdit8;
-	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
-	void __fastcall Button7Click(TObject *Sender);
-	void __fastcall Button8Click(TObject *Sender);
 	TButton *Button6;
 	TButton *Button7;
 	TButton *Button8;
@@ -47,6 +44,9 @@ __published:	// IDE-managed Components
 	void __fastcall Button4Click(TObject *Sender);
 	void __fastcall Button5Click(TObject *Sender);
 	void __fastcall Button6Click(TObject *Sender);
+	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+	void __fastcall Button7Click(TObject *Sender);
+	void __fastcall Button8Click(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
 	__fastcall TForm1(TComponent* Owner);
