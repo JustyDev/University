@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.432,C:\OS_OOP\OOP\Lab2\Unit1.cpp=C:\C++ Builder\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.672,C:\OS_OOP\OOP\Lab2\Project1.cbproj=C:\C++ Builder\Project1.cbproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.278,=C:\C++ Builder\Project1PCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.647,C:\OS_OOP\OOP\Lab2\Project1PCH1.h=C:\C++ Builder\Project1PCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.893,=C:\OS_OOP\OOP\Lab2\Functions.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.432,C:\OS_OOP\OOP\Lab2\Unit1.h=C:\C++ Builder\Unit1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.946,=C:\OS_OOP\OOP\Lab2\Functions.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.432,C:\OS_OOP\OOP\Lab2\Unit1.dfm=C:\C++ Builder\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.730,=C:\C++ Builder\Unit1.cpp</Transaction>
+    <Transaction>2025.05.06 20:19:11.506,=D:\Work\University\Semester-4\ООП\Labs\Lab2\cpp\Unit3.cpp</Transaction>
+    <Transaction>2025.05.06 20:19:31.946,=D:\Work\University\Semester-4\ООП\Labs\Lab2\cpp\Unit2.cpp</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="Project1.cpp"/>
+    <File Path="Project1PCH1.h"/>
+    <File Path="Unit1.cpp"/>
+    <File Path="Unit1.cpp"/>
+    <File Path="Unit1.dfm"/>
+    <File Path="Unit1.h"/>
+    <File Path="Unit2.cpp"/>
+    <File Path="Unit2.cpp"/>
+    <File Path="Unit2.h"/>
+  </ProjectSortOrder>
+</BorlandProject>
