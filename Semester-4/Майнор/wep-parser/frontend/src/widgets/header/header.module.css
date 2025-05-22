@@ -1,0 +1,41 @@
+.header {
+  padding: 1rem;
+  background: var(--color-bg-secondary);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.link {
+  color: var(--color-text-primary);
+  text-decoration: none;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.link:hover {
+  background-color: var(--color-bg-hover);
+}
+
+.title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #111827;
+}

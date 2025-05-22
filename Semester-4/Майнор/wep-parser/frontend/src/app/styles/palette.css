@@ -1,0 +1,159 @@
+:root {
+    /* background */
+    --bg-default: rgba(255, 255, 255, 1);
+    --bg-default-inverse: rgba(37, 36, 39, 1);
+    --bg-ghost: rgba(0, 23, 90, 0.05);
+    --bg-border: rgba(0, 42, 104, 0.08);
+    --bg-brand: rgba(38, 145, 252, 1);
+    --bg-tone: rgba(0, 16, 40, 0.6);
+    --bg-link: rgba(25, 131, 255, 0.05);
+    --bg-link-hover: rgba(25, 131, 255, 0.1);
+    --bg-accent: rgba(247, 248, 251, 1);
+    --bg-alert: rgba(235, 51, 51, 0.25);
+    --bg-success: rgba(9, 179, 123, 0.25);
+    --bg-warning: rgba(255, 161, 10, 0.25);
+    --bg-normal: rgba(50, 180, 255, 0.25);
+    --bg-illustration: rgba(226, 235, 247, 1);
+    --bg-page: rgba(0, 0, 0, 0.3);
+    --bg-transparent: rgba(255, 255, 255, 0);
+
+    /* text */
+    --text-primary: rgba(0, 32, 51, 1);
+    --text-primary-inverse: rgba(255, 255, 255, 1);
+    --text-secondary: rgba(0, 32, 51, 0.6);
+    --text-ghost: rgba(0, 32, 51, 0.4);
+    --text-link: rgba(25, 131, 255, 1);
+    --text-link-hover: rgba(57, 148, 255, 1);
+    --text-alert: rgba(235, 51, 51, 1);
+    --text-success: rgba(9, 179, 123, 1);
+    --text-warning: rgba(255, 161, 10, 1);
+    --text-normal: rgba(50, 180, 255, 1);
+
+    /* control */
+    --control-bg: rgba(0, 39, 139, 0.05);
+    --control-bg-hex: #f2f4f9;
+    --control-focus-bg: rgba(240, 242, 246, 1);
+    --control-border: rgba(0, 42, 104, 0.08);
+    --control-focus-border: rgba(255, 220, 96, 1);
+    --control-text: rgba(0, 32, 51, 1);
+    --control-placeholder: rgba(0, 32, 51, 0.4);
+    --control-selection-bg: rgba(0, 23, 90, 0.05);
+    --control-selection-text: rgba(0, 32, 51, 1);
+
+    /* control clear */
+    --control-clear-bg: transparent;
+    --control-clear-bg-hover: rgba(0, 42, 104, 0.04);
+    --control-clear-text: rgba(0, 32, 51, 0.8);
+    --control-clear-text-hover: rgba(0, 32, 51, 0.8);
+    --control-clear-text-inverse: rgba(255, 255, 255, 0.8);
+    --control-clear-text-inverse-hover: rgba(255, 255, 255, 0.8);
+
+    /* control ghost */
+    --control-ghost-bg: rgba(92, 121, 177, 0.1);
+    --control-ghost-bg-inverse: rgba(255, 255, 255, 0.08);
+    --control-ghost-bg-hover: rgba(92, 121, 177, 0.16);
+    --control-ghost-text: rgba(0, 32, 51, 0.8);
+    --control-ghost-text-hover: rgba(0, 32, 51, 0.8);
+    --control-ghost-text-inverse: rgba(255, 255, 255, 0.8);
+
+    /* control secondary */
+    --control-secondary-bg: transparent;
+    --control-secondary-text: rgba(0, 32, 51, 0.8);
+    --control-secondary-border: rgba(0, 32, 51, 0.12);
+    --control-secondary-border-hover: rgba(0, 32, 51, 0.24);
+    --control-secondary-text-hover: rgba(0, 32, 51, 0.8);
+
+    /* control primary */
+    --control-primary-text: rgba(255, 255, 255, 1);
+    --control-primary-text-inverse: rgba(37, 36, 39, 1);
+    --control-primary-bg: rgba(51, 51, 51, 1);
+    --control-primary-bg-inverse: rgba(255, 255, 255, 1);
+    --control-primary-bg-hover: rgba(55, 55, 55, 1);
+    --control-primary-bg-hover-inverse: rgba(251, 251, 251, 1);
+    --control-primary-text-hover: rgba(255, 255, 255, 1);
+    --control-primary-text-hover-inverse: rgba(37, 36, 39, 1);
+
+    /* control disabled */
+    --control-disabled-text: rgba(0, 32, 51, 0.3);
+    --control-disabled-bg: rgba(0, 32, 51, 0.03);
+}
+
+:global .theme-night {
+    /* background */
+    --bg-default: rgba(37, 36, 39, 1);
+    --bg-default-inverse: rgba(255, 255, 255, 1);
+    --bg-ghost: rgba(255, 255, 255, 0.07);
+    --bg-border: rgba(255, 255, 255, 0.12);
+    --bg-brand: rgba(38, 145, 252, 1);
+    --bg-brand-legacy: rgba(255, 220, 97, 1);
+    --bg-accent: rgba(18, 18, 20, 1);
+    --bg-link: rgba(222, 190, 73, 0.1);
+    --bg-link-hover: rgba(222, 190, 73, 0.2);
+    --bg-tone: rgba(18, 18, 20, 0.8);
+    --bg-alert: rgba(247, 59, 59, 0.25);
+    --bg-warning: rgba(248, 199, 53, 0.25);
+    --bg-success: rgba(16, 174, 121, 0.25);
+    --bg-normal: rgba(0, 155, 245, 0.4);
+    --bg-illustration: rgba(71, 77, 85, 1);
+    --bg-page: rgba(0, 0, 0, 0.3);
+    --bg-transparent: rgba(255, 255, 255, 0);
+
+    /* text */
+    --text-primary: rgba(255, 255, 255, 1);
+    --text-primary-inverse: rgba(0, 32, 51, 1);
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-ghost: rgba(255, 255, 255, 0.5);
+    --text-link: rgba(222, 190, 73, 1);
+    --text-link-hover: rgba(242, 200, 43, 1);
+    --text-alert: rgba(247, 59, 59, 1);
+    --text-warning: rgba(248, 199, 53, 1);
+    --text-success: rgba(16, 174, 121, 1);
+    --text-normal: rgba(0, 155, 245, 1);
+
+    /* control primary */
+    --control-primary-bg: rgba(255, 255, 255, 1);
+    --control-primary-bg-inverse: rgba(51, 51, 51, 1);
+    --control-primary-bg-hover: rgba(251, 251, 251, 1);
+    --control-primary-bg-hover-inverse: rgba(55, 55, 55, 1);
+    --control-primary-text: rgba(37, 36, 39, 1);
+    --control-primary-text-inverse: rgba(255, 255, 255, 1);
+    --control-primary-text-hover: rgba(37, 36, 39, 1);
+    --control-primary-text-hover-inverse: rgba(255, 255, 255, 1);
+
+    /* control secondary */
+    --control-secondary-border: rgba(255, 255, 255, 1);
+    --control-secondary-border-hover: rgba(251, 251, 251, 1);
+    --control-secondary-text: rgba(255, 255, 255, 1);
+    --control-secondary-text-hover: rgba(251, 251, 251, 1);
+
+    /* control ghost */
+    --control-ghost-bg: rgba(255, 255, 255, 0.08);
+    --control-ghost-bg-inverse: rgba(92, 121, 177, 0.1);
+    --control-ghost-bg-hover: rgba(255, 255, 255, 0.12);
+    --control-ghost-text: rgba(255, 255, 255, 0.8);
+    --control-ghost-text-hover: rgba(255, 255, 255, 0.8);
+    --control-ghost-text-inverse: rgba(0, 32, 51, 0.8);
+
+    /* control disabled */
+    --control-disabled-bg: rgba(255, 255, 255, 0.05);
+    --control-disabled-text: rgba(255, 255, 255, 0.35);
+
+    /* control clear */
+    --control-clear-bg: transparent;
+    --control-clear-bg-hover: rgba(255, 255, 255, 0.04);
+    --control-clear-text: rgba(255, 255, 255, 0.8);
+    --control-clear-text-hover: rgba(255, 255, 255, 0.8);
+    --control-clear-text-inverse: rgba(0, 32, 51, 0.8);
+    --control-clear-text-inverse-hover: rgba(0, 32, 51, 0.8);
+
+    /* control */
+    --control-bg: rgba(239, 244, 255, 0.1);
+    --control-bg-hex: #39383c;
+    --control-focus-bg: rgba(239, 244, 255, 0.15);
+    --control-border: rgba(255, 255, 255, 0.12);
+    --control-focus-border: rgba(255, 255, 255, 0.5);
+    --control-text: rgba(255, 255, 255, 1);
+    --control-placeholder: rgba(255, 255, 255, 0.5);
+    --control-selection-bg: rgba(37, 37, 37, 1);
+    --control-selection-text: rgba(255, 255, 255, 1);
+}

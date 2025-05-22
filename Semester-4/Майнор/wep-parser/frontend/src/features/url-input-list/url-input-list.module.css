@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.settingsWrapper {
+  margin-left: auto;
+  padding-right: 8px;
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.deleteButton {
+  color: #ff4444;
+  cursor: pointer;
+  padding: 4px;
+  border: none;
+  background: none;
+  font-size: 1.2rem;
+}
+
+.deleteButton:hover {
+  color: #cc0000;
+}
+
+.hidden {
+  display: none;
+}
+
+.urlInput {
+  flex: 1;
+}
+
+.parseButton {
+  margin-left: 16px;
+  margin-right: 8px;
+}
