@@ -1,54 +1,55 @@
-import { useUnit } from 'effector-react';
-import { $urlInputs, $parserSettings, addUrlInput, updateUrlInput, removeUrlInput, parseUrls } from '../../shared/model/parser';
-import { ParserSettings } from '../parser-settings/parser-settings';
-import { UrlInputItem } from './url-input-item';
-import styles from './url-input-list.module.css';
-import { useNavigate } from 'react-router-dom';
+import {useUnit} from 'effector-react';
+import {Button} from '../../shared/ui';
+import {
+  $parserSettings,
+  $urlInputs,
+  addUrlInput,
+  parseUrls,
+  removeUrlInput,
+  updateUrlInput
+} from '../../shared/model/parser';
+import {UrlInputItem} from './url-input-item';
+import s from './url-input-list.module.css';
 
 export const UrlInputList = () => {
-  const { urlInputs, parserSettings } = useUnit({
+  const {urlInputs, parserSettings} = useUnit({
     urlInputs: $urlInputs,
     parserSettings: $parserSettings
   });
-  const navigate = useNavigate();
-  const removeInput = useUnit(removeUrlInput);
-
-  const parseUrlsEvent = useUnit(parseUrls);
 
   const onClickParse = () => {
     const urls = urlInputs.map(input => input.value).filter(Boolean);
     if (urls.length > 0) {
       const settings = parserSettings
-      parseUrlsEvent({ urls, settings });
-      navigate('/results');
+      parseUrls({urls, settings});
     }
   };
 
   const handleChange = (id: string, value: string) => {
-    updateUrlInput({ id, value });
-  };
-
-  const handleAdd = () => {
-    addUrlInput();
+    updateUrlInput({id, value});
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.inputRow}>
-        <div className={styles.settingsWrapper}>
-          <ParserSettings />
-        </div>
-      </div>
+    <div className={s.container}>
       {urlInputs.map((input, index) => (
         <UrlInputItem
           key={input.id}
           id={input.id}
           value={input.value}
           isLast={index === urlInputs.length - 1}
+          count={urlInputs.length}
           onChange={handleChange}
-          onAdd={handleAdd}
-          onParse={onClickParse}
-          onRemove={removeInput}
+          onAdd={addUrlInput}
+          onRemove={removeUrlInput}
+          additional={index === urlInputs.length - 1 && (
+            <Button
+              onClick={onClickParse}
+              variant="primary"
+              className={s.parseButton}
+            >
+              Парсить
+            </Button>
+          )}
         />
       ))}
     </div>

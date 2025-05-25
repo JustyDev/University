@@ -8,13 +8,28 @@ export class ParseDataDto {
   description?: string;
 
   @ApiProperty()
+  keywords?: string[];
+
+  @ApiProperty()
   textContent: string[];
 
   @ApiProperty()
-  headers: Array<{
-    tag: 'h1' | 'h2' | 'h3';
-    text: string;
-  }>;
+  h1: string[];
+
+  @ApiProperty()
+  h2: string[];
+
+  @ApiProperty()
+  h3: string[];
+
+  @ApiProperty()
+  h4: string[];
+
+  @ApiProperty()
+  h5: string[];
+
+  @ApiProperty()
+  h6: string[];
 
   @ApiProperty()
   images: string[];
@@ -24,14 +39,11 @@ export class ParseDataDto {
 
   @ApiProperty()
   externalLinks: string[];
-
-  @ApiProperty()
-  html: string;
 }
 
 export class ParseResultDto {
   @ApiProperty()
-  requestId: string;
+  _id: string;
 
   @ApiProperty()
   urls: string[];
@@ -44,4 +56,10 @@ export class ParseResultDto {
     data?: ParseDataDto;
     error?: string;
   }>;
+
+  @ApiProperty()
+  createdAt: Date;
+
+  @ApiProperty()
+  updatedAt: Date;
 }

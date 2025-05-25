@@ -1,46 +1,47 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  position: relative;
-}
-
-.settingsWrapper {
-  margin-left: auto;
-  padding-right: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
 }
 
 .inputRow {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .deleteButton {
-  color: #ff4444;
-  cursor: pointer;
-  padding: 4px;
-  border: none;
-  background: none;
-  font-size: 1.2rem;
+    cursor: pointer;
+    padding: 4px;
+    font-size: 1.2rem;
 }
 
 .deleteButton:hover {
-  color: #cc0000;
+    color: #ff4444;
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
 
 .urlInput {
-  flex: 1;
+    min-width: 550px;
+    flex: 1;
 }
 
 .parseButton {
-  margin-left: 16px;
-  margin-right: 8px;
+    align-self: flex-start;
+    background-color: #2563eb;
+    color: white;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.parseButton:hover {
+    background-color: #1d4ed8;
 }

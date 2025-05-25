@@ -1,6 +1,6 @@
-import { ButtonHTMLAttributes, ReactNode } from 'react';
+import {ButtonHTMLAttributes, ReactNode} from 'react';
 import clsx from 'clsx';
-import styles from './button.module.css';
+import s from './button.module.css';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
@@ -8,19 +8,19 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: 'small' | 'medium' | 'large';
 }
 
-export const Button = ({ 
-  children, 
-  variant = 'secondary', 
-  size = 'medium', 
-  className = '', 
-  ...props 
-}: ButtonProps) => {
+export const Button = ({
+                         children,
+                         variant = 'secondary',
+                         size = 'medium',
+                         className = '',
+                         ...props
+                       }: ButtonProps) => {
   return (
-    <button 
+    <button
       className={clsx(
-        styles.button,
-        styles[variant],
-        styles[size],
+        s.button,
+        s[variant],
+        s[size],
         className
       )}
       {...props}

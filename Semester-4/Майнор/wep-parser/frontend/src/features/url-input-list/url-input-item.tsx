@@ -1,31 +1,33 @@
-import { PlusCircle, X } from 'lucide-react';
+import {PlusCircle, Trash2} from 'lucide-react';
 import clsx from 'clsx';
-import { Button, Input } from '../../shared/ui';
-import styles from './url-input-list.module.css';
-import { ChangeEvent } from 'react';
+import {Button, Input} from '../../shared/ui';
+import s from './url-input-list.module.css';
+import {ChangeEvent, ReactNode} from 'react';
+import {ParserSettings} from "@features/parser-settings/parser-settings.tsx";
 
 interface UrlInputItemProps {
   id: string;
   value: string;
   isLast: boolean;
+  count: number;
   onChange: (id: string, value: string) => void;
   onAdd: () => void;
-  onParse: () => void;
   onRemove?: (id: string) => void;
+  additional?: ReactNode;
 }
 
-export const UrlInputItem = ({ id, value, isLast, onChange, onAdd, onParse, onRemove }: UrlInputItemProps) => {
+export const UrlInputItem = ({id, value, isLast, count, onChange, onAdd, onRemove, additional}: UrlInputItemProps) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(id, e.target.value);
   };
 
   return (
-    <div className={styles.inputRow}>
+    <div className={s.inputRow}>
       <Input
-        placeholder="Введите URL"
+        placeholder="Введите ссылку на сайт..."
         value={value}
         onChange={handleChange}
-        className={styles.urlInput}
+        className={s.urlInput}
       />
       {isLast ? (
         <Button
@@ -33,8 +35,9 @@ export const UrlInputItem = ({ id, value, isLast, onChange, onAdd, onParse, onRe
           onClick={onAdd}
           aria-label="Добавить URL"
           title="Добавить URL"
+          disabled={count >= 5}
         >
-          <PlusCircle size={20} />
+          <PlusCircle size={20}/>
         </Button>
       ) : (
         <Button
@@ -42,22 +45,17 @@ export const UrlInputItem = ({ id, value, isLast, onChange, onAdd, onParse, onRe
           onClick={() => onRemove?.(id)}
           aria-label="Удалить URL"
           title="Удалить URL"
-          className={clsx(styles.deleteButton, {
-            [styles.hidden]: isLast
+          className={clsx(s.deleteButton, {
+            [s.hidden]: isLast
           })}
         >
-          <X size={20} />
+          <Trash2 size={20}/>
         </Button>
       )}
       {isLast && (
-        <Button
-          onClick={onParse}
-          variant="primary"
-          className={styles.parseButton}
-        >
-          Парсить
-        </Button>
+        <ParserSettings/>
       )}
+      {additional}
     </div>
   );
 };

@@ -1,14 +1,14 @@
-import styles from './header.module.css';
-import { Link } from 'react-router-dom';
+import s from './header.module.css';
+import {Link} from 'react-router-dom';
 
 export const Header = () => {
   return (
-    <header className={styles.header}>
-      <div className={styles.container}>
-        <h1 className={styles.title}>Web Parser</h1>
-        <nav className={styles.nav}>
-          <Link to="/" className={styles.link}>Главная</Link>
-          <Link to="/common" className={styles.link}>Common</Link>
+    <header className={s.header}>
+      <div className={s.container}>
+        <h1 className={s.title}>Dynamic Web Parser</h1>
+        <nav className={s.nav}>
+          <Link to="/" className={s.link}>Главная</Link>
+          <Link to="/history" className={s.link}>История парсинга</Link>
         </nav>
       </div>
     </header>

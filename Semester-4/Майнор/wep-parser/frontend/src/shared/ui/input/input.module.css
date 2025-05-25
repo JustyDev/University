@@ -1,4 +1,5 @@
 .input {
+  font-family: var(--font-primary);
   border: 1px solid #d1d5db;
   border-radius: 8px;
   font-family: inherit;

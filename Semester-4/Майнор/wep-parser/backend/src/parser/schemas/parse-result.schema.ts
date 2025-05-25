@@ -4,9 +4,6 @@ import { Document } from 'mongoose';
 @Schema({ timestamps: true })
 export class ParseResult extends Document {
   @Prop({ required: true })
-  requestId: string;
-
-  @Prop({ required: true })
   urls: string[];
 
   @Prop({ required: true, type: [Object] })
@@ -17,15 +14,23 @@ export class ParseResult extends Document {
     data?: {
       title?: string;
       description?: string;
+      keywords?: string[];
       textContent: string[];
-      headers: Array<{ tag: string; text: string }>;
+      h1: string[];
+      h2: string[];
+      h3: string[];
+      h4: string[];
+      h5: string[];
+      h6: string[];
       images: string[];
       internalLinks: string[];
       externalLinks: string[];
-      html: string;
     };
     error?: string;
   }>;
+
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export const ParseResultSchema = SchemaFactory.createForClass(ParseResult);

@@ -1,8 +1,12 @@
-import styles from './loader.module.css';
+import s from './loader.module.css';
 
-export const Loader = () => (
-  <div className={styles.loader}>
-    <div className={styles.spinner}></div>
-    <p>Парсинг данных...</p>
+type LoaderProps = {
+  label?: string
+}
+
+export const Loader = ({label}: LoaderProps) => (
+  <div className={s.loader}>
+    <div className={s.spinner}></div>
+    <p>{label ? label : 'Парсинг данных...'}</p>
   </div>
 );

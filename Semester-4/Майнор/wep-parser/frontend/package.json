@@ -11,11 +11,14 @@
   },
   "dependencies": {
     "@effector/reflect": "^10.0.0",
+    "@mantine/core": "^8.0.0",
+    "@mantine/hooks": "^8.0.0",
     "axios": "^1.9.0",
     "clsx": "^2.1.1",
     "effector": "^23.3.0",
     "effector-react": "^23.3.0",
     "lucide-react": "^0.508.0",
+    "nanoid": "^5.1.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.6.0"

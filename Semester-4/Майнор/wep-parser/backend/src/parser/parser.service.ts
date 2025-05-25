@@ -1,9 +1,9 @@
-import { Injectable, Logger, Inject } from '@nestjs/common';
-import { Model } from 'mongoose';
-import { InjectModel } from '@nestjs/mongoose';
-import { ParseResult } from './schemas/parse-result.schema';
-import { ParseRequestDto, ParseOptionsDto } from './dto/parse-request.dto';
-import { ParseResultDto, ParseDataDto } from './dto/parse-result.dto';
+import {HttpException, Injectable, Logger} from '@nestjs/common';
+import {Model} from 'mongoose';
+import {InjectModel} from '@nestjs/mongoose';
+import {ParseResult} from './schemas/parse-result.schema';
+import {ParseOptionsDto, ParseRequestDto} from './dto/parse-request.dto';
+import {ParseDataDto, ParseResultDto} from './dto/parse-result.dto';
 import * as cheerio from 'cheerio';
 import * as puppeteer from 'puppeteer';
 
@@ -12,31 +12,52 @@ export class ParserService {
   constructor(
     @InjectModel(ParseResult.name)
     private readonly parseResultModel: Model<ParseResult>,
-  ) {}
+  ) {
+  }
+
   private readonly logger = new Logger(ParserService.name);
 
-  async parse(parseRequest: ParseRequestDto): Promise<ParseResultDto> {
+  async parse(parseRequest: ParseRequestDto): Promise<ParseResult> {
     const browser = await puppeteer.launch();
+
+    const urls = parseRequest.urls.map((url) => {
+      if (url.startsWith('http')) return;
+
+      return 'https://' + url;
+    })
+
+    if (!urls.length) {
+      throw new HttpException('No urls specified', 500);
+    }
+
     try {
       const results = await this.processUrlsWithQueue(
         browser,
-        parseRequest.urls,
+        urls,
         parseRequest.options
       );
-      
-      // Save results to MongoDB
-      const requestId = Date.now().toString();
-      const parseResult = {
-        requestId,
-        urls: parseRequest.urls,
+
+      return await this.parseResultModel.create({
+        urls,
         results
-      };
-      await this.parseResultModel.create(parseResult);
-      
-      return parseResult;
+      });
     } finally {
       await browser.close();
     }
+  }
+
+  async getResults(id: string): Promise<ParseResultDto> {
+    const result = await this.parseResultModel.findById(id).lean<ParseResult>();
+    if (!result) {
+      throw new Error('Result not found');
+    }
+    return {
+      _id: result._id.toString(),
+      urls: result.urls,
+      results: result.results,
+      createdAt: new Date(result.createdAt),
+      updatedAt: new Date(result.updatedAt)
+    };
   }
 
   private async processUrlsWithQueue(
@@ -50,7 +71,7 @@ export class ParserService {
     data?: ParseDataDto;
     error?: string;
   }>> {
-    const queue: {url: string; depth: number; parentUrl?: string}[] = [];
+    const queue: { url: string; depth: number; parentUrl?: string }[] = [];
     const processedUrls = new Set<string>();
     const results: Array<{
       url: string;
@@ -60,12 +81,10 @@ export class ParserService {
       error?: string;
     }> = [];
 
-    // Initialize queue with starting URLs
-    urls.forEach(url => queue.push({url, depth: 0}));
+    urls.forEach(url => queue.push({url, depth: 1}));
 
     while (queue.length > 0) {
       const {url, depth, parentUrl} = queue.shift()!;
-
       this.logger.log(`Process url: ${url}`);
 
       if (processedUrls.has(url)) {
@@ -73,20 +92,22 @@ export class ParserService {
         continue;
       }
 
-      const pageData = await this.fetchPageData(browser, url, depth, parentUrl);
+      const pageData = await this.fetchPageData(browser, url, depth, options, parentUrl);
       results.push(pageData);
       processedUrls.add(url);
 
-      // Add child links to queue if not at max depth
       if (depth < options.depth && pageData.status === 'success' && pageData.data) {
-        for (const link of pageData.data.internalLinks) {
-          if (!processedUrls.has(link)) {
-            queue.push({
-              url: link,
-              depth: depth + 1,
-              parentUrl: url
-            });
-          }
+        const allLinks = [...pageData.data.internalLinks, ...pageData.data.externalLinks];
+
+        for (const link of allLinks) {
+          if (processedUrls.has(link)) continue;
+          if (!link.startsWith('http')) continue;
+
+          queue.push({
+            url: link,
+            depth: depth + 1,
+            parentUrl: url
+          });
         }
       }
     }
@@ -98,47 +119,78 @@ export class ParserService {
     browser: puppeteer.Browser,
     url: string,
     depth: number,
+    options: ParseOptionsDto,
     parentUrl?: string
   ): Promise<{
     url: string;
     status_code: number;
+    depth: number;
     status: 'failed' | 'success';
     data?: ParseDataDto;
     error?: string;
+    parent_url?: string;
   }> {
-    const { html, status, error } = await this.fetchHtml(browser, url);
-    
+    const {html, status, error} = await this.fetchHtml(browser, url);
+
     if (status >= 400 || error) {
       return {
         url,
         status_code: status,
         status: 'failed',
+        parent_url: parentUrl,
+        depth: depth,
         error: error || `HTTP Error ${status}`
       };
     }
 
     const $ = cheerio.load(html);
     const parseData: ParseDataDto = {
-      title: $('title').text(),
-      description: $('meta[name="description"]').attr('content'),
-      textContent: this.extractTextContent(html),
-      headers: this.extractHeaders(html),
-      images: await this.extractImages(html),
+      textContent: options.extractTextContent ? this.extractTextContent(html) : [],
+      h1: options.extractH1 ? this.extractHeaders(html, 'h1') : [],
+      h2: options.extractH2 ? this.extractHeaders(html, 'h2') : [],
+      h3: options.extractH3 ? this.extractHeaders(html, 'h3') : [],
+      h4: options.extractH4 ? this.extractHeaders(html, 'h4') : [],
+      h5: options.extractH5 ? this.extractHeaders(html, 'h5') : [],
+      h6: options.extractH6 ? this.extractHeaders(html, 'h6') : [],
+      images: options.extractImages ? await this.extractImages(html) : [],
       internalLinks: [],
-      externalLinks: [],
-      html
+      externalLinks: []
     };
 
+    if (options.extractDescriptions) {
+      parseData.title = $('title').text();
+      parseData.description = $('meta[name="description"]').attr('content');
+      parseData.keywords = this.extractKeywords(html);
+    }
+
+    if (options.extractH1) parseData.h1 = this.extractHeaders(html, 'h1');
+    if (options.extractH2) parseData.h2 = this.extractHeaders(html, 'h2');
+    if (options.extractH3) parseData.h3 = this.extractHeaders(html, 'h3');
+    if (options.extractH4) parseData.h4 = this.extractHeaders(html, 'h4');
+    if (options.extractH5) parseData.h5 = this.extractHeaders(html, 'h5');
+    if (options.extractH6) parseData.h6 = this.extractHeaders(html, 'h6');
+
+    if (options.extractImages) {
+      parseData.images = await this.extractImages(html);
+    }
+
     const allLinks = await this.extractLinks(html);
-    const { internalLinks, externalLinks } = this.categorizeLinks(allLinks, url);
-    parseData.internalLinks = internalLinks;
-    parseData.externalLinks = externalLinks;
+    const {internalLinks, externalLinks} = this.categorizeLinks(allLinks, url);
+
+    if (options.extractInternalLinks) {
+      parseData.internalLinks = internalLinks;
+    }
+    if (options.extractExternalLinks) {
+      parseData.externalLinks = externalLinks;
+    }
 
     return {
       url,
       status_code: status,
       status: 'success',
-      data: parseData
+      depth: depth,
+      data: parseData,
+      parent_url: parentUrl
     };
   }
 
@@ -186,14 +238,33 @@ export class ParserService {
     }
   }
 
+  private isValidUrl(url: string): boolean {
+    try {
+      // Skip empty, anchor-only or javascript: links
+      if (!url || url.startsWith('#') || url.startsWith('javascript:')) {
+        return false;
+      }
+
+      // Basic URL validation
+      new URL(url);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
   private async extractLinks(html: string): Promise<string[]> {
-    const links: string[] = [];
+    const links = new Set<string>();
     const regex = /<a[^>]+href="([^"]*)"[^>]*>/g;
     let match: RegExpExecArray | null;
+
     while ((match = regex.exec(html)) !== null) {
-      if (match[1]) links.push(match[1]);
+      if (match[1] && this.isValidUrl(match[1])) {
+        links.add(match[1].trim());
+      }
     }
-    return links;
+
+    return Array.from(links);
   }
 
   private async extractImages(html: string): Promise<string[]> {
@@ -211,6 +282,12 @@ export class ParserService {
       if (url.startsWith('http://') || url.startsWith('https://')) {
         return url;
       }
+
+      // Add https:// if no protocol is specified
+      if (!url.includes('://') && !url.startsWith('/')) {
+        url = `https://${url}`;
+      }
+
       const base = new URL(baseUrl);
       return new URL(url, base.origin).href;
     } catch (e) {
@@ -233,14 +310,14 @@ export class ParserService {
       }
     });
 
-    return { internalLinks, externalLinks };
+    return {internalLinks, externalLinks};
   }
 
   private extractTextContent(html: string): string[] {
     const $ = cheerio.load(html);
     $('script, style, noscript, iframe, svg').remove();
     const textBlocks: string[] = [];
-    
+
     $('body *').each((_, el) => {
       if ($(el).children().length === 0) {
         const text = $(el).text().trim();
@@ -249,22 +326,18 @@ export class ParserService {
         }
       }
     });
-    
+
     return textBlocks;
   }
 
-  private extractHeaders(html: string): Array<{tag: 'h1'|'h2'|'h3', text: string}> {
+  private extractHeaders(html: string, tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'): string[] {
     const $ = cheerio.load(html);
-    const headers: Array<{tag: 'h1'|'h2'|'h3', text: string}> = [];
-    
-    $('h1, h2, h3').each((_, el) => {
-      const tag = el.tagName.toLowerCase() as 'h1'|'h2'|'h3';
-      headers.push({
-        tag,
-        text: $(el).text().trim()
-      });
-    });
-    
-    return headers;
+    return $(tag).map((_, el) => $(el).text().trim()).get();
+  }
+
+  private extractKeywords(html: string): string[] {
+    const $ = cheerio.load(html);
+    const keywords = $('meta[name="keywords"]').attr('content');
+    return keywords ? keywords.split(',').map(k => k.trim()) : [];
   }
 }

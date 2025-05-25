@@ -1,0 +1,13 @@
+.page {
+    border-radius: 12px;
+}
+
+.title {
+    margin-bottom: 20px;
+}
+
+.listContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
