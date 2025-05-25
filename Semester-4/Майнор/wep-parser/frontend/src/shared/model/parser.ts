@@ -1,5 +1,5 @@
-import { createEffect, createEvent, createStore, sample } from 'effector';
-import { createGate } from 'effector-react';
+import {createEffect, createEvent, createStore, sample} from 'effector';
+import {createGate} from 'effector-react';
 import axios from 'axios';
 
 // Types
@@ -26,14 +26,16 @@ export interface ParserSettings {
 }
 
 // Events
+export const resetInputs = createEvent();
 export const addUrlInput = createEvent();
 export const updateUrlInput = createEvent<{ id: string; value: string }>();
 export const removeUrlInput = createEvent<string>();
-export const parseUrls = createEvent<{urls: string[], settings: ParserSettings}>();
+export const parseUrls = createEvent<{ urls: string[], settings: ParserSettings }>();
 export const updateParserSettings = createEvent<Partial<ParserSettings>>();
 
 // Stores
-export const $urlInputs = createStore<UrlInput[]>([{ id: '1', value: '' }]);
+export const $urlInputs = createStore<UrlInput[]>([{id: '1', value: ''}]).reset(resetInputs);
+
 export interface ParseData {
   title?: string;
   description?: string;
@@ -85,9 +87,9 @@ export const $parserSettings = createStore<ParserSettings>({
 });
 
 // Effects
-export const parseUrlsFx = createEffect<{urls: string[], settings: ParserSettings}, ParseResult>(async (params) => {
-  const { urls, settings } = params;
-  
+export const parseUrlsFx = createEffect<{ urls: string[], settings: ParserSettings }, ParseResult>(async (params) => {
+  const {urls, settings} = params;
+
   if (!urls.length) {
     throw new Error('Введите хотя бы один URL');
   }
@@ -96,7 +98,7 @@ export const parseUrlsFx = createEffect<{urls: string[], settings: ParserSetting
     urls,
     options: settings
   });
-  
+
   return response.data;
 });
 
@@ -107,11 +109,11 @@ export const getResultById = async (id: string) => {
 
 // Logic
 $urlInputs
-  .on(addUrlInput, (state) => [...state, { id: Date.now().toString(), value: '' }])
-  .on(updateUrlInput, (state, { id, value }) => 
-    state.map(input => input.id === id ? { ...input, value } : input)
+  .on(addUrlInput, (state) => [...state, {id: Date.now().toString(), value: ''}])
+  .on(updateUrlInput, (state, {id, value}) =>
+    state.map(input => input.id === id ? {...input, value} : input)
   )
-  .on(removeUrlInput, (state, id) => 
+  .on(removeUrlInput, (state, id) =>
     state.filter(input => input.id !== id)
   );
 
@@ -138,7 +140,7 @@ export const ResultsGate = createGate();
 
 sample({
   clock: parseUrls,
-  fn: (params) => ({ urls: params.urls, settings: params.settings }),
+  fn: (params) => ({urls: params.urls, settings: params.settings}),
   target: parseUrlsFx
 });
 

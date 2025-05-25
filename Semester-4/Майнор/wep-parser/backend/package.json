@@ -19,10 +19,12 @@
     "@types/mongoose": "^5.11.97",
     "cheerio": "^1.0.0",
     "cors": "^2.8.5",
+    "js-yaml": "^4.1.0",
     "mongoose": "^8.14.2",
     "puppeteer": "^24.8.2",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.2"
+    "rxjs": "^7.8.2",
+    "xml-js": "^1.6.11"
   },
   "keywords": [],
   "author": "",

@@ -6,6 +6,7 @@ import {
   addUrlInput,
   parseUrls,
   removeUrlInput,
+  resetInputs,
   updateUrlInput
 } from '../../shared/model/parser';
 import {UrlInputItem} from './url-input-item';
@@ -22,6 +23,7 @@ export const UrlInputList = () => {
     if (urls.length > 0) {
       const settings = parserSettings
       parseUrls({urls, settings});
+      resetInputs();
     }
   };
 
