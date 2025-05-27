@@ -33,6 +33,10 @@
     flex: 1;
 }
 
+.urlInput.errored {
+    border: 1px solid #f03e3e !important;
+}
+
 .parseButton {
     align-self: flex-start;
     background-color: #2563eb;

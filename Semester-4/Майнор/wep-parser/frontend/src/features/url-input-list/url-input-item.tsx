@@ -10,13 +10,24 @@ interface UrlInputItemProps {
   value: string;
   isLast: boolean;
   count: number;
+  error?: string;
   onChange: (id: string, value: string) => void;
   onAdd: () => void;
   onRemove?: (id: string) => void;
   additional?: ReactNode;
 }
 
-export const UrlInputItem = ({id, value, isLast, count, onChange, onAdd, onRemove, additional}: UrlInputItemProps) => {
+export const UrlInputItem = ({
+                               id,
+                               value,
+                               isLast,
+                               count,
+                               onChange,
+                               onAdd,
+                               onRemove,
+                               additional,
+                               error
+                             }: UrlInputItemProps) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(id, e.target.value);
   };
@@ -27,7 +38,7 @@ export const UrlInputItem = ({id, value, isLast, count, onChange, onAdd, onRemov
         placeholder="Введите ссылку на сайт..."
         value={value}
         onChange={handleChange}
-        className={s.urlInput}
+        className={clsx(s.urlInput, error && s.errored)}
       />
       {isLast ? (
         <Button
