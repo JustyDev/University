@@ -3,12 +3,14 @@ import math
 from time import perf_counter
 
 WIDTH, HEIGHT = 900, 600
-PIXEL_SIZE = 4  # размер "пикселя" на экране
+PIXEL_SIZE = 4  # Размер "пикселя" на экране
 
 def to_grid(x, y):
+    # Переводит экранные координаты в координаты "пиксельной" сетки
     return x // PIXEL_SIZE, y // PIXEL_SIZE
 
 def to_canvas(gx, gy):
+    # Переводит координаты сетки обратно в координаты холста
     return gx * PIXEL_SIZE, gy * PIXEL_SIZE
 
 class App:
@@ -16,24 +18,26 @@ class App:
         self.root = root
         root.title("Окружности/дуги — вариант 16 (штрихпунктир 3-3-1-3)")
 
+        # Холст для рисования
         self.canvas = tk.Canvas(root, width=WIDTH, height=HEIGHT, bg="white")
         self.canvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
+        # Панель управления снизу
         ctrl = tk.Frame(root)
         ctrl.pack(side=tk.BOTTOM, fill=tk.X, pady=4)
 
-        # Режимы
+        # Переключатель между режимами: окружность, дуга, концентрические окружности
         self.mode = tk.StringVar(value="circle")
         tk.Radiobutton(ctrl, text="Окружность", variable=self.mode, value="circle").pack(side=tk.LEFT, padx=4)
         tk.Radiobutton(ctrl, text="Дуга", variable=self.mode, value="arc").pack(side=tk.LEFT)
         tk.Radiobutton(ctrl, text="Концентрические", variable=self.mode, value="concentric").pack(side=tk.LEFT)
 
-        # Цвет
+        # Поле для выбора цвета
         tk.Label(ctrl, text="Цвет:").pack(side=tk.LEFT, padx=(10, 2))
         self.color_var = tk.StringVar(value="#000000")
         tk.Entry(ctrl, textvariable=self.color_var, width=8).pack(side=tk.LEFT)
 
-        # Радиус / шаг / количество
+        # Поля для радиуса (R), шага (dR), количества (N)
         tk.Label(ctrl, text="R:").pack(side=tk.LEFT, padx=(10, 2))
         self.r_var = tk.StringVar(value="")
         tk.Entry(ctrl, textvariable=self.r_var, width=6).pack(side=tk.LEFT)
@@ -46,7 +50,7 @@ class App:
         self.n_var = tk.StringVar(value="5")
         tk.Entry(ctrl, textvariable=self.n_var, width=6).pack(side=tk.LEFT)
 
-        # Углы для дуги (в градусах, 0 — вправо, против часовой)
+        # Поля для углов (для дуги)
         tk.Label(ctrl, text="угол нач:").pack(side=tk.LEFT, padx=(12, 2))
         self.a0_var = tk.StringVar(value="0")
         tk.Entry(ctrl, textvariable=self.a0_var, width=6).pack(side=tk.LEFT)
@@ -55,41 +59,46 @@ class App:
         self.a1_var = tk.StringVar(value="180")
         tk.Entry(ctrl, textvariable=self.a1_var, width=6).pack(side=tk.LEFT)
 
-        # Кнопки
+        # Кнопки для ручной отрисовки/очистки и вывод сетки
         tk.Button(ctrl, text="Нарисовать (по полям)", command=self.draw_from_fields).pack(side=tk.LEFT, padx=10)
         tk.Button(ctrl, text="Очистить", command=self.clear).pack(side=tk.LEFT)
         self.grid_var = tk.BooleanVar(value=False)
         tk.Checkbutton(ctrl, text="Сетка", variable=self.grid_var, command=self.toggle_grid).pack(side=tk.LEFT, padx=8)
 
+        # Строка состояния
         self.status = tk.Label(ctrl, text="ЛКМ: центр; второй ЛКМ: радиус", anchor="w")
         self.status.pack(side=tk.LEFT, padx=12)
 
-        self.center = None
-        self.grid_items = []
+        self.center = None              # Сохраняет центр окружности (если выбран)
+        self.grid_items = []            # Хранит id элементов сетки
 
+        # Привязка мыши
         self.canvas.bind("<Button-1>", self.on_click)
 
-        # Шаблон варианта 16
-        self.pattern = [3, 3, 1, 3]           # длины сегментов в пикселях
-        self.pattern_modes = [True, False, True, False]  # рисуем/пропуск
+        # Шаблон штрихпунктирной линии (вариант 16): 3 пикс. рисуем, 3 пропуск, 1 рисуем, 3 пропуск
+        self.pattern = [3, 3, 1, 3]
+        self.pattern_modes = [True, False, True, False]
 
-    # ======== рисование базовое ========
+    # ======== Базовое рисование ========
     def draw_pixel(self, gx, gy, color="#000000"):
+        # Рисует один "пиксель" (прямоугольник заданного цвета) в координатах сетки (gx, gy)
         x0, y0 = to_canvas(gx, gy)
         x1, y1 = x0 + PIXEL_SIZE - 1, y0 + PIXEL_SIZE - 1
         self.canvas.create_rectangle(x0, y0, x1, y1, outline=color, fill=color)
 
-    # ======== служебные для дуги ========
+    # ======== Служебные методы для дуги ========
     @staticmethod
     def normalize_angle_deg(a):
+        # Приводит угол к диапазону [0, 360)
         return a % 360.0
 
     def make_angle_filter(self, cx, cy, a0_deg, a1_deg):
+        # Возвращает функцию-фильтр, пропускающую только те точки, что лежат между углами a0 и a1
         a0 = self.normalize_angle_deg(a0_deg)
         a1 = self.normalize_angle_deg(a1_deg)
 
         def in_range(ang):
-            # полный круг, если углы совпадают
+            # Если угол дуги ~0, то всегда истина (полный круг)
             if abs(((a1 - a0) % 360.0)) < 1e-9:
                 return True
             if a0 <= a1:
@@ -98,39 +107,40 @@ class App:
                 return ang >= a0 or ang <= a1
 
         def filt(px, py):
+            # Вычисляет угол текущей точки относительного центра
             ang = math.degrees(math.atan2(-(py - cy), (px - cx)))
             ang = self.normalize_angle_deg(ang)
             return in_range(ang)
 
         return filt
 
-    # ======== построение окружности упорядоченным обходом ========
+    # ======== Генерация упорядоченного пути по окружности ========
     @staticmethod
     def octant_points_r0(r):
         """
-        Алгоритм средней точки для базового октанта (0..45°), старт в (r, 0).
-        Возвращает список (x,y) для x >= y >= 0 в порядке возрастания угла.
+        Алгоритм средней точки (Брезенхема) для базового октанта окружности (0..45°), старт (r, 0).
+        Возвращает список (x,y) для x >= y >= 0 — в порядке увеличения угла.
         """
         x, y = int(round(r)), 0
         d = 1 - x
         pts = []
         while y <= x:
-            pts.append((x, y))
+            pts.append((x, y))  # Добавляем точку октанта
             y += 1
             if d < 0:
                 d += 2 * y + 1
             else:
                 x -= 1
                 d += 2 * (y - x) + 1
-        return pts  # (x, y) для базового октанта
+        return pts
 
     def circle_path_points(self, cx, cy, r):
         """
-        Полный упорядоченный путь по окружности CCW, начиная с угла 0° (вправо).
-        Использует базовый октант и симметрии с реверсом по нечётным октантам.
+        Полный упорядоченный путь по окружности против часовой стрелки,
+        начиная с угла 0° (вправо). Использует симметрии относительно октантов.
         """
         base = self.octant_points_r0(r)
-        # Отображения в октанты (0..7), плюс нужно ли реверсировать base
+        # Описывает отображения в 8 октантов и необходимость реверса base
         maps = [
             (lambda x, y: (cx + x, cy - y), False),  # 0:   0..45
             (lambda x, y: (cx + y, cy - x), True),   # 1:  45..90
@@ -147,7 +157,7 @@ class App:
         for transform, need_rev in maps:
             seq = reversed(base) if need_rev else base
             for i, (x, y) in enumerate(seq):
-                # избегаем дубликатов на стыках октантов
+                # Избегаем дубликатов на стыках октантов (первая точка — только для первого октанта)
                 if not first and i == 0:
                     continue
                 path.append(transform(x, y))
@@ -156,8 +166,8 @@ class App:
 
     def draw_circle_variant16(self, cx, cy, r, color, angle_filter=None):
         """
-        Рисует окружность/дугу штрихпунктиром 3-3-1-3 (вариант 16).
-        Если задан angle_filter(px, py) -> bool, рисуем только точки дуги.
+        Рисует окружность/дугу по шаблону штрихпунктирного стиля 3-3-1-3 (вариант 16).
+        Если задан angle_filter(px, py) -> bool, рисует только соответствующую дугу.
         """
         if r <= 0:
             return 0
@@ -167,8 +177,9 @@ class App:
         remaining = self.pattern[seg_idx]
         draw_on = self.pattern_modes[seg_idx]
 
-        pixels = 0
+        pixels = 0  # Счетчик нарисованных пикселей
         for (px, py) in path:
+            # если фильтра нет (окружность) или точка подходит по углу (дуга) — рисуем/пропускаем по шаблону
             if (angle_filter is None) or angle_filter(px, py):
                 if draw_on:
                     self.draw_pixel(px, py, color)
@@ -180,8 +191,9 @@ class App:
                     draw_on = self.pattern_modes[seg_idx]
         return pixels
 
-    # ======== UI обработка ========
+    # ======== Обработка событий ========
     def on_click(self, event):
+        # Обработка клика мыши: вначале ждем центр окружности, потом — точку радиуса
         gx, gy = to_grid(event.x, event.y)
         if self.center is None:
             self.center = (gx, gy)
@@ -190,12 +202,13 @@ class App:
         else:
             cx, cy = self.center
             dx, dy = gx - cx, gy - cy
-            R = int(round(math.hypot(dx, dy)))
+            R = int(round(math.hypot(dx, dy)))  # Радиус по расстоянию
             color = self.color_var.get().strip() or "#000000"
 
             t0 = perf_counter()
             pixels = 0
 
+            # Рисуем выбранный режим: окружность, дуга, концентрические круги
             if self.mode.get() == "circle":
                 pixels = self.draw_circle_variant16(cx, cy, R, color)
             elif self.mode.get() == "arc":
@@ -217,6 +230,7 @@ class App:
             self.status.config(text="ЛКМ: центр; второй ЛКМ: радиус")
 
     def draw_from_fields(self):
+        # Отрисовка фигуры по введённым в поля радиусу/углам/шагу
         color = self.color_var.get().strip() or "#000000"
         if self.center is None:
             cx = (self.canvas.winfo_width() // PIXEL_SIZE) // 2
@@ -251,12 +265,14 @@ class App:
         self.status.config(text="ЛКМ: центр; второй ЛКМ: радиус")
 
     def clear(self):
+        # Очистить холст и нарисовать сетку (если надо)
         self.canvas.delete("all")
         self.center = None
         if self.grid_var.get():
             self.draw_grid()
 
     def toggle_grid(self):
+        # Вкл/выкл отображение сетки
         if self.grid_var.get():
             self.draw_grid()
         else:
@@ -265,6 +281,7 @@ class App:
             self.grid_items.clear()
 
     def draw_grid(self):
+        # Рисует сетку вспомогательных линий
         for item in self.grid_items:
             self.canvas.delete(item)
         self.grid_items.clear()
@@ -282,6 +299,7 @@ class App:
             self.grid_items.append(self.canvas.create_line(0, y, w, y, fill=color))
 
 if __name__ == "__main__":
+    # Точка входа — запуск приложения
     root = tk.Tk()
     App(root)
     root.mainloop()
