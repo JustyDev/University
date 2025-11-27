@@ -34,8 +34,8 @@ class _CaesarCipherPageState extends State<CaesarCipherPage> {
   String _result = '';
 
   // Русский алфавит
-  static const String _russianLower = 'абвгдежзийклмнопрстуфхцчшщъыьэюя';
-  static const String _russianUpper = 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
+  static const String _russianLower = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя';
+  static const String _russianUpper = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
   
   // Английский алфавит
   static const String _englishLower = 'abcdefghijklmnopqrstuvwxyz';
