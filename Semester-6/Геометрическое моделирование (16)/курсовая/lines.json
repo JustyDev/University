@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "objects": [
+    {
+      "kind": "line",
+      "points": [
+        [
+          245,
+          418
+        ],
+        [
+          505,
+          222
+        ]
+      ],
+      "outline": "#202124",
+      "fill": "",
+      "fill_type": "none",
+      "width": 2,
+      "obj_id": "37e854374ad248aca732fda877c237b4"
+    },
+    {
+      "kind": "line",
+      "points": [
+        [
+          477,
+          328
+        ],
+        [
+          607,
+          195
+        ]
+      ],
+      "outline": "#202124",
+      "fill": "",
+      "fill_type": "none",
+      "width": 2,
+      "obj_id": "9d607511c9714a3ea639bc2a8f00424f"
+    },
+    {
+      "kind": "line",
+      "points": [
+        [
+          663,
+          338
+        ],
+        [
+          797,
+          170
+        ]
+      ],
+      "outline": "#202124",
+      "fill": "",
+      "fill_type": "none",
+      "width": 2,
+      "obj_id": "d20fb5adbdd2491ba2767f73077fa417"
+    },
+    {
+      "kind": "line",
+      "points": [
+        [
+          305,
+          156
+        ],
+        [
+          474,
+          87
+        ]
+      ],
+      "outline": "#202124",
+      "fill": "",
+      "fill_type": "none",
+      "width": 2,
+      "obj_id": "5d58fcc1fe7041baa62edd025cb0dce6"
+    },
+    {
+      "kind": "line",
+      "points": [
+        [
+          496,
+          136
+        ],
+        [
+          727,
+          112
+        ]
+      ],
+      "outline": "#202124",
+      "fill": "",
+      "fill_type": "none",
+      "width": 2,
+      "obj_id": "3d9330b1c1c140e98210cd63a38b71bc"
+    }
+  ]
+}
