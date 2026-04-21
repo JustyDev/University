@@ -1,71 +1,64 @@
--- Лабораторная работа 5. MySQL 8.0+
+-- Лабораторная работа 5
 
-CREATE DATABASE IF NOT EXISTS lab5_tasks
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
+-- ============================
+-- Задание 5.1 — Показатели отказов
+-- ============================
 
-USE lab5_tasks;
+CREATE TABLE lr5_users (
+    user_id INT,
+    action VARCHAR(10),
+    act_date DATE
+);
 
--- Задание 5.1. Показатели отказов.
-DROP TABLE IF EXISTS users;
+INSERT INTO lr5_users (user_id, action, act_date) VALUES
+(1, 'start',  '2025-01-01'),
+(1, 'cancel', '2025-01-02'),
+(2, 'start',  '2025-01-03'),
+(2, 'publish','2025-01-04'),
+(3, 'start',  '2025-01-05'),
+(3, 'cancel', '2025-01-06'),
+(1, 'start',  '2025-01-07'),
+(1, 'publish','2025-01-08'),
+(4, 'start',  '2025-01-09');
 
-CREATE TABLE users (
-  user_id INT NOT NULL,
-  action ENUM('start', 'cancel', 'publish') NOT NULL,
-  action_date DATE NOT NULL,
-  KEY idx_users_user_action (user_id, action),
-  KEY idx_users_date (action_date)
-) ENGINE=InnoDB;
-
-INSERT INTO users (user_id, action, action_date) VALUES
-(1, 'start',   '2020-01-01'),
-(1, 'cancel',  '2020-01-02'),
-(2, 'start',   '2020-01-03'),
-(2, 'publish', '2020-01-04'),
-(3, 'start',   '2020-01-05'),
-(3, 'cancel',  '2020-01-06'),
-(1, 'start',   '2020-01-07'),
-(1, 'publish', '2020-01-08');
-
+-- Запрос 5.1 (publish_rate и cancel_rate для каждого пользователя)
 SELECT
-  user_id,
-  ROUND(100 * SUM(action = 'cancel') / NULLIF(SUM(action = 'start'), 0), 2) AS cancel_percent,
-  ROUND(100 * SUM(action = 'publish') / NULLIF(SUM(action = 'start'), 0), 2) AS publish_percent
-FROM users
+   user_id,
+   SUM(action = 'publish') / NULLIF(SUM(action = 'start'), 0) AS publish_rate,
+   SUM(action = 'cancel') / NULLIF(SUM(action = 'start'), 0) AS cancel_rate
+FROM lr5_users
 GROUP BY user_id
 ORDER BY user_id;
+-- В MySQL логические выражения считаются за 1 (TRUE) и 0 (FALSE), деление выдаст верные доли.
 
--- Задание 5.2. Изменения в капитале.
-DROP TABLE IF EXISTS transactions;
+-- ============================
+-- Задание 5.2 — Изменения в капитале
+-- ============================
 
-CREATE TABLE transactions (
-  transaction_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  sender_id INT NOT NULL,
-  receiver_id INT NOT NULL,
-  amount DECIMAL(12,2) NOT NULL,
-  transaction_date DATE NOT NULL,
-  PRIMARY KEY (transaction_id),
-  KEY idx_transactions_sender (sender_id),
-  KEY idx_transactions_receiver (receiver_id),
-  CONSTRAINT chk_transactions_amount CHECK (amount > 0)
-) ENGINE=InnoDB;
+CREATE TABLE lr5_transactions (
+    sender INT,
+    receiver INT,
+    amount INT,
+    transaction_date DATE
+);
 
-INSERT INTO transactions (sender_id, receiver_id, amount, transaction_date) VALUES
-(1, 2, 100.00, '2020-01-01'),
-(2, 3,  50.00, '2020-01-02'),
-(3, 1,  35.00, '2020-01-03'),
-(1, 3,  20.00, '2020-01-04');
+INSERT INTO lr5_transactions (sender, receiver, amount, transaction_date) VALUES
+(5, 2, 10, '2020-02-12'),
+(1, 3, 15, '2020-02-13'),
+(2, 1, 20, '2020-02-13'),
+(3, 2, 25, '2020-02-14'),
+(3, 1, 20, '2020-02-15'),
+(2, 3, 15, '2020-02-15'),
+(1, 4, 5,  '2020-02-16');
 
+-- Запрос 5.2 (итоговое изменение капитала, отсортировано по убыванию)
 SELECT
-  user_id,
-  SUM(delta) AS capital_change
+    u.user AS user,
+    SUM(u.net_change) AS net_change
 FROM (
-  SELECT sender_id AS user_id, -amount AS delta
-  FROM transactions
-  UNION ALL
-  SELECT receiver_id AS user_id, amount AS delta
-  FROM transactions
-) t
-GROUP BY user_id
-ORDER BY capital_change DESC, user_id;
-
+    SELECT sender AS user, -amount AS net_change FROM lr5_transactions
+    UNION ALL
+    SELECT receiver AS user, amount AS net_change FROM lr5_transactions
+) u
+GROUP BY u.user
+ORDER BY net_change DESC, user ASC;

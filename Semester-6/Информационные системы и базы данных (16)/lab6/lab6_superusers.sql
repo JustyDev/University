@@ -1,68 +1,68 @@
--- Лабораторная работа 6. MySQL 8.0+
+-- 1. Создание таблицы users
+CREATE TABLE users (
+    user_id INT,
+    product_id INT,
+    transaction_date DATE
+);
 
-CREATE DATABASE IF NOT EXISTS lab6_superusers
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
+-- 2. Вставка данных
+INSERT INTO users VALUES
+(1, 101, '2020-02-12'),
+(2, 105, '2020-02-13'),
+(1, 111, '2020-02-14'),
+(3, 121, '2020-02-15'),
+(1, 101, '2020-02-16'),
+(2, 105, '2020-02-17'),
+(4, 101, '2020-02-18'),
+(3, 105, '2020-02-15'); -- (дату для 3 пользователя и product_id=105 подставил по образцу из скриншота)
 
-USE lab6_superusers;
+-- 6.1. Имитация ROW_NUMBER без оконных функций (MySQL 5.x)
+-- Найти вторую по времени транзакцию для каждого пользователя
 
-DROP TABLE IF EXISTS zzz;
-
-CREATE TABLE zzz (
-  user_id INT NOT NULL,
-  transaction_id INT NOT NULL,
-  transaction_date DATE NOT NULL,
-  KEY idx_zzz_user_date (user_id, transaction_date, transaction_id)
-) ENGINE=InnoDB;
-
-INSERT INTO zzz (user_id, transaction_id, transaction_date) VALUES
-(1, 101, '2022-02-12'),
-(2, 105, '2022-02-13'),
-(1, 111, '2022-02-14'),
-(3, 121, '2022-02-15'),
-(1, 101, '2022-02-16'),
-(2, 105, '2022-02-17'),
-(4, 101, '2022-02-18'),
-(3, 105, '2022-02-19');
-
--- 1. Имитация ROW_NUMBER без оконных функций.
 SELECT
-  ranked.user_id,
-  MIN(CASE WHEN ranked.row_num = 2 THEN ranked.transaction_date END) AS superuser_date
-FROM (
-  SELECT
-    z1.user_id,
-    z1.transaction_id,
-    z1.transaction_date,
-    COUNT(*) AS row_num
-  FROM zzz z1
-  JOIN zzz z2
-    ON z2.user_id = z1.user_id
-   AND (
-     z2.transaction_date < z1.transaction_date
-     OR (z2.transaction_date = z1.transaction_date AND z2.transaction_id <= z1.transaction_id)
-   )
-  GROUP BY z1.user_id, z1.transaction_id, z1.transaction_date
-) ranked
-GROUP BY ranked.user_id
-ORDER BY superuser_date IS NULL, superuser_date, ranked.user_id;
+    u.user_id,
+    MIN(u2.transaction_date) AS superuser_date
+FROM
+    users u
+    JOIN users u2 ON u.user_id = u2.user_id AND u.transaction_date < u2.transaction_date
+GROUP BY
+    u.user_id
+HAVING
+    COUNT(*) >= 1
 
--- 2. Решение с ROW_NUMBER.
-WITH numbered AS (
-  SELECT
+UNION
+
+SELECT
+    u.user_id, NULL
+FROM
+    users u
+WHERE
+    u.user_id NOT IN (
+        SELECT user_id
+        FROM users
+        GROUP BY user_id
+        HAVING COUNT(*) >= 2
+    )
+GROUP BY u.user_id
+ORDER BY user_id;
+
+-- 6.2. Решение с использованием ROW_NUMBER (MySQL 8.0+)
+
+SELECT
     user_id,
-    transaction_id,
-    transaction_date,
-    ROW_NUMBER() OVER (
-      PARTITION BY user_id
-      ORDER BY transaction_date, transaction_id
-    ) AS row_num
-  FROM zzz
-)
-SELECT
-  user_id,
-  MIN(CASE WHEN row_num = 2 THEN transaction_date END) AS superuser_date
-FROM numbered
+    CASE
+        WHEN COUNT(*) >= 2 THEN
+            MIN(CASE WHEN rn = 2 THEN transaction_date END)
+        ELSE NULL
+    END AS superuser_date
+FROM
+(
+    SELECT
+        user_id,
+        transaction_date,
+        ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY transaction_date) AS rn
+    FROM users
+) t
 GROUP BY user_id
-ORDER BY superuser_date IS NULL, superuser_date, user_id;
+ORDER BY user_id;
 

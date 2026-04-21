@@ -1,91 +1,60 @@
--- Лабораторная работа 3. Вариант 16.
--- Запросы используют схему airport_v16 из lab1_airport_variant16.sql.
+-- Структура из ЛР 1
+-- ==== ЗАПРОСЫ К ЛАБОРАТОРНОЙ 3 ====
 
-USE airport_v16;
-
--- 1. Определить наличие свободных мест на рейс N 870 31 декабря 2000 года.
+-- 1. Определить наличие свободных мест на рейс № 870 31 декабря 2000 года.
 SELECT
-  f.flight_no,
-  DATE(f.scheduled_departure) AS flight_date,
-  ac.model,
-  ac.seats AS total_seats,
-  f.sold_seats,
-  ac.seats - f.sold_seats AS free_seats,
-  CASE WHEN ac.seats > f.sold_seats THEN 'Есть свободные места' ELSE 'Свободных мест нет' END AS availability
-FROM flights f
-JOIN aircraft ac ON ac.aircraft_id = f.aircraft_id
-WHERE f.flight_no = 870
-  AND DATE(f.scheduled_departure) = '2000-12-31';
+    S.nomer,
+    R.data_vremya_vyleta,
+    (S.chislo_mest - R.kolichestvo_prodannykh_biletov) AS svobodnye_mesta
+FROM Reis R
+JOIN Samolet S ON R.samolet_id = S.id
+WHERE S.nomer = '870'
+  AND DATE(R.data_vremya_vyleta) = '2000-12-31';
+-- Показывает количество свободных мест на рейсе № 870 в указанный день
 
--- 2. Рассчитать дальность полета самолета по каждому маршруту.
--- Если в таблице маршрутов хранится фактическая дальность, она выводится напрямую.
+-- 2. Рассчитать дальность полёта самолёта по каждому маршруту.
 SELECT
-  dep.city AS departure_city,
-  arr.city AS arrival_city,
-  r.distance_km AS route_distance_km,
-  ac.model,
-  ROUND(ac.speed_kmh * TIMESTAMPDIFF(MINUTE, f.scheduled_departure, f.scheduled_arrival) / 60, 2) AS calculated_distance_km
-FROM flights f
-JOIN routes r ON r.route_id = f.route_id
-JOIN airports dep ON dep.airport_id = r.departure_airport_id
-JOIN airports arr ON arr.airport_id = r.arrival_airport_id
-JOIN aircraft ac ON ac.aircraft_id = f.aircraft_id
-ORDER BY dep.city, arr.city, ac.model;
+    S.nomer AS samolet_nomer,
+    S.marka,
+    M.punkt_vyleta,
+    M.punkt_naznacheniya,
+    M.rasstoyanie
+FROM Reis R
+JOIN Samolet S ON R.samolet_id = S.id
+JOIN Marshrut M ON R.marshrut_id = M.id;
+-- Выводит все маршруты, по которым летал каждый самолёт, вместе с расстоянием
 
--- 3. Создать таблицу расписания самолетов по маршруту "Москва" - "Васюки".
-DROP TABLE IF EXISTS moscow_vasyuki_schedule;
-
-CREATE TABLE moscow_vasyuki_schedule AS
+-- 3. Создать таблицу расписания самолётов по маршруту «Москва»-«Васюки».
 SELECT
-  f.flight_no,
-  dep.city AS departure_city,
-  arr.city AS arrival_city,
-  ac.board_number,
-  ac.model,
-  f.scheduled_departure,
-  f.scheduled_arrival,
-  ac.seats,
-  f.sold_seats,
-  ac.seats - f.sold_seats AS free_seats
-FROM flights f
-JOIN routes r ON r.route_id = f.route_id
-JOIN airports dep ON dep.airport_id = r.departure_airport_id
-JOIN airports arr ON arr.airport_id = r.arrival_airport_id
-JOIN aircraft ac ON ac.aircraft_id = f.aircraft_id
-WHERE dep.city = 'Москва'
-  AND arr.city = 'Васюки';
+    R.id AS reis_id,
+    S.nomer AS samolet_nomer,
+    S.marka,
+    R.data_vremya_vyleta,
+    R.data_vremya_pribytiya
+FROM Reis R
+JOIN Marshrut M ON R.marshrut_id = M.id
+JOIN Samolet S ON R.samolet_id = S.id
+WHERE M.punkt_vyleta = 'Москва' AND M.punkt_naznacheniya = 'Васюки';
+-- Вывод расписания по определённому маршруту
 
-ALTER TABLE moscow_vasyuki_schedule
-  ADD PRIMARY KEY (flight_no, scheduled_departure);
+-- 4. Увеличить число мест самолётов «ТУ» на 5 человек.
+UPDATE Samolet
+SET chislo_mest = chislo_mest + 5
+WHERE marka LIKE 'ТУ%';
+-- Увеличивает число мест у всех самолётов марки, начинающейся на "ТУ"
 
-SELECT * FROM moscow_vasyuki_schedule;
-
--- 4. Увеличить число мест самолетов "ТУ" на 5 человек.
-UPDATE aircraft
-SET seats = seats + 5
-WHERE model LIKE 'ТУ%';
-
--- 5. Создать сводную таблицу количества вылетов самолетов по маршрутам.
-DROP TABLE IF EXISTS flight_count_by_route;
-
-CREATE TABLE flight_count_by_route AS
+-- 5. Создать сводную таблицу количества вылетов самолётов по маршрутам.
 SELECT
-  dep.city AS departure_city,
-  arr.city AS arrival_city,
-  COUNT(*) AS flights_count
-FROM flights f
-JOIN routes r ON r.route_id = f.route_id
-JOIN airports dep ON dep.airport_id = r.departure_airport_id
-JOIN airports arr ON arr.airport_id = r.arrival_airport_id
-GROUP BY dep.city, arr.city;
+    M.punkt_vyleta,
+    M.punkt_naznacheniya,
+    COUNT(R.id) AS kolichestvo_vyletov
+FROM Reis R
+JOIN Marshrut M ON R.marshrut_id = M.id
+GROUP BY M.punkt_vyleta, M.punkt_naznacheniya;
+-- Количество вылетов по каждому маршруту
 
-ALTER TABLE flight_count_by_route
-  ADD PRIMARY KEY (departure_city, arrival_city);
-
-SELECT * FROM flight_count_by_route;
-
--- 10. Уменьшить скорость самолетов "Боинг" на 10%.
-UPDATE aircraft
-SET speed_kmh = ROUND(speed_kmh * 0.90, 2)
-WHERE model LIKE 'Боинг%';
-
+-- 6. Уменьшить скорость самолётов «Боинг» на 10%.
+UPDATE Samolet
+SET skorost_poleta = skorost_poleta * 0.9
+WHERE marka LIKE '%Боинг%';
+-- Уменьшает скорость у всех самолётов марок, содержащих "Боинг"

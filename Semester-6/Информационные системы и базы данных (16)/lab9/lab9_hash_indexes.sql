@@ -1,133 +1,78 @@
--- Лабораторная работа 9. MySQL 8.0+
-
-CREATE DATABASE IF NOT EXISTS lab9_hash_indexes
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
-
-USE lab9_hash_indexes;
-
--- Задание 9.1. Имитация hash-индекса через CRC32.
-DROP TRIGGER IF EXISTS trg_pseudohash_before_insert;
-DROP TRIGGER IF EXISTS trg_pseudohash_before_update;
-DROP TABLE IF EXISTS pseudohash;
+-- ========== Задание 9.1 - pseudohash, хеш-индекс через crc32 ==========
 
 CREATE TABLE pseudohash (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  url VARCHAR(255) NOT NULL,
-  url_crc INT UNSIGNED NOT NULL DEFAULT 0,
-  PRIMARY KEY (id),
-  KEY idx_pseudohash_url_crc (url_crc)
-) ENGINE=InnoDB;
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    url VARCHAR(255) NOT NULL,
+    url_crc INT UNSIGNED NOT NULL DEFAULT 0,
+    PRIMARY KEY (id),
+    INDEX idx_crc (url_crc)
+);
 
 DELIMITER //
-
-CREATE TRIGGER trg_pseudohash_before_insert
+CREATE TRIGGER pseudohash_before_insert
 BEFORE INSERT ON pseudohash
 FOR EACH ROW
 BEGIN
-  SET NEW.url_crc = CRC32(NEW.url);
-END//
-
-CREATE TRIGGER trg_pseudohash_before_update
+    SET NEW.url_crc = CRC32(NEW.url);
+END;
+//
+CREATE TRIGGER pseudohash_before_update
 BEFORE UPDATE ON pseudohash
 FOR EACH ROW
 BEGIN
-  SET NEW.url_crc = CRC32(NEW.url);
-END//
-
+    SET NEW.url_crc = CRC32(NEW.url);
+END;
+//
 DELIMITER ;
 
-INSERT INTO pseudohash (url) VALUES
-('https://example.org/'),
-('https://example.org/catalog'),
-('https://example.org/catalog/item/1');
+-- ========== Задание 9.2 ==========
 
--- Поиск использует crc32-индекс и проверяет исходную строку на случай коллизии.
-SET @url := 'https://example.org/catalog';
+-- 1. Создать таблицу с orderNumber, productName, productLine и hash_md5
 
-EXPLAIN SELECT *
-FROM pseudohash
-WHERE url_crc = CRC32(@url)
-  AND url = @url;
-
-SELECT *
-FROM pseudohash
-WHERE url_crc = CRC32(@url)
-  AND url = @url;
-
--- Задание 9.2.
--- Выполнять в установленной базе classicmodels либо заменить USE на нужную БД.
-USE classicmodels;
-
-DROP TABLE IF EXISTS order_product_hash;
-
-CREATE TABLE order_product_hash AS
-SELECT
-  od.orderNumber,
-  p.productName,
-  p.productLine,
-  MD5(CONCAT_WS('#', od.orderNumber, p.productName, p.productLine)) AS hash_md5
-FROM orderdetails od
-JOIN products p ON p.productCode = od.productCode;
-
-ALTER TABLE order_product_hash
-  MODIFY orderNumber INT NOT NULL,
-  MODIFY productName VARCHAR(70) NOT NULL,
-  MODIFY productLine VARCHAR(50) NOT NULL,
-  MODIFY hash_md5 CHAR(32) NOT NULL;
-
--- Селективность полного MD5-хэша.
-SELECT
-  COUNT(DISTINCT hash_md5) / COUNT(*) AS full_hash_selectivity,
-  COUNT(*) AS rows_total,
-  COUNT(DISTINCT hash_md5) AS distinct_hashes
-FROM order_product_hash;
-
--- Минимальная длина префикса, при которой селективность равна селективности полного хэша.
-WITH RECURSIVE prefix_lengths AS (
-  SELECT 1 AS prefix_len
-  UNION ALL
-  SELECT prefix_len + 1
-  FROM prefix_lengths
-  WHERE prefix_len < 32
-),
-selectivity AS (
-  SELECT
-    prefix_len,
-    COUNT(DISTINCT LEFT(hash_md5, prefix_len)) / COUNT(*) AS prefix_selectivity
-  FROM prefix_lengths
-  CROSS JOIN order_product_hash
-  GROUP BY prefix_len
-),
-full_selectivity AS (
-  SELECT COUNT(DISTINCT hash_md5) / COUNT(*) AS value
-  FROM order_product_hash
-)
-SELECT MIN(s.prefix_len) AS required_prefix_length
-FROM selectivity s
-CROSS JOIN full_selectivity fs
-WHERE s.prefix_selectivity = fs.value;
-
--- Если предыдущий запрос вернул, например, 8, создаем индекс длины 8.
--- При другом результате заменить 8 на найденное значение.
-CREATE INDEX idx_order_product_hash_md5_prefix
-  ON order_product_hash (hash_md5(8));
-
-SET @hash := (
-  SELECT hash_md5
-  FROM order_product_hash
-  LIMIT 1
+CREATE TABLE orderdetails_products_hash (
+    orderNumber INT(11) NOT NULL,
+    productName VARCHAR(70) NOT NULL,
+    productLine VARCHAR(50) NOT NULL,
+    hash_md5 CHAR(32) NOT NULL,
+    PRIMARY KEY (orderNumber, productName)
 );
 
-EXPLAIN ANALYZE
-SELECT *
-FROM order_product_hash
-WHERE hash_md5 = @hash;
+-- 2. Заполнение с вычислением hash_md5
+INSERT INTO orderdetails_products_hash (orderNumber, productName, productLine, hash_md5)
+SELECT
+    od.orderNumber,
+    p.productName,
+    p.productLine,
+    MD5(CONCAT(od.orderNumber, '|', p.productName, '|', p.productLine))
+FROM ClassicModels.OrderDetails od
+JOIN ClassicModels.Products p ON od.productCode = p.productCode;
 
-ALTER TABLE order_product_hash DROP INDEX idx_order_product_hash_md5_prefix;
+-- 3. Оценка селективности хэша и выбор необходимой длины префикса
 
-EXPLAIN ANALYZE
-SELECT *
-FROM order_product_hash
-WHERE hash_md5 = @hash;
+-- Селективность по всему хэшу
+SELECT
+    COUNT(*) AS total_rows,
+    COUNT(DISTINCT hash_md5) AS unique_hashes,
+    ROUND(100 * COUNT(DISTINCT hash_md5) / COUNT(*), 2) AS selectivity_percent
+FROM orderdetails_products_hash;
 
+-- Анализ уникальности по префиксам 8, 12, 16 символов
+SELECT
+    COUNT(DISTINCT LEFT(hash_md5, 8))  AS uniq8,
+    COUNT(DISTINCT LEFT(hash_md5,12))  AS uniq12,
+    COUNT(DISTINCT LEFT(hash_md5,16))  AS uniq16,
+    COUNT(*) AS total
+FROM orderdetails_products_hash;
+
+-- 4. Создать индекс по необходимой длине (обычно 12-16 символов префикса гарантирует селективность для md5)
+CREATE INDEX idx_md5_12 ON orderdetails_products_hash (hash_md5(12));
+
+-- 5. Сравнение скорости запроса с индексом и без индекса:
+-- (A) С индексом:
+EXPLAIN SELECT * FROM orderdetails_products_hash WHERE hash_md5 = MD5('10100|1928 Mercedes-Benz SSK|Vintage Cars');
+
+-- (B) Без индекса (удалить индекс, затем повторить explain):
+-- DROP INDEX idx_md5_12 ON orderdetails_products_hash;
+-- EXPLAIN SELECT * FROM orderdetails_products_hash WHERE hash_md5 = MD5('10100|1928 Mercedes-Benz SSK|Vintage Cars');
+
+-- Запросы для анализа времени выполнения тестируются в клиенте вручную.

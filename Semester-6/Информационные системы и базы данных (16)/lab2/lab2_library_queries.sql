@@ -1,93 +1,74 @@
--- Лабораторная работа 2.
--- Запросы по тексту Word-файла. MySQL 8.0+
+-- Читатели
+CREATE TABLE Reader (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
+);
 
-CREATE DATABASE IF NOT EXISTS library_lab2
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
+-- Книги
+CREATE TABLE Book (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(100) NOT NULL
+);
 
-USE library_lab2;
+-- Выдача книг
+CREATE TABLE BookIssue (
+    id SERIAL PRIMARY KEY,
+    book_id INT NOT NULL,
+    reader_id INT NOT NULL,
+    issue_date DATE NOT NULL,
+    return_date DATE, -- может быть NULL, если книгу не вернули
+    FOREIGN KEY (book_id) REFERENCES Book(id),
+    FOREIGN KEY (reader_id) REFERENCES Reader(id)
+);
 
-DROP TABLE IF EXISTS book_loans;
-DROP TABLE IF EXISTS books;
-DROP TABLE IF EXISTS readers;
+-- Примерные данные
+INSERT INTO Reader (name) VALUES
+('Anna Ivanova'),
+('Boris Petrov'),
+('Galina Smirnova'),
+('Dmitry Sokolov'),
+('Ekaterina Fedorova'),
+('Catherine Miles'),
+('George Miller');
 
-CREATE TABLE readers (
-  reader_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  full_name VARCHAR(120) NOT NULL,
-  PRIMARY KEY (reader_id),
-  KEY idx_readers_full_name (full_name)
-) ENGINE=InnoDB;
+INSERT INTO Book (title) VALUES
+('SQL For Beginners'),
+('War and Peace'),
+('Harry Potter'),
+('C# Programming');
 
-CREATE TABLE books (
-  book_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  title VARCHAR(160) NOT NULL,
-  PRIMARY KEY (book_id),
-  KEY idx_books_title (title)
-) ENGINE=InnoDB;
+INSERT INTO BookIssue (book_id, reader_id, issue_date, return_date) VALUES
+(1, 1, '2003-10-03', '2003-10-10'),
+(2, 2, '2003-10-04', '2003-10-11'),
+(3, 3, '2003-10-03', NULL),
+(4, 4, '2003-10-02', '2003-10-06'),
+(1, 5, '2003-10-04', NULL),
+(3, 6, '2003-10-10', NULL),
+(2, 7, '2003-09-29', '2003-10-02');
 
-CREATE TABLE book_loans (
-  loan_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  book_id INT UNSIGNED NOT NULL,
-  reader_id INT UNSIGNED NOT NULL,
-  issue_date DATE NOT NULL,
-  return_date DATE NULL,
-  PRIMARY KEY (loan_id),
-  KEY idx_book_loans_issue_date (issue_date),
-  KEY idx_book_loans_return_date (return_date),
-  CONSTRAINT fk_book_loans_book
-    FOREIGN KEY (book_id) REFERENCES books (book_id)
-    ON UPDATE CASCADE ON DELETE RESTRICT,
-  CONSTRAINT fk_book_loans_reader
-    FOREIGN KEY (reader_id) REFERENCES readers (reader_id)
-    ON UPDATE CASCADE ON DELETE RESTRICT
-) ENGINE=InnoDB;
 
-INSERT INTO readers (full_name) VALUES
-('Alice Brown'),
-('Charles Green'),
-('George Adams'),
-('Helen Stone');
 
-INSERT INTO books (title) VALUES
-('Databases'),
-('SQL Practice'),
-('Algorithms'),
-('Networks');
+-- 1. Запрос: все книги, выданные 3 и 4 октября 2003 с использованием IN
+SELECT * FROM BookIssue
+WHERE issue_date IN ('2003-10-03', '2003-10-04');
+-- Использование оператора IN для выбора конкретных дат
 
-INSERT INTO book_loans (book_id, reader_id, issue_date, return_date) VALUES
-(1, 1, '2003-10-03', NULL),
-(2, 2, '2003-10-04', '2003-10-12'),
-(3, 3, '2003-10-05', NULL),
-(4, 4, '2003-10-03', '2003-10-20');
+-- 1. Запрос: все книги, выданные 3 и 4 октября 2003 с использованием BETWEEN
+SELECT * FROM BookIssue
+WHERE issue_date BETWEEN '2003-10-03' AND '2003-10-04';
+-- Использование BETWEEN для выбора диапазона дат
 
--- 1. Все книги, выданные 3 и 4 октября 2003 г. с использованием IN.
-SELECT b.book_id, b.title, bl.issue_date, r.full_name
-FROM book_loans bl
-JOIN books b ON b.book_id = bl.book_id
-JOIN readers r ON r.reader_id = bl.reader_id
-WHERE bl.issue_date IN ('2003-10-03', '2003-10-04');
+-- 2. Запрос: все читатели, чьи имена начинаются с буквы от 'A' до 'G'
+SELECT * FROM Reader
+WHERE LEFT(name, 1) BETWEEN 'A' AND 'G';
+-- Проверка первой буквы имени в диапазоне от "A" до "G"
 
--- 1. То же условие с использованием BETWEEN.
-SELECT b.book_id, b.title, bl.issue_date, r.full_name
-FROM book_loans bl
-JOIN books b ON b.book_id = bl.book_id
-JOIN readers r ON r.reader_id = bl.reader_id
-WHERE bl.issue_date BETWEEN '2003-10-03' AND '2003-10-04';
+-- 3. Запрос: все читатели, чьи имена начинаются с буквы 'C'
+SELECT * FROM Reader
+WHERE name LIKE 'C%';
+-- Поиск по шаблону имени, начинающемуся на "C"
 
--- 2. Все читатели, чьи имена начинаются с буквы в диапазоне от A до G.
-SELECT reader_id, full_name
-FROM readers
-WHERE LEFT(full_name, 1) BETWEEN 'A' AND 'G';
-
--- 3. Все читатели, чьи имена начинаются с C.
-SELECT reader_id, full_name
-FROM readers
-WHERE full_name LIKE 'C%';
-
--- 4. Все книги с нулевым/NULL значением в поле возврата.
-SELECT b.book_id, b.title, bl.issue_date, bl.return_date, r.full_name
-FROM book_loans bl
-JOIN books b ON b.book_id = bl.book_id
-JOIN readers r ON r.reader_id = bl.reader_id
-WHERE bl.return_date IS NULL OR bl.return_date = '0000-00-00';
-
+-- 4. Запрос: все книги, имеющие NULL в поле возврата (еще не возвращены)
+SELECT * FROM BookIssue
+WHERE return_date IS NULL;
+-- Выдачи книг, у которых дата возврата отсутствует (книга не возвращена)
