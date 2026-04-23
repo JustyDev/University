@@ -10,18 +10,12 @@ SELECT
     p.productCode,
     p.productName,
     p.productLine,
-    p.textDescription
+    pl.textDescription
 FROM ClassicModels.Orders o
 JOIN ClassicModels.Customers c ON o.customerNumber = c.customerNumber
 JOIN ClassicModels.OrderDetails od ON od.orderNumber = o.orderNumber
-JOIN ClassicModels.Products p ON od.productCode = p.productCode;
-
--- Если textDescription нет в таблице Products, а есть в ProductLines - добавить join
-ALTER TABLE ClassicModels.denorm_orders_products ADD COLUMN textDescription VARCHAR(4000);
-UPDATE ClassicModels.denorm_orders_products d
-JOIN ClassicModels.Products p ON d.productCode = p.productCode
-JOIN ClassicModels.ProductLines pl ON p.productLine = pl.productLine
-SET d.textDescription = pl.textDescription;
+JOIN ClassicModels.Products p ON od.productCode = p.productCode
+JOIN ClassicModels.ProductLines pl ON p.productLine = pl.productLine;
 
 -- Создать процедуру/событие для регулярного обновления (раз в месяц)
 DELIMITER $$
@@ -139,4 +133,3 @@ DELIMITER ;
 
 -- Пример декодирования:
 -- CALL image_decode(1);
-

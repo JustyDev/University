@@ -50,14 +50,14 @@ INSERT INTO Reis (samolet_id, marshrut_id, data_vremya_vyleta, data_vremya_priby
 
 -- 1. Среднее расчетное время полета для самолёта 'ТУ-154' по маршруту 'Чугуев' - 'Мерефа'
 SELECT
-    AVG(EXTRACT(EPOCH FROM (r.data_vremya_pribytiya - r.data_vremya_vyleta))/60) AS avg_flight_minutes
+    AVG(TIMESTAMPDIFF(MINUTE, r.data_vremya_vyleta, r.data_vremya_pribytiya)) AS avg_flight_minutes
 FROM Reis r
 JOIN Samolet s ON r.samolet_id = s.id
 JOIN Marshrut m ON r.marshrut_id = m.id
 WHERE s.marka = 'ТУ-154'
   AND m.punkt_vyleta = 'Чугуев'
   AND m.punkt_naznacheniya = 'Мерефа';
--- Среднее время в минутах (для PostgreSQL: EXTRACT(EPOCH ...)/60). Для SQLite/Oracle/MySQL выражение может отличаться.
+-- Среднее время в минутах через функцию MySQL TIMESTAMPDIFF.
 
 -- 2. Марка самолёта, которая чаще всего летает по маршруту 'Чугуев' - 'Мерефа'
 SELECT
@@ -80,14 +80,14 @@ SELECT
 FROM Reis r
 JOIN Samolet s ON r.samolet_id = s.id
 JOIN Marshrut m ON r.marshrut_id = m.id
-WHERE (CAST(r.kolichestvo_prodannykh_biletov AS FLOAT) / s.chislo_mest) < 0.7
+WHERE (r.kolichestvo_prodannykh_biletov / s.chislo_mest) < 0.7
 GROUP BY m.punkt_vyleta, m.punkt_naznacheniya
 HAVING COUNT(*) = (
     SELECT MAX(cnt) FROM (
         SELECT COUNT(*) AS cnt
         FROM Reis r2
         JOIN Samolet s2 ON r2.samolet_id = s2.id
-        WHERE (CAST(r2.kolichestvo_prodannykh_biletov AS FLOAT) / s2.chislo_mest) < 0.7
+        WHERE (r2.kolichestvo_prodannykh_biletov / s2.chislo_mest) < 0.7
         GROUP BY r2.marshrut_id
     ) sub
 );

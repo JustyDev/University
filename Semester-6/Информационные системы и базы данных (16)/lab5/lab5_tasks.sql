@@ -53,12 +53,12 @@ INSERT INTO lr5_transactions (sender, receiver, amount, transaction_date) VALUES
 
 -- Запрос 5.2 (итоговое изменение капитала, отсортировано по убыванию)
 SELECT
-    u.user AS user,
+    u.`user` AS `user`,
     SUM(u.net_change) AS net_change
 FROM (
-    SELECT sender AS user, -amount AS net_change FROM lr5_transactions
+    SELECT sender AS `user`, -amount AS net_change FROM lr5_transactions
     UNION ALL
-    SELECT receiver AS user, amount AS net_change FROM lr5_transactions
+    SELECT receiver AS `user`, amount AS net_change FROM lr5_transactions
 ) u
-GROUP BY u.user
-ORDER BY net_change DESC, user ASC;
+GROUP BY u.`user`
+ORDER BY net_change DESC, `user` ASC;

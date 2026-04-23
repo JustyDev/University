@@ -2,7 +2,7 @@
 
 -- Таблица "Маршрут"
 CREATE TABLE Marshrut (
-    id SERIAL PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     punkt_vyleta VARCHAR(50) NOT NULL,
     punkt_naznacheniya VARCHAR(50) NOT NULL,
     rasstoyanie INT NOT NULL
@@ -10,7 +10,7 @@ CREATE TABLE Marshrut (
 
 -- Таблица "Самолет"
 CREATE TABLE Samolet (
-    id SERIAL PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     nomer VARCHAR(10) NOT NULL UNIQUE,
     marka VARCHAR(30) NOT NULL,
     chislo_mest INT NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE Samolet (
 
 -- Таблица "Рейс"
 CREATE TABLE Reis (
-    id SERIAL PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     samolet_id INT NOT NULL,
     marshrut_id INT NOT NULL,
     data_vremya_vyleta TIMESTAMP NOT NULL,

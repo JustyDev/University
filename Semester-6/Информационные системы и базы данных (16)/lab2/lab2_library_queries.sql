@@ -1,18 +1,18 @@
 -- Читатели
 CREATE TABLE Reader (
-    id SERIAL PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL
 );
 
 -- Книги
 CREATE TABLE Book (
-    id SERIAL PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(100) NOT NULL
 );
 
 -- Выдача книг
 CREATE TABLE BookIssue (
-    id SERIAL PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     book_id INT NOT NULL,
     reader_id INT NOT NULL,
     issue_date DATE NOT NULL,
