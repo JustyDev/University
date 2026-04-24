@@ -1,0 +1,143 @@
+{
+  "version": 1,
+  "objects": [
+    {
+      "kind": "line",
+      "points": [
+        [
+          226,
+          336
+        ],
+        [
+          451,
+          162
+        ]
+      ],
+      "outline": "#202124",
+      "fill": "",
+      "fill_type": "none",
+      "width": 2,
+      "obj_id": "7ada694c1f614ebfb8d42693284b11a2"
+    },
+    {
+      "kind": "arc",
+      "points": [
+        [
+          410,
+          636
+        ],
+        [
+          582,
+          628
+        ],
+        [
+          506,
+          556
+        ]
+      ],
+      "outline": "#202124",
+      "fill": "",
+      "fill_type": "none",
+      "width": 2,
+      "obj_id": "2cfed7ed9031417d9718c50b7efd7414"
+    },
+    {
+      "kind": "arc",
+      "points": [
+        [
+          127,
+          521
+        ],
+        [
+          354,
+          521
+        ],
+        [
+          274,
+          429
+        ]
+      ],
+      "outline": "#202124",
+      "fill": "",
+      "fill_type": "none",
+      "width": 2,
+      "obj_id": "69c34e12bd0448dc90c8a91ada788f81"
+    },
+    {
+      "kind": "arc",
+      "points": [
+        [
+          613,
+          445
+        ],
+        [
+          706,
+          457
+        ],
+        [
+          651,
+          492
+        ]
+      ],
+      "outline": "#202124",
+      "fill": "",
+      "fill_type": "none",
+      "width": 2,
+      "obj_id": "f81fd86e7f2e40d3bdde8059ad5198b6"
+    },
+    {
+      "kind": "circle",
+      "points": [
+        [
+          141,
+          153
+        ],
+        [
+          151,
+          154
+        ]
+      ],
+      "outline": "#202124",
+      "fill": "",
+      "fill_type": "none",
+      "width": 2,
+      "obj_id": "afe16abc668e45858d7abb302d4a384b"
+    },
+    {
+      "kind": "circle",
+      "points": [
+        [
+          516,
+          195
+        ],
+        [
+          671,
+          213
+        ]
+      ],
+      "outline": "#202124",
+      "fill": "#b4ce00",
+      "fill_type": "solid",
+      "width": 2,
+      "obj_id": "3517615101c5447e8117d14df5c1a1aa"
+    },
+    {
+      "kind": "circle",
+      "points": [
+        [
+          776,
+          257
+        ],
+        [
+          836,
+          259
+        ]
+      ],
+      "outline": "#202124",
+      "fill": "#88c0d0",
+      "fill_type": "solid",
+      "width": 2,
+      "obj_id": "45ec2a62bca84a1c9ac73ba48aa7c5ed"
+    }
+  ]
+}
