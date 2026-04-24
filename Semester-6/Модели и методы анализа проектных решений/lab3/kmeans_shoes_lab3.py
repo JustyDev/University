@@ -13,6 +13,7 @@ RESULT_PATH = LAB3_DIR / "shoes_kmeans_result.csv"
 
 def load_data() -> pd.DataFrame:
     df = pd.read_csv(DATA_PATH, header=None)
+    df = df.transpose().reset_index(drop=True)
     df.columns = [f"feature_{idx + 1}" for idx in range(df.shape[1])]
     return df
 
