@@ -17,7 +17,6 @@ JOIN ClassicModels.OrderDetails od ON od.orderNumber = o.orderNumber
 JOIN ClassicModels.Products p ON od.productCode = p.productCode
 JOIN ClassicModels.ProductLines pl ON p.productLine = pl.productLine;
 
--- Создать процедуру/событие для регулярного обновления (раз в месяц)
 DELIMITER $$
 CREATE EVENT ev_update_denorm_orders_products
 ON SCHEDULE EVERY 1 MONTH
@@ -42,7 +41,7 @@ BEGIN
     JOIN ClassicModels.ProductLines pl ON p.productLine = pl.productLine;
 END $$
 DELIMITER ;
--- Включить обработку событий, если выключено (разово)
+
 SET GLOBAL event_scheduler = ON;
 
 -- ===================== Задание 10.2 =====================

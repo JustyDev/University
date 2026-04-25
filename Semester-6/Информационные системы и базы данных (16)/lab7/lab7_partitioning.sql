@@ -29,7 +29,7 @@ END$$
 DELIMITER ;
 
 -- Пример вызова: вставить 100 случайных строк
--- CALL insert_random_lr7_users(100);
+CALL insert_random_lr7_users(100);
 
 -- =====================
 -- Шаг 2. PARTITION BY YEAR

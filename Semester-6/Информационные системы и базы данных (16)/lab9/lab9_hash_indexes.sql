@@ -72,7 +72,7 @@ CREATE INDEX idx_md5_12 ON orderdetails_products_hash (hash_md5(12));
 EXPLAIN SELECT * FROM orderdetails_products_hash WHERE hash_md5 = MD5('10100|1928 Mercedes-Benz SSK|Vintage Cars');
 
 -- (B) Без индекса (удалить индекс, затем повторить explain):
--- DROP INDEX idx_md5_12 ON orderdetails_products_hash;
--- EXPLAIN SELECT * FROM orderdetails_products_hash WHERE hash_md5 = MD5('10100|1928 Mercedes-Benz SSK|Vintage Cars');
+DROP INDEX idx_md5_12 ON orderdetails_products_hash;
+EXPLAIN SELECT * FROM orderdetails_products_hash WHERE hash_md5 = MD5('10100|1928 Mercedes-Benz SSK|Vintage Cars');
 
 -- Запросы для анализа времени выполнения тестируются в клиенте вручную.
