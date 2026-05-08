@@ -1,0 +1,47 @@
+Notebook[{
+Cell["Lab 1: Hierarchical Clustering Dendrogram", "Title"],
+Cell["Run the input cell below in Wolfram Mathematica. The normalized data is loaded from survey_normed.csv by an absolute path.", "Text"],
+Cell["ClearAll[\"Global`*\"];\n\
+Needs[\"HierarchicalClustering`\"];\n\
+\n\
+data = Import[\"/Users/justy-dev/Documents/University/Semester-6/Модели и методы анализа проектных решений/lab1/survey_normed.csv\", \"CSV\"];\n\
+header = First[data];\n\
+rows = Rest[data];\n\
+labels = ToString /@ rows[[All, 1]];\n\
+numericData = ToExpression /@ rows[[All, 2 ;; Length[header]]];\n\
+indexedData = Range[Length[numericData]];\n\
+cutHeight = 3.618278;\n\
+\n\
+hierarcgdata = Agglomerate[\n\
+  indexedData,\n\
+  Linkage -> \"Ward\",\n\
+  DistanceFunction -> (EuclideanDistance[numericData[[#1]], numericData[[#2]]] &)\n\
+];\n\
+\n\
+dendrogram = Show[\n\
+  DendrogramPlot[\n\
+    hierarcgdata,\n\
+    LeafLabels -> labels,\n\
+    HighlightLevel -> 3\n\
+  ],\n\
+  PlotLabel -> \"Hierarchical Clustering of Survey Respondents\",\n\
+  Axes -> True,\n\
+  AxesLabel -> {\"Respondent ID\", \"Distance\"},\n\
+  AxesOrigin -> {0, 0},\n\
+  ImageSize -> 1400,\n\
+  Epilog -> {\n\
+    {Red, Thick, Dashed, Line[{{0, cutHeight}, {Length[labels] + 1, cutHeight}}]},\n\
+    Inset[\n\
+      Style[\"Cut level\", 14, Red, Bold],\n\
+      {Length[labels] * 0.9, cutHeight},\n\
+      {Left, Bottom}\n\
+    ]\n\
+  }\n\
+];\n\
+\n\
+dendrogram\n\
+", "Input"]
+},
+WindowTitle->"lab1_dendrogram",
+StyleDefinitions->"Default.nb"
+]

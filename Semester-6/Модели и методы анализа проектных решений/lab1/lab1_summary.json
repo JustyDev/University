@@ -1,0 +1,8 @@
+{
+  "confidence_level": 0.95,
+  "z_value": 1.96,
+  "max_margin_error": 0.1,
+  "required_sample_size": 97,
+  "actual_sample_size": 100,
+  "cut_height": 3.618278335102489
+}
