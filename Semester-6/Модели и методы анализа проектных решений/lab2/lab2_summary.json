@@ -1,0 +1,62 @@
+{
+  "cluster_counts": {
+    "1": 36,
+    "2": 25,
+    "3": 39
+  },
+  "results": {
+    "Decision Tree": {
+      "accuracy_mean": 0.82,
+      "accuracy_std": 0.0678232998312527,
+      "f1_mean": 0.8140460487225193,
+      "f1_std": 0.0728113870479113
+    },
+    "Random Forest": {
+      "accuracy_mean": 0.95,
+      "accuracy_std": 0.05477225575051661,
+      "f1_mean": 0.9503636363636364,
+      "f1_std": 0.0541091642228242
+    },
+    "GBM": {
+      "accuracy_mean": 0.9199999999999999,
+      "accuracy_std": 0.06,
+      "f1_mean": 0.9208613739201974,
+      "f1_std": 0.05899631816090567
+    }
+  },
+  "best_model": "Random Forest",
+  "feature_importance": [
+    {
+      "feature": "Q2",
+      "importance": 0.2428548562260015
+    },
+    {
+      "feature": "Q7",
+      "importance": 0.16305125323125036
+    },
+    {
+      "feature": "Q6",
+      "importance": 0.14565978996763748
+    },
+    {
+      "feature": "Q1",
+      "importance": 0.1330588253137254
+    },
+    {
+      "feature": "Q8",
+      "importance": 0.10274223436335377
+    },
+    {
+      "feature": "Q5",
+      "importance": 0.08949789214648066
+    },
+    {
+      "feature": "Q3",
+      "importance": 0.06314977431316447
+    },
+    {
+      "feature": "Q4",
+      "importance": 0.05998537443838635
+    }
+  ]
+}
