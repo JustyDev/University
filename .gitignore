@@ -5,3 +5,8 @@ build
 out
 cmake-build-debug/
 .DS_Store
+_runner/
+
+# Лабораторные по 1С: рабочий каталог сборки не нужен, а собранные .cf — нужны
+_build/
+!Semester-7/Технология разработки прикладных решений 1С/lab*/build/

@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcssch="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.16">
+	<AutoTime>CurrentOrLast</AutoTime>
+	<UsePostingMode>Auto</UsePostingMode>
+	<RepostOnWrite>true</RepostOnWrite>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1"/>
+	<Events>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<InputField name="Номер" id="6">
+			<DataPath>Объект.Number</DataPath>
+			<ContextMenu name="НомерКонтекстноеМеню" id="10"/>
+			<ExtendedTooltip name="НомерРасширеннаяПодсказка" id="11"/>
+		</InputField>
+		<InputField name="Дата" id="7">
+			<DataPath>Объект.Date</DataPath>
+			<ContextMenu name="ДатаКонтекстноеМеню" id="12"/>
+			<ExtendedTooltip name="ДатаРасширеннаяПодсказка" id="13"/>
+		</InputField>
+		<InputField name="Склад" id="8">
+			<DataPath>Объект.Склад</DataPath>
+			<ContextMenu name="СкладКонтекстноеМеню" id="14"/>
+			<ExtendedTooltip name="СкладРасширеннаяПодсказка" id="15"/>
+		</InputField>
+		<Table name="СписокТоваров" id="9">
+			<Footer>true</Footer>
+			<DataPath>Объект.СписокТоваров</DataPath>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="СписокТоваровКонтекстноеМеню" id="16"/>
+			<AutoCommandBar name="СписокТоваровКоманднаяПанель" id="-9"/>
+			<ExtendedTooltip name="СписокТоваровРасширеннаяПодсказка" id="17"/>
+			<SearchStringAddition name="СписокТоваровСтрокаПоиска" id="18">
+				<AdditionSource>
+					<Item>СписокТоваров</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="СписокТоваровСтрокаПоискаКонтекстноеМеню" id="19"/>
+				<ExtendedTooltip name="СписокТоваровСтрокаПоискаРасширеннаяПодсказка" id="20"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="СписокТоваровСостояниеПросмотра" id="21">
+				<AdditionSource>
+					<Item>СписокТоваров</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="СписокТоваровСостояниеПросмотраКонтекстноеМеню" id="22"/>
+				<ExtendedTooltip name="СписокТоваровСостояниеПросмотраРасширеннаяПодсказка" id="23"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="СписокТоваровУправлениеПоиском" id="24">
+				<AdditionSource>
+					<Item>СписокТоваров</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="СписокТоваровУправлениеПоискомКонтекстноеМеню" id="25"/>
+				<ExtendedTooltip name="СписокТоваровУправлениеПоискомРасширеннаяПодсказка" id="26"/>
+			</SearchControlAddition>
+			<ChildItems>
+				<InputField name="СписокТоваровТовар" id="2">
+					<DataPath>Объект.СписокТоваров.Товар</DataPath>
+					<ContextMenu name="СписокТоваровТоварКонтекстноеМеню" id="27"/>
+					<ExtendedTooltip name="СписокТоваровТоварРасширеннаяПодсказка" id="28"/>
+				</InputField>
+				<InputField name="СписокТоваровЦветТовара" id="3">
+					<DataPath>Объект.СписокТоваров.Товар.ЦветТовара</DataPath>
+					<ContextMenu name="СписокТоваровЦветТовараКонтекстноеМеню" id="29"/>
+					<ExtendedTooltip name="СписокТоваровЦветТовараРасширеннаяПодсказка" id="30"/>
+				</InputField>
+				<InputField name="СписокТоваровСтранаТовара" id="4">
+					<DataPath>Объект.СписокТоваров.Товар.СтранаТовара</DataPath>
+					<ContextMenu name="СписокТоваровСтранаТовараКонтекстноеМеню" id="31"/>
+					<ExtendedTooltip name="СписокТоваровСтранаТовараРасширеннаяПодсказка" id="32"/>
+				</InputField>
+				<InputField name="СписокТоваровКоличество" id="5">
+					<DataPath>Объект.СписокТоваров.Количество</DataPath>
+					<FooterDataPath>ИтогоКоличество</FooterDataPath>
+					<FooterHorizontalAlign>Right</FooterHorizontalAlign>
+					<ContextMenu name="СписокТоваровКоличествоКонтекстноеМеню" id="33"/>
+					<ExtendedTooltip name="СписокТоваровКоличествоРасширеннаяПодсказка" id="34"/>
+					<Events>
+						<Event name="OnChange">СписокТоваровКоличествоПриИзменении</Event>
+					</Events>
+				</InputField>
+			</ChildItems>
+		</Table>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:DocumentObject.РасходТоваров</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ИтогоКоличество" id="90">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Итого количество</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>10</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+	</Attributes>
+</Form>

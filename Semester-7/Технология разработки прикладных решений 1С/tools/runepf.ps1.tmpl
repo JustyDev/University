@@ -1,0 +1,38 @@
+$ProgressPreference='SilentlyContinue'
+$ErrorActionPreference='Continue'
+$TAG  = '@@TAG@@'
+$SRC  = '@@SRC@@'
+$BASE = '@@BASE@@'
+$NAME = '@@NAME@@'
+$exe  = 'C:\Program Files (x86)\1cv8t\8.3.23.1688\bin\1cv8t.exe'
+$epfDir = 'D:\1CBases\_epf'
+$logdir = 'D:\1CBases\_logs'
+$out  = Join-Path $PSScriptRoot ('..\out\' + $TAG + '.txt')
+$lines = @()
+New-Item -ItemType Directory -Force -Path $epfDir, $logdir | Out-Null
+$epf = Join-Path $epfDir ($NAME + '.epf')
+
+function Run1C([string[]]$a, [string]$tag, [int]$timeoutMs = 120000) {
+  $log = Join-Path $logdir "$tag.log"
+  if (Test-Path -LiteralPath $log) { Remove-Item -LiteralPath $log -Force }
+  $all = $a + @("/Out`"$log`"", '/DisableStartupDialogs', '/DisableStartupMessages')
+  $script:lines += "RUN $tag"
+  $p = Start-Process -FilePath $exe -ArgumentList $all -PassThru -WindowStyle Hidden
+  if (-not $p.WaitForExit($timeoutMs)) {
+    $script:lines += "  ТАЙМАУТ — процесс снят"
+    try { $p.Kill() } catch { }
+    Start-Sleep -Seconds 2
+  }
+  $script:lines += "  exit=$($p.ExitCode)"
+  if (Test-Path -LiteralPath $log) { Get-Content -LiteralPath $log -Encoding UTF8 | ForEach-Object { $script:lines += "  | $_" } }
+}
+
+Run1C @('DESIGNER', "/F`"$BASE`"", '/LoadExternalDataProcessorOrReportFromFiles', "`"$SRC`"", "`"$epf`"") "$TAG-build"
+if (Test-Path -LiteralPath $epf) {
+  $lines += "epf: $((Get-Item -LiteralPath $epf).Length) байт"
+  Run1C @('ENTERPRISE', "/F`"$BASE`"", "/Execute`"$epf`"") "$TAG-exec"
+} else {
+  $lines += "epf не собран"
+}
+$lines | Out-File -FilePath $out -Encoding utf8
+$lines | ForEach-Object { Write-Output $_ }

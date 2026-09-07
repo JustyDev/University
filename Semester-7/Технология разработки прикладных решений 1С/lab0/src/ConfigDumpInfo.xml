@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ConfigDumpInfo xmlns="http://v8.1c.ru/8.3/xcf/dumpinfo" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" format="Hierarchical" version="2.16">
+	<ConfigVersions>
+		<Metadata name="AccumulationRegister.ВелосипедыВПрокате" id="7c702834-5900-41f1-8fef-53e809a90c21" configVersion="abaf3d223081e94b99a0f2a1cda1ea3c00000000">
+			<Metadata name="AccumulationRegister.ВелосипедыВПрокате.Dimension.Велосипед" id="493ef30b-13da-43cb-8a9e-4c9a14a02839"/>
+			<Metadata name="AccumulationRegister.ВелосипедыВПрокате.Dimension.Клиент" id="617d948b-ac9c-4442-9879-41b5cd06d972"/>
+			<Metadata name="AccumulationRegister.ВелосипедыВПрокате.Resource.Количество" id="76eb353c-0e65-47ba-91fe-7b46a271222b"/>
+		</Metadata>
+		<Metadata name="AccumulationRegister.Выручка" id="a4df2aee-bbb3-4863-9b47-6d1fe593286c" configVersion="6d88446eec8805488b029dc3d0f3c28900000000">
+			<Metadata name="AccumulationRegister.Выручка.Dimension.Модель" id="2d4ad64b-7e09-4174-9b9d-c897ec84bb00"/>
+			<Metadata name="AccumulationRegister.Выручка.Resource.Часы" id="73ff7d5d-2cb4-49dc-80ae-28a8c6e5e791"/>
+			<Metadata name="AccumulationRegister.Выручка.Resource.Сумма" id="a0091e18-72de-43ce-8516-e69abc4176f5"/>
+			<Metadata name="AccumulationRegister.Выручка.Dimension.Клиент" id="f7bb22e6-56f4-4508-b9cf-b0929ff44ab3"/>
+		</Metadata>
+		<Metadata name="AccumulationRegister.Резервы" id="d0b6e99d-b40c-418d-952d-8fff14dbc824" configVersion="bbef3a1bcb91974d88e225197b5fcf2a00000000">
+			<Metadata name="AccumulationRegister.Резервы.Dimension.Модель" id="0c0feea0-94a4-4a35-9bce-4e31ac7cecf7"/>
+			<Metadata name="AccumulationRegister.Резервы.Resource.Количество" id="1c8aca64-85e8-4053-b5f8-74b8a9c05295"/>
+		</Metadata>
+		<Metadata name="Catalog.Велосипеды" id="7e1ff70f-0c71-46b3-9570-fbaca13e5679" configVersion="cb4b2aa8f36e6d4e90192f53dffff9d700000000">
+			<Metadata name="Catalog.Велосипеды.Attribute.Модель" id="5a6d0fed-171f-4674-a1d5-6817ba57f2dc"/>
+			<Metadata name="Catalog.Велосипеды.Attribute.Исправен" id="c914cfa3-9aa1-406b-baf0-49b024d52695"/>
+		</Metadata>
+		<Metadata name="Catalog.Клиенты" id="0918188d-7bc4-4020-8f7d-3a090a8627a5" configVersion="9b37274bc527de489a1b9d87a15cff6600000000">
+			<Metadata name="Catalog.Клиенты.Attribute.Телефон" id="5ef5f520-0fee-4df9-ac29-3f110a188420"/>
+			<Metadata name="Catalog.Клиенты.Attribute.НомерКомнаты" id="719fb968-a16f-4cef-9989-78aeaf27c93d"/>
+			<Metadata name="Catalog.Клиенты.Attribute.ПостоялецГостиницы" id="71c67b49-0cdf-4641-a9f0-94b7396a7b92"/>
+			<Metadata name="Catalog.Клиенты.Attribute.Гостиница" id="78156d04-27ec-42d3-a410-501572ef54b6"/>
+		</Metadata>
+		<Metadata name="Catalog.МоделиВелосипедов" id="f15495bc-1692-47cb-ad0e-d7d23c8c2d59" configVersion="ef13e258fad93049ad9867c10df6d52e00000000">
+			<Metadata name="Catalog.МоделиВелосипедов.Attribute.ЦенаЗаЧас" id="a5372660-9629-405c-938b-99e2317d25f9"/>
+		</Metadata>
+		<Metadata name="Configuration.ПрокатВелосипедов" id="6b93a5db-55d4-4d4f-a4ad-8a3159e72f78" configVersion="a223f0f5c626ac429b27193ff1b0f9d500000000"/>
+		<Metadata name="Document.ВозвратВелосипедов" id="22572633-f675-4851-a9f8-ba272bd5cf5b" configVersion="8f81d7307c53ec469b69a97ed9de111e00000000">
+			<Metadata name="Document.ВозвратВелосипедов.TabularSection.Состав.Attribute.Часы" id="16fb8097-5b4e-434a-8e43-19e0ea27668f"/>
+			<Metadata name="Document.ВозвратВелосипедов.Attribute.Клиент" id="20ab93db-4729-4f79-becd-8c49c7c3f4d8"/>
+			<Metadata name="Document.ВозвратВелосипедов.TabularSection.Состав.Attribute.Состояние" id="46deb602-2903-4781-b09f-c525778dc5e2"/>
+			<Metadata name="Document.ВозвратВелосипедов.TabularSection.Состав.Attribute.ВремяВыдачи" id="713b88dd-3ee5-4ae3-8918-afe5eada17c7"/>
+			<Metadata name="Document.ВозвратВелосипедов.TabularSection.Состав" id="9d1e4f01-ca04-41b0-9611-d19c0362c9fd"/>
+			<Metadata name="Document.ВозвратВелосипедов.TabularSection.Состав.Attribute.ВремяВозврата" id="a1cb5008-e639-4280-950f-152c81b58e27"/>
+			<Metadata name="Document.ВозвратВелосипедов.TabularSection.Состав.Attribute.Велосипед" id="bf5d5cec-13d7-48b5-a8f4-00728e4998c2"/>
+			<Metadata name="Document.ВозвратВелосипедов.Attribute.Выдача" id="df4c96ac-6daa-4877-8814-f5c9f50da639"/>
+			<Metadata name="Document.ВозвратВелосипедов.TabularSection.Состав.Attribute.Сумма" id="f4d31ed1-9e54-4322-aee0-73a6abec0407"/>
+		</Metadata>
+		<Metadata name="Document.ВозвратВелосипедов.ObjectModule" id="22572633-f675-4851-a9f8-ba272bd5cf5b.0" configVersion="eb387d7c6014ea449aacce5d73004e3700000000"/>
+		<Metadata name="Document.ВыдачаВелосипедов" id="d3f5d7f8-5790-426a-ada2-2df3a855a421" configVersion="3fdf46110f227f4f8c10944acafa4f6600000000">
+			<Metadata name="Document.ВыдачаВелосипедов.Attribute.СуммаЗалога" id="037706d5-7f25-4832-85b3-d47aa0291eca"/>
+			<Metadata name="Document.ВыдачаВелосипедов.Attribute.ВидЗалога" id="0671d773-4ab7-454a-af79-9e65de258151"/>
+			<Metadata name="Document.ВыдачаВелосипедов.Attribute.Клиент" id="10ecd365-17a5-4db4-a479-aff0e5ecd88d"/>
+			<Metadata name="Document.ВыдачаВелосипедов.TabularSection.Состав.Attribute.Велосипед" id="12716f38-7be9-4f47-937d-35977ce811d1"/>
+			<Metadata name="Document.ВыдачаВелосипедов.TabularSection.Состав" id="76a6a821-5ae7-484b-8e21-b11c9f8dbabb"/>
+			<Metadata name="Document.ВыдачаВелосипедов.Attribute.Резерв" id="9a03cb55-f6db-4983-ba73-e22ca60e9bce"/>
+			<Metadata name="Document.ВыдачаВелосипедов.TabularSection.Состав.Attribute.ВремяВыдачи" id="a4f9d1cb-0baf-422e-8cf5-582b8d728a82"/>
+		</Metadata>
+		<Metadata name="Document.ВыдачаВелосипедов.ObjectModule" id="d3f5d7f8-5790-426a-ada2-2df3a855a421.0" configVersion="57023a3db00c8f40ae2574ad5d8f630800000000"/>
+		<Metadata name="Document.Резервирование" id="a462b9c2-40b0-44ab-a3f7-6690b157d5cd" configVersion="d8bc603f446f7840ab6950ec60e6aab100000000">
+			<Metadata name="Document.Резервирование.Attribute.Клиент" id="05ecaa54-1ac8-4ef0-8c9a-84c221ba9ae8"/>
+			<Metadata name="Document.Резервирование.Attribute.ДатаОкончания" id="76cf18ef-9fe1-46ce-8e61-e769e7e74a81"/>
+			<Metadata name="Document.Резервирование.Attribute.Количество" id="77b820af-01c6-4e32-a9f3-1bba13141155"/>
+			<Metadata name="Document.Резервирование.Attribute.Модель" id="a3a3e9d0-944c-433a-92c8-e880ca98f35a"/>
+			<Metadata name="Document.Резервирование.Attribute.ДатаНачала" id="fab90e2b-785b-4243-857a-d440b1a7d8fc"/>
+		</Metadata>
+		<Metadata name="Document.Резервирование.ObjectModule" id="a462b9c2-40b0-44ab-a3f7-6690b157d5cd.0" configVersion="5f36ab0fe91e40429961281d0687940b00000000"/>
+		<Metadata name="Enum.ВидЗалога" id="c8ab9a20-2250-4194-bd31-586bce11d359" configVersion="9a5508988eabf943807a30d59143955c00000000">
+			<Metadata name="Enum.ВидЗалога.EnumValue.Паспорт" id="9ac436fa-3c31-4c56-b7c8-6aeeaa8789ac"/>
+			<Metadata name="Enum.ВидЗалога.EnumValue.ВодительскоеУдостоверение" id="a2847357-5d09-4854-bbff-af7af0ef23f8"/>
+			<Metadata name="Enum.ВидЗалога.EnumValue.Деньги" id="d27d7c93-7d8b-4968-bcc0-e40d89338082"/>
+		</Metadata>
+		<Metadata name="Enum.СостояниеВелосипеда" id="6eae2d28-77db-4532-9424-5b3c51e5ced2" configVersion="fde69ec48fd93a49a704299e0d857fcf00000000">
+			<Metadata name="Enum.СостояниеВелосипеда.EnumValue.Испорчен" id="095a13fd-d7f6-497b-87a6-ba7e5eebe903"/>
+			<Metadata name="Enum.СостояниеВелосипеда.EnumValue.Целый" id="1700370d-591c-4a53-b573-6af89edfb812"/>
+		</Metadata>
+		<Metadata name="Language.Русский" id="a4f585c3-2f01-417a-990d-a1f70e666bfa" configVersion="64a49a92896b7449bc9933ca61af0f7300000000"/>
+		<Metadata name="Report.АналитикаПоКлиентам" id="63917075-7ffe-483a-91cd-b934e101b7c4" configVersion="c649866f07a3314cb45e4da1ce07d77900000000"/>
+		<Metadata name="Report.АналитикаПоКлиентам.Template.ОсновнаяСхемаКомпоновкиДанных" id="09e888f8-0a3f-410f-831d-ac770cc31c50" configVersion="dc8a5e333fd71c4e96c8eb1c7e1e94fb00000000"/>
+		<Metadata name="Report.АналитикаПоКлиентам.Template.ОсновнаяСхемаКомпоновкиДанных.Template" id="09e888f8-0a3f-410f-831d-ac770cc31c50.0" configVersion="5cde93dc52d2e74a8e1d3ae3ead2f54200000000"/>
+		<Metadata name="Report.ВелосипедыВПрокате" id="f086d6bf-2229-4c5b-a4a0-c313ce1868ce" configVersion="782fa960aef12f48884b6f3ca5cf713100000000"/>
+		<Metadata name="Report.ВелосипедыВПрокате.Template.ОсновнаяСхемаКомпоновкиДанных" id="3c2f5bfd-fa35-4226-ab3b-12941bf25eb4" configVersion="a377e253ed17214aa575d202238cefea00000000"/>
+		<Metadata name="Report.ВелосипедыВПрокате.Template.ОсновнаяСхемаКомпоновкиДанных.Template" id="3c2f5bfd-fa35-4226-ab3b-12941bf25eb4.0" configVersion="87e562be628b2c45a42ee377c7e12d9b00000000"/>
+		<Metadata name="Report.ВыручкаЗаПериод" id="1c624af2-2449-4442-a02c-f075d5dae8b5" configVersion="73cdafd903cefb4c8a1dcb797a83fa1a00000000"/>
+		<Metadata name="Report.ВыручкаЗаПериод.Form.ФормаОтчета" id="09309645-712d-4875-b6bc-0ab4f4d65cdf" configVersion="fdde278c4c5b02469d419cbb0d1f166100000000"/>
+		<Metadata name="Report.ВыручкаЗаПериод.Form.ФормаОтчета.Form" id="09309645-712d-4875-b6bc-0ab4f4d65cdf.0" configVersion="12de075ed6d4cf4dbfc5406a3475d80c00000000"/>
+		<Metadata name="Subsystem.Аналитика" id="1b1aacc6-0577-4b38-88de-248f55b4b2fb" configVersion="1ae78dfb0e0e1f44a0d2f8a2b96bcb8700000000"/>
+		<Metadata name="Subsystem.Прокат" id="e1426018-211c-472c-99c4-167d3923aa2c" configVersion="22e6df046df0494bb9475f7c77dbf90700000000"/>
+		<Metadata name="Subsystem.Справочники" id="b8f48040-60b8-4a03-83fd-49d3c6295feb" configVersion="a76a322e85591b4bae313556bd0aa6bc00000000"/>
+	</ConfigVersions>
+</ConfigDumpInfo>

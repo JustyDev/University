@@ -1,0 +1,65 @@
+$ProgressPreference='SilentlyContinue'
+$ErrorActionPreference='Continue'
+$TAG      = '@@TAG@@'
+$SRCDEMO  = '@@SRCDEMO@@'
+$SRCCLEAN = '@@SRCCLEAN@@'
+$BASE     = '@@BASE@@'
+$SHOT     = '@@SHOT@@'
+$REPORTS  = '@@REPORTS@@'
+$exe    = 'C:\Program Files (x86)\1cv8t\8.3.23.1688\bin\1cv8t.exe'
+$logdir = 'D:\1CBases\_logs'
+$out    = Join-Path $PSScriptRoot ('..\out\' + $TAG + '.txt')
+$lines  = @()
+New-Item -ItemType Directory -Force -Path $logdir | Out-Null
+
+function Run1C([string[]]$a, [string]$tag, [int]$timeoutMs = 180000) {
+  $log = Join-Path $logdir "$tag.log"
+  if (Test-Path -LiteralPath $log) { Remove-Item -LiteralPath $log -Force }
+  $all = $a + @("/Out`"$log`"", '/DisableStartupDialogs', '/DisableStartupMessages')
+  $script:lines += "RUN $tag"
+  $p = Start-Process -FilePath $exe -ArgumentList $all -PassThru -WindowStyle Hidden
+  if (-not $p.WaitForExit($timeoutMs)) {
+    $script:lines += "  ТАЙМАУТ — процесс снят"
+    try { $p.Kill() } catch { }
+    Start-Sleep -Seconds 2
+  }
+  $script:lines += "  exit=$($p.ExitCode)"
+  if (Test-Path -LiteralPath $log) { Get-Content -LiteralPath $log -Encoding UTF8 | ForEach-Object { $script:lines += "  | $_" } }
+}
+
+if (Test-Path -LiteralPath $BASE) { Remove-Item -Recurse -Force -LiteralPath $BASE }
+New-Item -ItemType Directory -Force -Path $BASE | Out-Null
+
+Run1C @('CREATEINFOBASE', "File=`"$BASE`";") "$TAG-create"
+Run1C @('DESIGNER', "/F`"$BASE`"", '/LoadConfigFromFiles', "`"$SRCDEMO`"") "$TAG-load-demo"
+Run1C @('DESIGNER', "/F`"$BASE`"", '/UpdateDBCfg') "$TAG-update-demo"
+Run1C @('ENTERPRISE', "/F`"$BASE`"", '/CЗаполнитьДемоДанные') "$TAG-fill"
+if ($REPORTS -ne '') {
+  Run1C @('ENTERPRISE', "/F`"$BASE`"", "/CВыгрузитьОтчеты:$REPORTS") "$TAG-reports"
+  if (Test-Path -LiteralPath (Join-Path $REPORTS 'log.txt')) {
+    Get-Content -LiteralPath (Join-Path $REPORTS 'log.txt') -Encoding UTF8 | ForEach-Object { $lines += "  R| $_" }
+  } else { $lines += "  R| нет log.txt" }
+}
+
+Run1C @('DESIGNER', "/F`"$BASE`"", '/LoadConfigFromFiles', "`"$SRCCLEAN`"") "$TAG-load-clean"
+Run1C @('DESIGNER', "/F`"$BASE`"", '/UpdateDBCfg') "$TAG-update-clean"
+
+if ($SHOT -ne '') {
+  # скриншот работающей конфигурации: запускаем 1С, ждём отрисовки, снимаем экран
+  Add-Type -AssemblyName System.Windows.Forms, System.Drawing
+  $proc = Start-Process -FilePath $exe -ArgumentList @('ENTERPRISE', "/F`"$BASE`"") -PassThru
+  Start-Sleep -Seconds 25
+  $bounds = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
+  $bmp = New-Object System.Drawing.Bitmap $bounds.Width, $bounds.Height
+  $gfx = [System.Drawing.Graphics]::FromImage($bmp)
+  $gfx.CopyFromScreen($bounds.Location, [System.Drawing.Point]::Empty, $bounds.Size)
+  New-Item -ItemType Directory -Force -Path (Split-Path -Parent $SHOT) | Out-Null
+  $bmp.Save($SHOT, [System.Drawing.Imaging.ImageFormat]::Png)
+  $gfx.Dispose(); $bmp.Dispose()
+  $lines += "скриншот: $SHOT"
+  try { $proc.Kill() } catch { }
+  Get-Process 1cv8t, 1cv8ct -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+}
+
+$lines | Out-File -FilePath $out -Encoding utf8
+$lines | ForEach-Object { Write-Output $_ }

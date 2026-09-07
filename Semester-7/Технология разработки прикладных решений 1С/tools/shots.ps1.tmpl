@@ -1,0 +1,116 @@
+$ProgressPreference='SilentlyContinue'
+$ErrorActionPreference='Continue'
+$TAG   = '@@TAG@@'
+$BASE  = '@@BASE@@'
+$DIR   = '@@DIR@@'
+$SPECS = '@@SPECS@@'   # param|file.png;param|file.png
+$exe   = 'C:\Program Files (x86)\1cv8t\8.3.23.1688\bin\1cv8t.exe'
+$out   = Join-Path $PSScriptRoot ('..\out\' + $TAG + '.txt')
+$lines = @()
+New-Item -ItemType Directory -Force -Path $DIR | Out-Null
+
+Add-Type -AssemblyName System.Windows.Forms, System.Drawing
+Add-Type @"
+using System;
+using System.Runtime.InteropServices;
+public class Win {
+  [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr h);
+  [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr h, int c);
+  [DllImport("user32.dll")] public static extern bool GetWindowRect(IntPtr h, out RECT r);
+  [DllImport("user32.dll")] public static extern bool IsWindowVisible(IntPtr h);
+  [DllImport("user32.dll")] public static extern bool PrintWindow(IntPtr h, IntPtr hdc, uint flags);
+  [DllImport("user32.dll", CharSet=CharSet.Unicode)] public static extern int GetWindowTextW(IntPtr h, System.Text.StringBuilder s, int n);
+  [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr h, out uint pid);
+  public delegate bool EnumProc(IntPtr h, IntPtr l);
+  [DllImport("user32.dll")] public static extern bool EnumWindows(EnumProc cb, IntPtr l);
+  public static System.Collections.Generic.List<IntPtr> Tops(uint pid) {
+    var res = new System.Collections.Generic.List<IntPtr>();
+    EnumWindows(delegate(IntPtr h, IntPtr l) {
+      uint p; GetWindowThreadProcessId(h, out p);
+      if (p == pid && IsWindowVisible(h)) res.Add(h);
+      return true;
+    }, IntPtr.Zero);
+    return res;
+  }
+  public static string Title(IntPtr h) {
+    var sb = new System.Text.StringBuilder(512); GetWindowTextW(h, sb, 512); return sb.ToString();
+  }
+  public struct RECT { public int Left, Top, Right, Bottom; }
+}
+"@
+
+function Shot([string]$param, [string]$file, [string]$titlePart) {
+  $args = @('ENTERPRISE', "/F`"$BASE`"", '/DisableStartupDialogs', '/DisableStartupMessages')
+  if ($param -ne '') { $args += "/C$param" }
+  $proc = Start-Process -FilePath $exe -ArgumentList $args -PassThru
+  Start-Sleep -Seconds 22
+  $proc.Refresh()
+  $h = $proc.MainWindowHandle
+  if ($h -eq [IntPtr]::Zero) {
+    $cand = Get-Process 1cv8t -ErrorAction SilentlyContinue | Where-Object { $_.MainWindowHandle -ne 0 } | Select-Object -First 1
+    if ($cand) { $h = $cand.MainWindowHandle }
+  }
+  if ($titlePart -ne '') {
+    $found = [IntPtr]::Zero
+    foreach ($pr in (Get-Process 1cv8t -ErrorAction SilentlyContinue)) {
+      foreach ($w in [Win]::Tops([uint32]$pr.Id)) {
+        $t = [Win]::Title($w)
+        $script:lines += "     окно: '$t'"
+        if ($t -like "*$titlePart*") { $found = $w }
+      }
+    }
+    if ($found -ne [IntPtr]::Zero) { $h = $found }
+  }
+  if ($h -ne [IntPtr]::Zero) {
+    # прячем чужие окна, чтобы в кадр попала только 1С
+    try { (New-Object -ComObject Shell.Application).MinimizeAll() } catch { }
+    Start-Sleep -Seconds 2
+    [Win]::ShowWindow($h, 3) | Out-Null      # SW_MAXIMIZE
+    [Win]::SetForegroundWindow($h) | Out-Null
+    Start-Sleep -Seconds 4
+    $r = New-Object Win+RECT
+    [Win]::GetWindowRect($h, [ref]$r) | Out-Null
+    $w = $r.Right - $r.Left; $ht = $r.Bottom - $r.Top
+    if ($w -gt 100 -and $ht -gt 100) {
+      # PrintWindow рисует окно в память: чужие окна поверх 1С в кадр не попадают
+      $bmp = New-Object System.Drawing.Bitmap $w, $ht
+      $gfx = [System.Drawing.Graphics]::FromImage($bmp)
+      $hdc = $gfx.GetHdc()
+      $okPW = [Win]::PrintWindow($h, $hdc, 2)
+      $gfx.ReleaseHdc($hdc)
+      # если PrintWindow вернул пустое полотно — снимаем с экрана
+      $blank = $true
+      foreach ($yy in 0, [int]($ht/4), [int]($ht/2)) {
+        foreach ($xx in 10, [int]($w/3), [int]($w/2)) {
+          $c = $bmp.GetPixel($xx, $yy)
+          if ($c.R -ne 0 -or $c.G -ne 0 -or $c.B -ne 0) { $blank = $false }
+        }
+      }
+      if (-not $okPW -or $blank) {
+        $gfx.CopyFromScreen($r.Left, $r.Top, 0, 0, (New-Object System.Drawing.Size($w, $ht)))
+        $script:lines += "     (PrintWindow не сработал, снято с экрана)"
+      }
+      $bmp.Save((Join-Path $DIR $file), [System.Drawing.Imaging.ImageFormat]::Png)
+      $gfx.Dispose(); $bmp.Dispose()
+      $script:lines += "OK   $file  ($w x $ht)  param='$param'"
+    } else {
+      $script:lines += "ПУСТО $file — некорректный размер окна"
+    }
+  } else {
+    $script:lines += "НЕТ ОКНА $file  param='$param'"
+  }
+  try { $proc.Kill() } catch { }
+  Get-Process 1cv8t, 1cv8ct -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+  Start-Sleep -Seconds 2
+}
+
+foreach ($spec in $SPECS.Split(';')) {
+  if ($spec.Trim() -eq '') { continue }
+  $parts = $spec.Split('|')
+  $tp = ''
+  if ($parts.Count -gt 2) { $tp = $parts[2] }
+  Shot $parts[0] $parts[1] $tp
+}
+
+$lines | Out-File -FilePath $out -Encoding utf8
+$lines | ForEach-Object { Write-Output $_ }

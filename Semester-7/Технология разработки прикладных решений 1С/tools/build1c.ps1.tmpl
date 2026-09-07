@@ -1,0 +1,51 @@
+$ProgressPreference='SilentlyContinue'
+$ErrorActionPreference='Continue'
+$TAG   = '@@TAG@@'
+$SRC   = '@@SRC@@'
+$BASE  = '@@BASE@@'
+$DUMP  = '@@DUMP@@'
+$CF    = '@@CF@@'
+$exe   = 'C:\Program Files (x86)\1cv8t\8.3.23.1688\bin\1cv8t.exe'
+$logdir= 'D:\1CBases\_logs'
+$out   = Join-Path $PSScriptRoot ('..\out\' + $TAG + '.txt')
+$lines = @()
+New-Item -ItemType Directory -Force -Path $logdir | Out-Null
+function Run1C([string[]]$a, [string]$tag) {
+  $log = Join-Path $logdir "$tag.log"
+  if (Test-Path -LiteralPath $log) { Remove-Item -LiteralPath $log -Force }
+  $all = $a + @("/Out`"$log`"", '/DisableStartupDialogs', '/DisableStartupMessages')
+  $script:lines += "RUN $tag"
+  $p = Start-Process -FilePath $exe -ArgumentList $all -PassThru -WindowStyle Hidden
+  if (-not $p.WaitForExit(180000)) {
+    $script:lines += "  ТАЙМАУТ 180 с — процесс 1С снят принудительно"
+    try { $p.Kill() } catch {}
+    Start-Sleep -Seconds 2
+  }
+  $script:lines += "  exit=$($p.ExitCode)"
+  if (Test-Path -LiteralPath $log) { Get-Content -LiteralPath $log -Encoding UTF8 | ForEach-Object { $script:lines += "  | $_" } }
+  return $p.ExitCode
+}
+$lines += "src: $SRC (exists=$(Test-Path -LiteralPath $SRC))"
+if (Test-Path -LiteralPath $BASE) { Remove-Item -Recurse -Force -LiteralPath $BASE }
+New-Item -ItemType Directory -Force -Path $BASE | Out-Null
+$rc = Run1C @('CREATEINFOBASE', "File=`"$BASE`";") "$TAG-create"
+if ($rc -eq 0) { $rc = Run1C @('DESIGNER', "/F`"$BASE`"", '/LoadConfigFromFiles', "`"$SRC`"") "$TAG-load" }
+if ($rc -eq 0) { $rc = Run1C @('DESIGNER', "/F`"$BASE`"", '/UpdateDBCfg') "$TAG-update" }
+if ($rc -eq 0) {
+  # синтаксический контроль модулей и проверка ссылок
+  Run1C @('DESIGNER', "/F`"$BASE`"", '/CheckConfig', '-ConfigLogIntegrity', '-IncorrectReferences',
+          '-ThinClient', '-ThickClientManagedApplication', '-DistributiveModules') "$TAG-check" | Out-Null
+}
+if ($rc -eq 0 -and $DUMP -ne '') {
+  if (Test-Path -LiteralPath $DUMP) { Remove-Item -Recurse -Force -LiteralPath $DUMP }
+  New-Item -ItemType Directory -Force -Path $DUMP | Out-Null
+  $rc = Run1C @('DESIGNER', "/F`"$BASE`"", '/DumpConfigToFiles', "`"$DUMP`"") "$TAG-dump"
+}
+if ($rc -eq 0 -and $CF -ne '') {
+  New-Item -ItemType Directory -Force -Path (Split-Path -Parent $CF) | Out-Null
+  $rc = Run1C @('DESIGNER', "/F`"$BASE`"", '/DumpCfg', "`"$CF`"") "$TAG-cf"
+  if (Test-Path -LiteralPath $CF) { $lines += "cf size: $((Get-Item -LiteralPath $CF).Length)" }
+}
+$lines += "RESULT: $rc"
+$lines | Out-File -FilePath $out -Encoding utf8
+$lines | ForEach-Object { Write-Output $_ }

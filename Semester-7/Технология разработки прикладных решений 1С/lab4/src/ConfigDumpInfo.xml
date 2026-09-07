@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ConfigDumpInfo xmlns="http://v8.1c.ru/8.3/xcf/dumpinfo" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" format="Hierarchical" version="2.16">
+	<ConfigVersions>
+		<Metadata name="AccumulationRegister.ОстаткиТоваров" id="ef479140-7723-4eb4-8cf2-973512dc80a3" configVersion="8ffa6e7dc78a2342a9c16f6528444ec100000000">
+			<Metadata name="AccumulationRegister.ОстаткиТоваров.Resource.Количество" id="30f05f48-307b-414f-a3eb-3615f1a22034"/>
+			<Metadata name="AccumulationRegister.ОстаткиТоваров.Dimension.Товар" id="b4f4bf76-81ef-44a7-ac72-45b9123fd92d"/>
+			<Metadata name="AccumulationRegister.ОстаткиТоваров.Dimension.Склад" id="f7165092-a7d5-442b-a8b7-34b3f6973d67"/>
+		</Metadata>
+		<Metadata name="Catalog.Склады" id="623fa494-4187-4203-9524-930e087bdea2" configVersion="697d36221c9e27459228bbb4d166950f00000000">
+			<Metadata name="Catalog.Склады.Attribute.АдресСклада" id="f216ef03-396e-47f2-9baa-97c7bea81971"/>
+		</Metadata>
+		<Metadata name="Catalog.СтраныТоваров" id="c0dbbe14-c6a5-4aa4-96ba-8cc91edd41e5" configVersion="8c976a94d2a96245b83773440d03bcd700000000"/>
+		<Metadata name="Catalog.Товары" id="d239486a-a035-4293-a80e-9a23a43e0e4e" configVersion="ad9a57b44297464a8d49c13a72b2f10b00000000">
+			<Metadata name="Catalog.Товары.Attribute.ЦветТовара" id="a4f3e301-4993-4cbf-9917-61b4f84771f7"/>
+			<Metadata name="Catalog.Товары.Attribute.СтранаТовара" id="e0d08df9-694e-43f4-98af-7a39c31f048b"/>
+		</Metadata>
+		<Metadata name="Catalog.ЦветаТоваров" id="659f718c-4419-44a8-941c-69226b373b09" configVersion="31baaf2a45157d4d8730efec67e3afce00000000"/>
+		<Metadata name="Configuration.ПростойСклад" id="ddc17b30-cd40-49a9-883c-a9d1555b1589" configVersion="9a839a6486dac24a857e9d637fa3d4a200000000"/>
+		<Metadata name="DataProcessor.СервисныеОперации" id="3c49064c-05f6-4f41-ab5f-c5f10213b211" configVersion="ca6a3e9544f37446beebdaebca2f740600000000"/>
+		<Metadata name="DataProcessor.СервисныеОперации.Form.Форма" id="0ab6f521-1dbf-4eef-b24f-57afcfa687f1" configVersion="62b413dab71c1b4cb41c108a70ce274100000000"/>
+		<Metadata name="DataProcessor.СервисныеОперации.Form.Форма.Form" id="0ab6f521-1dbf-4eef-b24f-57afcfa687f1.0" configVersion="03276f5b60c5dd4382375c673aca451c00000000"/>
+		<Metadata name="Document.ПриходТоваров" id="6c9ee559-080c-478b-be78-963cccd5d6b0" configVersion="6804d29102b7364484e10eae2cd7ffa200000000">
+			<Metadata name="Document.ПриходТоваров.TabularSection.СписокТоваров" id="39a0c15a-9961-48fd-b088-5ef615e14412"/>
+			<Metadata name="Document.ПриходТоваров.TabularSection.СписокТоваров.Attribute.ЦветТовара" id="462a783f-19c0-4cad-b693-1bb909b87cbb"/>
+			<Metadata name="Document.ПриходТоваров.TabularSection.СписокТоваров.Attribute.Количество" id="597aa188-bc73-48af-abbd-78a8261ab7b3"/>
+			<Metadata name="Document.ПриходТоваров.Attribute.Склад" id="9e6085ac-0f17-4a59-872f-2221c337fdab"/>
+			<Metadata name="Document.ПриходТоваров.TabularSection.СписокТоваров.Attribute.СтранаТовара" id="c0bc7927-c5b5-4a43-9f21-069fbba64891"/>
+			<Metadata name="Document.ПриходТоваров.TabularSection.СписокТоваров.Attribute.Товар" id="f3d240da-1775-4c5c-bb14-ae6af121eed5"/>
+		</Metadata>
+		<Metadata name="Document.ПриходТоваров.Form.ФормаДокумента" id="5ca1c2c9-46df-4cb6-b87d-bfd1fa9b565a" configVersion="e6eb7ccaa18fe54b8acea94ffdb3bbbf00000000"/>
+		<Metadata name="Document.ПриходТоваров.Form.ФормаДокумента.Form" id="5ca1c2c9-46df-4cb6-b87d-bfd1fa9b565a.0" configVersion="cfcc30f6ff7f37488813d7ed98f4679500000000"/>
+		<Metadata name="Document.ПриходТоваров.ObjectModule" id="6c9ee559-080c-478b-be78-963cccd5d6b0.0" configVersion="71f49f63b465e3408ac6b8759ed817bd00000000"/>
+		<Metadata name="Document.РасходТоваров" id="f4b6f4c0-0343-44bd-9f6a-3a0e65792427" configVersion="a54fe51e4d1d2c4baccf5f6c282f965700000000">
+			<Metadata name="Document.РасходТоваров.Attribute.Склад" id="01b7cabc-c695-4906-9b0f-076e406d026d"/>
+			<Metadata name="Document.РасходТоваров.TabularSection.СписокТоваров.Attribute.Товар" id="1fd16c1d-3464-4064-ad06-0aaf02419865"/>
+			<Metadata name="Document.РасходТоваров.TabularSection.СписокТоваров.Attribute.СтранаТовара" id="3162ee0c-7639-410c-8c6c-0639cc00b0ad"/>
+			<Metadata name="Document.РасходТоваров.TabularSection.СписокТоваров.Attribute.Количество" id="63ae974d-80f2-4744-8514-9babc534457f"/>
+			<Metadata name="Document.РасходТоваров.TabularSection.СписокТоваров" id="90266547-73fa-4b98-9b83-fe3ea0ce5e5a"/>
+			<Metadata name="Document.РасходТоваров.TabularSection.СписокТоваров.Attribute.ЦветТовара" id="c6348ef2-35ff-45a1-aff5-b45a2c8f8938"/>
+		</Metadata>
+		<Metadata name="Document.РасходТоваров.Form.ФормаДокумента" id="5d669514-41f1-4298-ac32-a9b6623a15b3" configVersion="1e97cc8509be734f9f002ce7d5c4116800000000"/>
+		<Metadata name="Document.РасходТоваров.Form.ФормаДокумента.Form" id="5d669514-41f1-4298-ac32-a9b6623a15b3.0" configVersion="c92c35dfd550b4478ade85f89439e61400000000"/>
+		<Metadata name="Document.РасходТоваров.ObjectModule" id="f4b6f4c0-0343-44bd-9f6a-3a0e65792427.0" configVersion="1caed6f34f2414438d8074ccb73ec60e00000000"/>
+		<Metadata name="Language.Русский" id="0ed8e792-154f-4ebd-a2c1-c2b4e8d21a10" configVersion="059521eb51fd6f48b85cde9f11f60bf000000000"/>
+		<Metadata name="Report.ОстаткиТоваров" id="39bd273c-1a3f-4055-859d-3a6d1c4cda50" configVersion="fe73492e5693554a86a6e960f0e7735c00000000"/>
+		<Metadata name="Report.ОстаткиТоваров.Template.ОсновнаяСхемаКомпоновкиДанных" id="64bc70a2-6568-4767-b896-1c0d7a936ee9" configVersion="5c1563986c066344a97188b79d98270100000000"/>
+		<Metadata name="Report.ОстаткиТоваров.Template.ОсновнаяСхемаКомпоновкиДанных.Template" id="64bc70a2-6568-4767-b896-1c0d7a936ee9.0" configVersion="ca42947bd782564fb31748fd6ef798aa00000000"/>
+		<Metadata name="Subsystem.Отчеты" id="1fb45d59-8ba2-4650-b356-4ca920832972" configVersion="b0de88b2683f2541a4a408604e11ae6400000000"/>
+		<Metadata name="Subsystem.Сервис" id="431480ea-f603-44fa-9a25-aaa3d4818f3a" configVersion="78c9280f79f1a44e98b6cef83a0ab66900000000"/>
+		<Metadata name="Subsystem.Справочники" id="f9426915-f2f9-41dd-9b36-3cca04952835" configVersion="51f0050e7a427c46b1224b9c2163d0e600000000"/>
+		<Metadata name="Subsystem.УчетТоваров" id="8de114c6-ede8-4112-adb3-6e1830fbc5d2" configVersion="6500836f25c1e547a01fc35fbaeba7c000000000"/>
+	</ConfigVersions>
+</ConfigDumpInfo>

@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcssch="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.16">
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1"/>
+	<ChildItems>
+		<InputField name="КатегорияТоваров" id="2">
+			<DataPath>КатегорияТоваров</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Категория товаров</v8:content>
+				</v8:item>
+			</Title>
+			<ChoiceFoldersAndItems>Folders</ChoiceFoldersAndItems>
+			<ContextMenu name="КатегорияТоваровКонтекстноеМеню" id="17"/>
+			<ExtendedTooltip name="КатегорияТоваровРасширеннаяПодсказка" id="18"/>
+		</InputField>
+		<Button name="ЗаменаЦвета" id="3">
+			<Type>UsualButton</Type>
+			<CommandName>Form.Command.ЗаменаЦвета</CommandName>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Замена цвета</v8:content>
+				</v8:item>
+			</Title>
+			<ExtendedTooltip name="ЗаменаЦветаРасширеннаяПодсказка" id="19"/>
+		</Button>
+		<Button name="ЗаменаСтраны" id="4">
+			<Type>UsualButton</Type>
+			<CommandName>Form.Command.ЗаменаСтраны</CommandName>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Замена страны</v8:content>
+				</v8:item>
+			</Title>
+			<ExtendedTooltip name="ЗаменаСтраныРасширеннаяПодсказка" id="20"/>
+		</Button>
+		<InputField name="НоваяГруппа" id="5">
+			<DataPath>НоваяГруппа</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Новая группа</v8:content>
+				</v8:item>
+			</Title>
+			<ContextMenu name="НоваяГруппаКонтекстноеМеню" id="21"/>
+			<ExtendedTooltip name="НоваяГруппаРасширеннаяПодсказка" id="22"/>
+		</InputField>
+		<Button name="СоздатьГруппу" id="6">
+			<Type>UsualButton</Type>
+			<CommandName>Form.Command.СоздатьГруппу</CommandName>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Создать группу</v8:content>
+				</v8:item>
+			</Title>
+			<ExtendedTooltip name="СоздатьГруппуРасширеннаяПодсказка" id="23"/>
+		</Button>
+		<InputField name="ТоварДляУдаления" id="7">
+			<DataPath>ТоварДляУдаления</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Товар для удаления</v8:content>
+				</v8:item>
+			</Title>
+			<ContextMenu name="ТоварДляУдаленияКонтекстноеМеню" id="24"/>
+			<ExtendedTooltip name="ТоварДляУдаленияРасширеннаяПодсказка" id="25"/>
+		</InputField>
+		<Button name="УдалитьТовар" id="8">
+			<Type>UsualButton</Type>
+			<CommandName>Form.Command.УдалитьТовар</CommandName>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Удалить товар</v8:content>
+				</v8:item>
+			</Title>
+			<ExtendedTooltip name="УдалитьТоварРасширеннаяПодсказка" id="26"/>
+		</Button>
+		<InputField name="ПутьКФайлу" id="9">
+			<DataPath>ПутьКФайлу</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Файл номенклатуры</v8:content>
+				</v8:item>
+			</Title>
+			<ContextMenu name="ПутьКФайлуКонтекстноеМеню" id="27"/>
+			<ExtendedTooltip name="ПутьКФайлуРасширеннаяПодсказка" id="28"/>
+		</InputField>
+		<Button name="ВыгрузитьТекст" id="10">
+			<Type>UsualButton</Type>
+			<CommandName>Form.Command.ВыгрузитьТекст</CommandName>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Выгрузить в текстовый файл</v8:content>
+				</v8:item>
+			</Title>
+			<ExtendedTooltip name="ВыгрузитьТекстРасширеннаяПодсказка" id="29"/>
+		</Button>
+		<Button name="ЗагрузитьТекст" id="11">
+			<Type>UsualButton</Type>
+			<CommandName>Form.Command.ЗагрузитьТекст</CommandName>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Загрузить из текстового файла</v8:content>
+				</v8:item>
+			</Title>
+			<ExtendedTooltip name="ЗагрузитьТекстРасширеннаяПодсказка" id="30"/>
+		</Button>
+		<InputField name="ДокументПрихода" id="12">
+			<DataPath>ДокументПрихода</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Документ прихода</v8:content>
+				</v8:item>
+			</Title>
+			<ContextMenu name="ДокументПриходаКонтекстноеМеню" id="31"/>
+			<ExtendedTooltip name="ДокументПриходаРасширеннаяПодсказка" id="32"/>
+		</InputField>
+		<InputField name="ПутьКФайлуДокумента" id="13">
+			<DataPath>ПутьКФайлуДокумента</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Файл документа</v8:content>
+				</v8:item>
+			</Title>
+			<ContextMenu name="ПутьКФайлуДокументаКонтекстноеМеню" id="33"/>
+			<ExtendedTooltip name="ПутьКФайлуДокументаРасширеннаяПодсказка" id="34"/>
+		</InputField>
+		<Button name="ВыгрузитьДокумент" id="14">
+			<Type>UsualButton</Type>
+			<CommandName>Form.Command.ВыгрузитьДокумент</CommandName>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Выгрузить документ в файл</v8:content>
+				</v8:item>
+			</Title>
+			<ExtendedTooltip name="ВыгрузитьДокументРасширеннаяПодсказка" id="35"/>
+		</Button>
+		<Button name="ЗагрузитьДокумент" id="15">
+			<Type>UsualButton</Type>
+			<CommandName>Form.Command.ЗагрузитьДокумент</CommandName>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Загрузить документ из файла</v8:content>
+				</v8:item>
+			</Title>
+			<ExtendedTooltip name="ЗагрузитьДокументРасширеннаяПодсказка" id="36"/>
+		</Button>
+		<Button name="КопироватьДокумент" id="16">
+			<Type>UsualButton</Type>
+			<CommandName>Form.Command.КопироватьДокумент</CommandName>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Скопировать документ</v8:content>
+				</v8:item>
+			</Title>
+			<ExtendedTooltip name="КопироватьДокументРасширеннаяПодсказка" id="37"/>
+		</Button>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:DataProcessorObject.СервисныеОперации</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="КатегорияТоваров" id="81">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Категория товаров</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Товары</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="НоваяГруппа" id="82">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Новая группа</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>200</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ТоварДляУдаления" id="83">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Товар для удаления</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Товары</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ПутьКФайлу" id="84">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Файл номенклатуры</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>200</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ДокументПрихода" id="85">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Документ прихода</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:DocumentRef.ПриходТоваров</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ПутьКФайлуДокумента" id="86">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Файл документа</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>200</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="ЗаменаЦвета" id="17">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Замена цвета</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ЗаменаЦвета</Action>
+		</Command>
+		<Command name="ЗаменаСтраны" id="18">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Замена страны</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ЗаменаСтраны</Action>
+		</Command>
+		<Command name="СоздатьГруппу" id="19">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Создать группу</v8:content>
+				</v8:item>
+			</Title>
+			<Action>СоздатьГруппу</Action>
+		</Command>
+		<Command name="УдалитьТовар" id="20">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Удалить товар</v8:content>
+				</v8:item>
+			</Title>
+			<Action>УдалитьТовар</Action>
+		</Command>
+		<Command name="ВыгрузитьТекст" id="21">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Выгрузить в текстовый файл</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ВыгрузитьТекст</Action>
+		</Command>
+		<Command name="ЗагрузитьТекст" id="22">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Загрузить из текстового файла</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ЗагрузитьТекст</Action>
+		</Command>
+		<Command name="ВыгрузитьДокумент" id="23">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Выгрузить документ в файл</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ВыгрузитьДокумент</Action>
+		</Command>
+		<Command name="ЗагрузитьДокумент" id="24">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Загрузить документ из файла</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ЗагрузитьДокумент</Action>
+		</Command>
+		<Command name="КопироватьДокумент" id="25">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Скопировать документ</v8:content>
+				</v8:item>
+			</Title>
+			<Action>КопироватьДокумент</Action>
+		</Command>
+	</Commands>
+</Form>
