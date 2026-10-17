@@ -1,0 +1,111 @@
+{
+  "stamp": "2026-10-17T16:48:39.152Z",
+  "base": "https://translark.ru",
+  "results": [
+    {
+      "id": "C-01",
+      "name": "Доступность API: GET /api/health",
+      "ok": true,
+      "ms": 135,
+      "note": "200, status=ok"
+    },
+    {
+      "id": "C-02",
+      "name": "SSR-страница / отдаётся с HTML",
+      "ok": true,
+      "ms": 49,
+      "note": "200, 17 КБ"
+    },
+    {
+      "id": "C-03",
+      "name": "SSR-страница /about отдаётся с HTML",
+      "ok": true,
+      "ms": 13,
+      "note": "200, 13 КБ"
+    },
+    {
+      "id": "C-04",
+      "name": "SSR-страница /privacy отдаётся с HTML",
+      "ok": true,
+      "ms": 23,
+      "note": "200, 15 КБ"
+    },
+    {
+      "id": "C-05",
+      "name": "SSR-страница /phrases отдаётся с HTML",
+      "ok": true,
+      "ms": 67,
+      "note": "200, 217 КБ"
+    },
+    {
+      "id": "C-06",
+      "name": "Несуществующая страница — 404",
+      "ok": true,
+      "ms": 22,
+      "note": "404"
+    },
+    {
+      "id": "C-07",
+      "name": "HTTP перенаправляется на HTTPS",
+      "ok": true,
+      "ms": 21,
+      "note": "301 → https://translark.ru/"
+    },
+    {
+      "id": "C-08",
+      "name": "Перевод без SID отклоняется (401)",
+      "ok": true,
+      "ms": 14,
+      "note": "401"
+    },
+    {
+      "id": "C-09",
+      "name": "Перевод с поддельным SID отклоняется (401)",
+      "ok": true,
+      "ms": 9,
+      "note": "401"
+    },
+    {
+      "id": "C-10",
+      "name": "Выдача SID: GET /api/sid",
+      "ok": true,
+      "ms": 13,
+      "note": "200, длина токена 107"
+    },
+    {
+      "id": "C-11",
+      "name": "SID без капчи не пускает к моделям (403 captcha_required)",
+      "ok": true,
+      "ms": 16,
+      "note": "403 captcha_required"
+    },
+    {
+      "id": "C-12",
+      "name": "Ограничение частоты выдачи SID (429 при всплеске)",
+      "ok": true,
+      "ms": 200,
+      "note": "первый 429 на запросе № 10"
+    },
+    {
+      "id": "C-13",
+      "name": "Время ответа /api/health (20 запросов): p95 < 500 мс",
+      "ok": true,
+      "ms": 254,
+      "note": "медиана 15 мс, p95 19 мс"
+    },
+    {
+      "id": "C-14",
+      "name": "Время загрузки главной страницы < 2 с",
+      "ok": true,
+      "ms": 21,
+      "note": "21 мс"
+    },
+    {
+      "id": "C-15",
+      "name": "robots.txt доступен",
+      "ok": true,
+      "ms": 4,
+      "note": "200"
+    }
+  ]
+}
